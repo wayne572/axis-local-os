@@ -50,6 +50,28 @@ Review drafts are saved under:
 
 Only move reviewed notes into `business/KNOWLEDGE_CAPTURE/`, then rebuild the index.
 
+## Local Model Runtime Health
+
+```powershell
+python tools/local_os/model_runtime.py
+```
+
+This checks whether the configured local model runtime is reachable.
+
+The current config is:
+
+```text
+config/local_model_runtime.json
+```
+
+Phase 1 is only a health check. It does not send prompts to the model yet.
+
+Expected outcomes:
+
+- If Ollama is not installed or running, the check explains that clearly.
+- If Ollama is running but `qwen3-coder` is missing, the check suggests `ollama pull qwen3-coder`.
+- If Ollama and the primary model are available, Axis has its first local model runtime boundary.
+
 ## Capture New Knowledge
 
 ```powershell

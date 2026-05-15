@@ -1,0 +1,17 @@
+{
+  "default_provider": "ollama",
+  "providers": {
+    "ollama": {
+      "type": "ollama",
+      "base_url": "http://localhost:11434",
+      "primary_model": "qwen3-coder",
+      "fallback_models": [
+        "deepseek-coder",
+        "kimi",
+        "glm"
+      ],
+      "health_endpoint": "/api/tags"
+    }
+  }
+}
+

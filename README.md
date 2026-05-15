@@ -38,6 +38,14 @@ Open:
 
 `START_HERE.md`
 
+For the Axis Local OS build track:
+
+`AXIS_LOCAL_OS_SPEC.md`
+
+`AXIS_BUILD_PLAN.md`
+
+`LEARNING_LOG.md`
+
 Then follow:
 
 `CLAUDE.md`
@@ -87,6 +95,8 @@ For pricing authority:
 | `PROJECTS/SFW_PROJECT_SOLUTIONS` | commercial assets, audit templates, delivery plans, ROI tracker, governance pack, client and Solo OS templates |
 | `TESTING` | startup and integration test plans |
 | `ARCHIVE_NOTES` | reference material only |
+| `config` | local runtime configuration for Axis Local OS build components |
+| `tools/local_os` | early Axis Local OS runtime, governance, and health-check tools |
 
 ## Current Business Authority
 
