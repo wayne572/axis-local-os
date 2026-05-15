@@ -171,3 +171,21 @@ Module:
 Key boundary:
 
 Start with local relationship memory, intro tracking, and draft-only follow-ups before adding external account integrations.
+
+## Phase 8 Progress Notes
+
+Status: in progress
+
+Goal:
+
+Add safe voice intake so Wayne can talk to Axis Local OS when typing is a barrier.
+
+Current scope:
+
+- voice safety spec
+- module registration
+- placeholder CLI
+
+Next implementation:
+
+Add local file transcription using `faster-whisper`.

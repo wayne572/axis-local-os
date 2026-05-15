@@ -282,6 +282,52 @@
         "Mark unclear source or consent as needs confirmation.",
         "Keep outreach warm, specific, and low pressure."
       ]
+    },
+    "voice_intake": {
+      "name": "Voice Intake",
+      "status": "active_capability_spec",
+      "type": "capability_module",
+      "purpose": "Safe voice-to-text intake for Axis Local OS, allowing Wayne to speak requests and review transcripts before routing or action.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/VOICE_INTAKE.md"
+      ],
+      "workflow_docs": [
+        "docs/modules/VOICE_INTAKE.md"
+      ],
+      "governance_docs": [
+        "docs/modules/VOICE_INTAKE.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "template_docs": [],
+      "commands": [
+        "AXIS: VOICE TRANSCRIBE",
+        "AXIS: VOICE ASK",
+        "AXIS: VOICE ROUTE",
+        "AXIS: VOICE CAPTURE DRAFT"
+      ],
+      "routing_keywords": [
+        "voice",
+        "talk",
+        "speak",
+        "speech",
+        "dictation",
+        "transcribe",
+        "transcript",
+        "audio",
+        "microphone",
+        "whisper",
+        "faster-whisper",
+        "whisper.cpp"
+      ],
+      "governance_rules": [
+        "Do not execute commands directly from voice.",
+        "Do not send messages directly from voice.",
+        "Do not update permanent memory directly from voice.",
+        "Always show transcript before action.",
+        "Treat relationship, client, health, finance, legal, and safeguarding content as sensitive.",
+        "Require review before turning voice notes into relationship memory, client records, or public outputs."
+      ]
     }
   }
 }

@@ -270,3 +270,29 @@ relationship memory + source IDs + consent gates + draft-only messaging + human 
 ```
 
 The first Relationship Connector OS build should work locally from approved notes and trackers before adding Gmail, LinkedIn, Telegram, WhatsApp, or browser-based enrichment.
+
+## 2026-05-15 - Voice Intake Before Voice Autonomy
+
+Lesson:
+
+Before Axis can listen, it needs rules for what happens after it hears something.
+
+Why:
+
+Voice makes it easier to capture thoughts, but it can also make accidental actions easier. The safe pattern is transcript-first:
+
+```text
+voice -> transcript -> review -> route -> draft/answer/proposed action -> approval
+```
+
+Current decision:
+
+Register `voice_intake` as a capability module before installing speech-to-text packages.
+
+Recommended first engine:
+
+`faster-whisper`
+
+Why:
+
+It fits the current Python build and is good for local file transcription. Live microphone support can come later once file transcription is stable and governed.

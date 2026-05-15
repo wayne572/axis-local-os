@@ -152,6 +152,7 @@ python tools/local_os/axis_modules.py show charity_cic_ai_os
 python tools/local_os/axis_modules.py show solo_operator_os
 python tools/local_os/axis_modules.py show client_os_build
 python tools/local_os/axis_modules.py show relationship_connector_os
+python tools/local_os/axis_modules.py show voice_intake
 python tools/local_os/axis_modules.py route "Create a charity funding workflow"
 ```
 
@@ -180,6 +181,28 @@ The first registered specialist module is:
 
 ```text
 relationship_connector_os
+```
+
+The first registered capability module is:
+
+```text
+voice_intake
+```
+
+## Voice Intake
+
+```powershell
+python tools/local_os/axis_voice.py status
+```
+
+Voice Intake is currently a safety spec and placeholder CLI.
+
+The next build step is file transcription with `faster-whisper`.
+
+Planned flow:
+
+```text
+voice -> transcript -> review -> route -> draft/answer/proposed action -> approval
 ```
 
 ## Capture New Knowledge
