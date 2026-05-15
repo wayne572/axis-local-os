@@ -377,6 +377,58 @@
         "Store generated audio under ignored local runtime state.",
         "Keep the text answer and source/audit trail available even when audio is generated."
       ]
+    },
+    "coding_agent": {
+      "name": "Coding Agent And Command Approval",
+      "status": "capability_spec_pending_build",
+      "type": "capability_module",
+      "purpose": "Governed code-execution layer for Axis Local OS. Previews commands and diffs, enforces approval levels, and writes an audit event for every action.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/CODING_AGENT.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "workflow_docs": [
+        "docs/modules/CODING_AGENT.md"
+      ],
+      "governance_docs": [
+        "docs/modules/CODING_AGENT.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "template_docs": [],
+      "commands": [
+        "AXIS: CODE PREVIEW",
+        "AXIS: CODE RUN",
+        "AXIS: CODE EDIT",
+        "AXIS: CODE APPLY",
+        "AXIS: CODE UNDO"
+      ],
+      "routing_keywords": [
+        "code",
+        "coding",
+        "command",
+        "shell",
+        "terminal",
+        "run command",
+        "execute",
+        "edit file",
+        "apply patch",
+        "diff",
+        "git commit",
+        "git push",
+        "install",
+        "script"
+      ],
+      "governance_rules": [
+        "No command runs without a preview shown in the same loop turn.",
+        "No file edit writes without a diff shown first.",
+        "Read-only inspection is level none; file edits are level review; mutating, external, or destructive actions require approval.",
+        "Never bypass hooks, signing, or verification flags.",
+        "Never auto-commit and never auto-push.",
+        "Workspace-scoped by default; out-of-scope writes require explicit acknowledgement.",
+        "Every action writes an audit event, including rejections.",
+        "Destructive actions require approval plus a typed confirm token."
+      ]
     }
   }
 }
