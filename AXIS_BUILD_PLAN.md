@@ -78,7 +78,25 @@ Build the local model runtime health check.
 - The prompt call writes an audit event.
 - The prompt call does not run tools, edit files, or update memory.
 - First test with `gemma4:latest` proved generation works but also showed ungrounded model risk.
+- `qwen3-coder:latest` is now installed, but the first grounded generation test timed out.
+- `gemma4:latest` completed the grounded generation test and answered from Axis context.
 
 Next action:
 
 Build a grounded prompt path that retrieves Axis context before calling the model.
+
+## Phase 3 Progress Notes
+
+Status: first pass complete
+
+Goal:
+
+Add a grounded model path that retrieves local Axis KB chunks before generation.
+
+Expected result:
+
+The same local model that guessed incorrectly should answer from Axis Local OS source material when retrieved context is injected.
+
+Verified result:
+
+`gemma4:latest` answered correctly from retrieved Axis context. `qwen3-coder:latest` needs further performance testing before it becomes the default practical model.

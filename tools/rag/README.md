@@ -95,6 +95,27 @@ Governance boundaries:
 
 Use `--model gemma4:latest` while `qwen3-coder` is not installed.
 
+## Grounded Local Model Prompt
+
+```powershell
+python tools/local_os/model_runtime.py grounded "What is Axis Local OS?" --model gemma4:latest --limit 3 --timeout 180
+```
+
+This retrieves local Axis KB context first, then injects that context into the model prompt.
+
+Governance boundaries:
+
+- the model must answer from retrieved context
+- source IDs are injected into the prompt
+- source IDs are shown in the output
+- the call still does not run tools, edit files, or update memory
+
+This is the first working version of:
+
+```text
+retrieve -> inject context -> generate -> audit
+```
+
 ## Capture New Knowledge
 
 ```powershell

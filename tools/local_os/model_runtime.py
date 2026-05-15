@@ -18,6 +18,9 @@ MODEL_AUDIT_PATH = AUDIT_DIR / "model_runtime.jsonl"
 DEFAULT_TIMEOUT_SECONDS = 5
 DEFAULT_GENERATE_TIMEOUT_SECONDS = 120
 
+sys.path.insert(0, str(ROOT / "tools" / "rag"))
+from kb_search import search  # noqa: E402
+
 
 @dataclass
 class RuntimeConfig:
@@ -51,6 +54,8 @@ class ModelResponse:
     done: bool
     message: str
     audit_path: str
+    grounded: bool = False
+    source_ids: list[str] | None = None
 
 
 def load_config(path: Path = CONFIG_PATH) -> dict[str, Any]:
@@ -255,6 +260,86 @@ def generate_once(
     return result
 
 
+def build_grounded_prompt(question: str, limit: int) -> tuple[str, list[dict[str, Any]]]:
+    results = search(question, limit)
+    sources: list[dict[str, Any]] = []
+    context_blocks: list[str] = []
+
+    for rank, (score, chunk) in enumerate(results, start=1):
+        source_id = chunk.get("id") or f"{chunk.get('source_path')}::chunk-{chunk.get('chunk_index')}"
+        source = {
+            "rank": rank,
+            "score": round(float(score), 4),
+            "source_id": source_id,
+            "source_path": chunk.get("source_path", "unknown"),
+            "title": chunk.get("title", "Untitled"),
+            "chunk_index": chunk.get("chunk_index", 0),
+        }
+        sources.append(source)
+        context_blocks.append(
+            "\n".join(
+                [
+                    f"[SOURCE {rank}]",
+                    f"source_id: {source['source_id']}",
+                    f"path: {source['source_path']}",
+                    f"title: {source['title']}",
+                    "text:",
+                    chunk.get("text", ""),
+                ]
+            )
+        )
+
+    context = "\n\n".join(context_blocks) or "No retrieved Axis Local OS context was found."
+    prompt = f"""You are answering inside Axis Local OS.
+
+Governance rules:
+- Answer only from the retrieved Axis context below.
+- Cite exact source_id values for project-memory claims.
+- Put citations in backticks, for example `AXIS_OS_CODEX_CURRENT\\AXIS_LOCAL_OS_SPEC.md::chunk-1`.
+- Do not cite SOURCE numbers as final citations.
+- If the retrieved context is insufficient, say what is missing.
+- Do not claim project history from general model memory.
+- Do not run tools, edit files, or update memory.
+
+Retrieved Axis context:
+{context}
+
+Question:
+{question}
+
+Answer:
+"""
+    return prompt, sources
+
+
+def generate_grounded(
+    question: str,
+    provider_name: str | None = None,
+    model: str | None = None,
+    limit: int = 4,
+    timeout: int = DEFAULT_GENERATE_TIMEOUT_SECONDS,
+) -> ModelResponse:
+    prompt, sources = build_grounded_prompt(question, limit)
+    result = generate_once(prompt, provider_name, model, timeout)
+    result.grounded = True
+    result.source_ids = [source["source_id"] for source in sources]
+    write_model_audit(
+        {
+            "schema": "axis-local-os-grounded-model-call-v1",
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "provider": result.provider,
+            "model": result.model,
+            "question_chars": len(question),
+            "prompt_chars": len(prompt),
+            "response_chars": len(result.response),
+            "source_ids": result.source_ids,
+            "done": result.done,
+            "message": result.message,
+        }
+    )
+    return result
+
+
 def render_health(health: RuntimeHealth) -> str:
     installed = ", ".join(health.installed_models) if health.installed_models else "none detected"
     fallback = ", ".join(health.fallback_models) if health.fallback_models else "none configured"
@@ -276,29 +361,44 @@ def render_health(health: RuntimeHealth) -> str:
 
 
 def render_model_response(result: ModelResponse) -> str:
+    source_ids = result.source_ids or []
     lines = [
         "# Axis Local OS Model Response",
         "",
         f"Provider: {result.provider}",
         f"Model: {result.model}",
         f"Done: {'yes' if result.done else 'no'}",
+        f"Grounded: {'yes' if result.grounded else 'no'}",
         "",
         "## Governance",
         "",
         "This call is model-only. It did not run tools, change files, or update memory.",
-        "",
-        "## Prompt",
-        "",
-        result.prompt,
-        "",
-        "## Response",
-        "",
-        result.response or result.message,
-        "",
-        "## Audit",
-        "",
-        result.audit_path,
     ]
+    if source_ids:
+        lines.extend(
+            [
+                "",
+                "## Retrieved Source IDs",
+                "",
+                *[f"- `{source_id}`" for source_id in source_ids],
+            ]
+        )
+    lines.extend(
+        [
+            "",
+            "## Prompt",
+            "",
+            result.prompt,
+            "",
+            "## Response",
+            "",
+            result.response or result.message,
+            "",
+            "## Audit",
+            "",
+            result.audit_path,
+        ]
+    )
     return "\n".join(lines)
 
 
@@ -320,10 +420,24 @@ def main() -> None:
     prompt_parser.add_argument("--timeout", type=int, default=DEFAULT_GENERATE_TIMEOUT_SECONDS)
     prompt_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
 
+    grounded_parser = subparsers.add_parser("grounded", help="Retrieve Axis context, then send one prompt")
+    grounded_parser.add_argument("question", help="Question to answer from retrieved Axis context")
+    grounded_parser.add_argument("--provider", default=None, help="Provider name from config/local_model_runtime.json")
+    grounded_parser.add_argument("--model", default=None, help="Override model name, for example gemma4:latest")
+    grounded_parser.add_argument("--limit", type=int, default=4, help="Number of KB chunks to inject")
+    grounded_parser.add_argument("--timeout", type=int, default=DEFAULT_GENERATE_TIMEOUT_SECONDS)
+    grounded_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
+
     parser.set_defaults(command="health")
     args = parser.parse_args()
 
-    if args.command == "prompt":
+    if args.command == "grounded":
+        result = generate_grounded(args.question, args.provider, args.model, args.limit, args.timeout)
+        if args.json:
+            print(json.dumps(asdict(result), indent=2, ensure_ascii=True))
+        else:
+            print(render_model_response(result))
+    elif args.command == "prompt":
         result = generate_once(args.prompt, args.provider, args.model, args.timeout)
         if args.json:
             print(json.dumps(asdict(result), indent=2, ensure_ascii=True))

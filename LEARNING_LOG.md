@@ -113,3 +113,31 @@ retrieval first -> context injection -> model response
 Takeaway:
 
 Axis Local OS must not rely on model memory or brand-name guessing. Project claims need retrieved context with source IDs.
+
+## 2026-05-15 - Grounded Prompting
+
+Lesson:
+
+Grounded prompting means giving the model retrieved project context before asking it to answer.
+
+Why:
+
+The model does not automatically know Wayne's Axis Local OS. It may know other things named Axis. Retrieval gives it the local project material it should use.
+
+The new flow is:
+
+```text
+question -> KB search -> source-backed context -> model prompt -> audited answer
+```
+
+Important:
+
+The model is still not allowed to update memory or run tools. Grounding improves the answer, but governance still controls the action.
+
+First grounded result:
+
+The same question that previously produced the wrong "Axis network devices" answer produced a correct Axis Local OS answer when local project context was injected.
+
+Second lesson:
+
+The primary coding model `qwen3-coder:latest` is installed, but it timed out on the first grounded generation test. `gemma4:latest` completed the grounded test successfully. This means model availability and model practicality are separate checks.
