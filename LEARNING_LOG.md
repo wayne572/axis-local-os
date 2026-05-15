@@ -407,3 +407,34 @@ Everything outside that list is approval-level by default. The classifier does n
 Takeaway:
 
 In governed systems, "I do not know what this is, so I will halt" is the correct behaviour. Cleverness is a liability when it lets the system act on an assumption.
+
+
+2026-05-15 - Apply Needs A Receipt
+Lesson:
+
+Writing to a file is not the dangerous step. The dangerous step is writing to a file that nobody actually previewed.
+
+Why:
+
+If preview and apply are separate but trust each other implicitly, anyone (or any agent) can call apply with whatever content they want and the preview governance becomes decorative. The fix is to make apply demand proof that a real preview happened.
+
+The proof is the diff_hash. The edit preview computes a sha256 of the rendered unified diff and stores it in the audit event. The apply path requires that exact diff_hash to be passed back in, looks up the audit entry, and refuses if there is no match.
+
+Other checks layered on top:
+
+- The matched preview must not be older than 30 minutes.
+- The matched preview must not have been blocked.
+- The current file sha256 must match the old_sha256 recorded at preview time. If anything else has touched the file in between, the apply halts because the diff no longer describes the change.
+- Out-of-scope targets must have been acknowledged at preview time, not just at apply time.
+
+If any check fails, no write happens. The apply still writes an audit event so the refusal is visible.
+
+A pre-image of the file (before the write) is copied to .axis/rollback so undo has something to restore. That makes write reversible by default, which is the whole point of governed mutation.
+
+Simple version:
+
+preview = describe the change
+diff_hash = receipt for that description
+apply = present the receipt, prove nothing has drifted, then write
+
+If the receipt is missing or the file has drifted, apply refuses and Wayne reviews.

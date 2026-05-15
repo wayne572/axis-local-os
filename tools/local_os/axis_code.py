@@ -16,11 +16,13 @@ from typing import Any
 
 OUTPUT_CHAR_LIMIT = 8000
 DEFAULT_RUN_TIMEOUT = 30
+APPLY_PREVIEW_MAX_AGE_SECONDS = 1800
 
 
 ROOT = Path(__file__).resolve().parents[2]
 AUDIT_DIR = ROOT / ".axis" / "audit"
 AUDIT_PATH = AUDIT_DIR / "coding_agent.jsonl"
+ROLLBACK_DIR = ROOT / ".axis" / "rollback"
 
 
 READ_ONLY_ALLOWLIST = {
@@ -111,6 +113,16 @@ class PreviewResult:
 
 def now_utc() -> datetime:
     return datetime.now(timezone.utc)
+
+
+def parse_iso(value: str) -> datetime | None:
+    try:
+        parsed = datetime.fromisoformat(value)
+    except (TypeError, ValueError):
+        return None
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=timezone.utc)
+    return parsed
 
 
 def tokenize(command: str) -> list[str]:
@@ -339,6 +351,179 @@ def edit_preview(target: Path, new_content: str, out_of_scope: bool) -> EditPrev
     )
     write_audit_event(result)
     return result
+
+
+@dataclass
+class ApplyResult:
+    schema: str
+    timestamp: str
+    target_path: str
+    workspace_root: str
+    in_workspace: bool
+    out_of_scope_acknowledged: bool
+    expected_diff_hash: str
+    matched_preview_timestamp: str | None
+    matched_preview_age_seconds: int | None
+    pre_apply_sha256: str | None
+    new_sha256: str
+    new_lines_count: int
+    classification: str
+    approval_level: str
+    halt_reason: str | None
+    written: bool
+    rollback_path: str | None
+    audit_path: str
+
+
+def find_matching_preview(target_resolved: Path, diff_hash: str) -> dict[str, Any] | None:
+    if not AUDIT_PATH.exists():
+        return None
+    match: dict[str, Any] | None = None
+    target_str = str(target_resolved)
+    with AUDIT_PATH.open("r", encoding="utf-8") as handle:
+        for raw in handle:
+            try:
+                event = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            if event.get("schema") != "axis-local-os-coding-agent-edit-preview-v1":
+                continue
+            if event.get("target_path") != target_str:
+                continue
+            if event.get("diff_hash") != diff_hash:
+                continue
+            match = event
+    return match
+
+
+def apply_edit(target: Path, new_content: str, expected_diff_hash: str, out_of_scope: bool) -> ApplyResult:
+    target_resolved = target.resolve()
+    in_workspace = is_within_workspace(target_resolved)
+    halt_reason: str | None = None
+    written = False
+    rollback_path: str | None = None
+    pre_apply_sha: str | None = None
+    matched_ts: str | None = None
+    matched_age: int | None = None
+    classification = "apply_blocked"
+    approval_level = "approval"
+
+    new_sha = sha256_text(new_content)
+    new_lines = new_content.count("\n") + (0 if new_content.endswith("\n") or not new_content else 1)
+
+    if not in_workspace and not out_of_scope:
+        halt_reason = "target is outside workspace root and out-of-scope was not acknowledged"
+
+    if halt_reason is None:
+        match = find_matching_preview(target_resolved, expected_diff_hash)
+        if match is None:
+            halt_reason = (
+                "no matching edit preview found in the audit log. Run `axis_code.py edit` first "
+                "and pass its diff_hash via --confirm."
+            )
+        else:
+            matched_ts = match.get("timestamp")
+            preview_dt = parse_iso(matched_ts) if matched_ts else None
+            if preview_dt is None:
+                halt_reason = "matched preview audit entry is missing a parseable timestamp"
+            else:
+                age = (now_utc() - preview_dt).total_seconds()
+                matched_age = int(age)
+                if age > APPLY_PREVIEW_MAX_AGE_SECONDS:
+                    halt_reason = (
+                        f"matched preview is {int(age)}s old (limit {APPLY_PREVIEW_MAX_AGE_SECONDS}s). "
+                        "Re-run `edit` to refresh the diff_hash."
+                    )
+                elif match.get("blocked_reasons"):
+                    halt_reason = "matched preview was blocked - cannot apply"
+                elif not in_workspace and not match.get("out_of_scope_acknowledged"):
+                    halt_reason = "out-of-scope flag must have been acknowledged at preview time"
+                else:
+                    approval_level = match.get("approval_level", "review")
+                    if approval_level not in {"review", "approval"}:
+                        halt_reason = f"approval level `{approval_level}` cannot be applied"
+                    else:
+                        # Drift check: current file sha must match the preview's recorded old_sha256.
+                        expected_old = match.get("old_sha256")
+                        if target_resolved.exists() and target_resolved.is_file():
+                            current_text, current_binary = read_text_file(target_resolved)
+                            if current_binary:
+                                halt_reason = "target is binary - apply path does not write binary files"
+                            else:
+                                pre_apply_sha = sha256_text(current_text)
+                                if expected_old is not None and pre_apply_sha != expected_old:
+                                    halt_reason = (
+                                        f"file drift detected. preview saw old_sha256={expected_old}, "
+                                        f"current sha256={pre_apply_sha}. Re-run `edit` to refresh."
+                                    )
+                        else:
+                            current_text = ""
+                            pre_apply_sha = None
+                            if expected_old is not None:
+                                halt_reason = "preview expected an existing file but target is missing now"
+
+    if halt_reason is None:
+        try:
+            ROLLBACK_DIR.mkdir(parents=True, exist_ok=True)
+            if target_resolved.exists():
+                timestamp = now_utc().strftime("%Y%m%dT%H%M%SZ")
+                rb = ROLLBACK_DIR / f"{timestamp}_{expected_diff_hash[:12]}.preimage"
+                rb.write_text(current_text, encoding="utf-8")
+                rollback_path = str(rb.relative_to(ROOT))
+            target_resolved.parent.mkdir(parents=True, exist_ok=True)
+            target_resolved.write_text(new_content, encoding="utf-8")
+            written = True
+            classification = "apply_write"
+        except OSError as exc:
+            halt_reason = f"write failed: {exc}"
+
+    result = ApplyResult(
+        schema="axis-local-os-coding-agent-apply-v1",
+        timestamp=now_utc().isoformat(),
+        target_path=str(target_resolved),
+        workspace_root=str(ROOT),
+        in_workspace=in_workspace,
+        out_of_scope_acknowledged=out_of_scope,
+        expected_diff_hash=expected_diff_hash,
+        matched_preview_timestamp=matched_ts,
+        matched_preview_age_seconds=matched_age,
+        pre_apply_sha256=pre_apply_sha,
+        new_sha256=new_sha,
+        new_lines_count=new_lines,
+        classification=classification,
+        approval_level=approval_level,
+        halt_reason=halt_reason,
+        written=written,
+        rollback_path=rollback_path,
+        audit_path=str(AUDIT_PATH.relative_to(ROOT)),
+    )
+    write_audit_event(result)
+    return result
+
+
+def render_apply_text(result: ApplyResult) -> str:
+    lines = [
+        "# Axis Coding Agent - Apply",
+        "",
+        f"Target: {result.target_path}",
+        f"In workspace: {result.in_workspace}",
+        f"Out-of-scope acknowledged: {result.out_of_scope_acknowledged}",
+        f"Expected diff_hash: {result.expected_diff_hash}",
+        f"Matched preview timestamp: {result.matched_preview_timestamp or 'no match'}",
+        f"Matched preview age (s): {result.matched_preview_age_seconds if result.matched_preview_age_seconds is not None else 'n/a'}",
+        f"Pre-apply sha256: {result.pre_apply_sha256 or 'n/a (new file)'}",
+        f"New sha256: {result.new_sha256}",
+        f"Classification: {result.classification}",
+        f"Approval level: {result.approval_level}",
+        f"Written: {result.written}",
+        f"Rollback path: {result.rollback_path or 'n/a'}",
+    ]
+    if result.halt_reason:
+        lines.extend(["", "## Halt Reason", "", result.halt_reason])
+    if result.written:
+        lines.extend(["", "## Result", "", "File written. Rollback pre-image stored. Use `axis_code.py undo` once available."])
+    lines.extend(["", "## Audit", "", result.audit_path])
+    return "\n".join(lines)
 
 
 @dataclass
@@ -602,9 +787,17 @@ def main() -> None:
     run_parser.add_argument("--timeout", type=int, default=DEFAULT_RUN_TIMEOUT, help="Timeout in seconds")
     run_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
 
-    for name in ("apply", "undo"):
-        sub = subparsers.add_parser(name, help=f"{name} - not yet implemented")
-        sub.add_argument("rest", nargs=argparse.REMAINDER)
+    apply_parser = subparsers.add_parser("apply", help="Write a previously-previewed edit to disk, gated on diff_hash and old-sha drift check")
+    apply_parser.add_argument("target", help="Target file path")
+    apply_src = apply_parser.add_mutually_exclusive_group(required=True)
+    apply_src.add_argument("--from", dest="from_path", help="Path to file with the new content")
+    apply_src.add_argument("--stdin", action="store_true", help="Read new content from stdin")
+    apply_parser.add_argument("--confirm", dest="diff_hash", required=True, help="diff_hash from the matching `edit` preview audit entry")
+    apply_parser.add_argument("--out-of-scope", action="store_true", help="Acknowledge out-of-scope (must also have been set at preview time)")
+    apply_parser.add_argument("--json", action="store_true", help="Print JSON")
+
+    undo_parser = subparsers.add_parser("undo", help="undo - not yet implemented")
+    undo_parser.add_argument("rest", nargs=argparse.REMAINDER)
 
     args = parser.parse_args()
 
@@ -623,6 +816,18 @@ def main() -> None:
         else:
             print(render_run_text(result_run))
         sys.exit(0 if result_run.executed and result_run.exit_code == 0 else (result_run.exit_code or 1))
+
+    if args.command == "apply":
+        if args.stdin:
+            new_content = sys.stdin.read()
+        else:
+            new_content = Path(args.from_path).read_text(encoding="utf-8")
+        result_apply = apply_edit(Path(args.target), new_content, args.diff_hash, args.out_of_scope)
+        if args.json:
+            print(json.dumps(asdict(result_apply), indent=2, ensure_ascii=True))
+        else:
+            print(render_apply_text(result_apply))
+        sys.exit(0 if result_apply.written else 1)
 
     if args.command == "edit":
         if args.stdin:
