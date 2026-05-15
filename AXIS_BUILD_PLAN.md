@@ -34,8 +34,8 @@ The model should be replaceable. Axis Local OS is built around governance, memor
 | Phase | Name | Status | Outcome |
 |---|---|---|---|
 | 0 | Constitution and governed loop | complete | Axis has source-backed retrieval, approval classification, audit logging, and review-only memory drafts. |
-| 1 | Local model runtime | in progress | Axis can check whether Ollama or another local provider is available. |
-| 2 | Model invocation | planned | Axis can send a prompt to a configured local model and capture the response through governance. |
+| 1 | Local model runtime | complete | Axis can check whether Ollama or another local provider is available. |
+| 2 | Model invocation | first pass complete | Axis can send a prompt to a configured local model and capture the response through governance. |
 | 3 | Coding-agent workflow | planned | Axis can prepare repo edits through a governed local assistant workflow. |
 | 4 | Durable RAG memory | planned | Axis can move from local JSON search to a stronger memory store. |
 | 5 | Reranking and source discipline | planned | Axis improves retrieval quality and reduces bad context. |
@@ -65,3 +65,20 @@ Not included yet:
 
 Build the local model runtime health check.
 
+## Phase 1 Progress Notes
+
+- Ollama is reachable locally.
+- `gemma4:latest` is installed and can be used as a temporary test model.
+- `qwen3-coder` did not finish installing during the first pull attempt.
+- Axis now needs a governed prompt call that can use an explicit model override while the primary model is pending.
+
+## Phase 2 Progress Notes
+
+- Axis can send one prompt to a local Ollama model.
+- The prompt call writes an audit event.
+- The prompt call does not run tools, edit files, or update memory.
+- First test with `gemma4:latest` proved generation works but also showed ungrounded model risk.
+
+Next action:
+
+Build a grounded prompt path that retrieves Axis context before calling the model.

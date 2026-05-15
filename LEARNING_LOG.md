@@ -58,3 +58,58 @@ In Phase 1, the health check asks:
 - what should Wayne do next if something is missing?
 
 This is a small example of governance thinking: check the operating conditions before taking action.
+
+## 2026-05-15 - Health Check vs Model Call
+
+Lesson:
+
+A health check and a model call are different things.
+
+A health check asks:
+
+```text
+Is the local model runtime available?
+```
+
+A model call asks:
+
+```text
+Can the runtime produce a response to this prompt?
+```
+
+Why:
+
+It is safer to prove availability first, then generation second. If both are mixed together, it becomes harder to understand what failed.
+
+Current result:
+
+- Ollama is reachable.
+- `gemma4:latest` is installed.
+- `qwen3-coder` is not installed yet.
+- The first governed model prompt can use `gemma4:latest` as a temporary test model.
+
+Governance boundary:
+
+The first prompt call is text-only. It cannot run tools, edit files, or update memory. It only proves that Axis can speak to a local model through the runtime adapter.
+
+## 2026-05-15 - First Ungrounded Model Lesson
+
+Lesson:
+
+A local model can answer confidently but refer to the wrong context if we do not ground it.
+
+What happened:
+
+We asked the installed local model to explain Axis Local OS in one sentence. The model produced an answer about Axis network devices, not Wayne's Axis Local OS.
+
+Why this matters:
+
+The model was not broken. It simply did not have the right project context in the prompt. This proves the original architecture decision:
+
+```text
+retrieval first -> context injection -> model response
+```
+
+Takeaway:
+
+Axis Local OS must not rely on model memory or brand-name guessing. Project claims need retrieved context with source IDs.

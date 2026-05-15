@@ -72,6 +72,29 @@ Expected outcomes:
 - If Ollama is running but `qwen3-coder` is missing, the check suggests `ollama pull qwen3-coder`.
 - If Ollama and the primary model are available, Axis has its first local model runtime boundary.
 
+You can also call the health mode explicitly:
+
+```powershell
+python tools/local_os/model_runtime.py health
+```
+
+## Governed Local Model Prompt
+
+```powershell
+python tools/local_os/model_runtime.py prompt "Reply with one sentence explaining what Axis Local OS is." --model gemma4:latest
+```
+
+This sends one prompt to a local Ollama model.
+
+Governance boundaries:
+
+- it does not run tools
+- it does not edit files
+- it does not update memory
+- it writes a small audit event to `.axis/audit/model_runtime.jsonl`
+
+Use `--model gemma4:latest` while `qwen3-coder` is not installed.
+
 ## Capture New Knowledge
 
 ```powershell
