@@ -296,3 +296,21 @@ Recommended first engine:
 Why:
 
 It fits the current Python build and is good for local file transcription. Live microphone support can come later once file transcription is stable and governed.
+
+## 2026-05-15 - Voice Reply Provider Interface
+
+Lesson:
+
+Axis should not hardwire itself to one text-to-speech engine.
+
+Decision:
+
+Use a Kokoro-FastAPI-style OpenAI-compatible speech endpoint as the first natural-voice provider, with Piper as the fallback.
+
+Why:
+
+Kokoro gives better natural voice potential, while Piper is a strong reliable local fallback. The provider interface means Axis can swap engines later as open-source voice tech improves.
+
+Governance:
+
+Axis should speak only text that already exists as an answer or approved draft. Speech should not hide the written answer, source trail, or audit record.

@@ -189,3 +189,20 @@ Current scope:
 Next implementation:
 
 Add local file transcription using `faster-whisper`.
+
+## Phase 9 Progress Notes
+
+Status: in progress
+
+Goal:
+
+Add voice reply as a replaceable text-to-speech capability.
+
+Provider strategy:
+
+- primary: Kokoro-FastAPI-style OpenAI-compatible speech endpoint
+- fallback: Piper
+
+Safety choice:
+
+Voice reply is disabled by default until a local TTS provider is running and tested.

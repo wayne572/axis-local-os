@@ -1,0 +1,25 @@
+{
+  "schema": "axis-local-os-voice-reply-v1",
+  "enabled": false,
+  "default_provider": "kokoro_fastapi",
+  "fallback_provider": "piper",
+  "output_dir": ".axis/voice_reply",
+  "speak_only_after_answer_logged": true,
+  "providers": {
+    "kokoro_fastapi": {
+      "type": "openai_compatible_speech",
+      "base_url": "http://localhost:8880",
+      "speech_endpoint": "/v1/audio/speech",
+      "model": "kokoro",
+      "voice": "af_heart",
+      "response_format": "wav"
+    },
+    "piper": {
+      "type": "piper_cli",
+      "command": "piper",
+      "voice_model_path": "",
+      "response_format": "wav"
+    }
+  }
+}
+

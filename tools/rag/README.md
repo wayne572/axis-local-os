@@ -153,6 +153,7 @@ python tools/local_os/axis_modules.py show solo_operator_os
 python tools/local_os/axis_modules.py show client_os_build
 python tools/local_os/axis_modules.py show relationship_connector_os
 python tools/local_os/axis_modules.py show voice_intake
+python tools/local_os/axis_modules.py show voice_reply
 python tools/local_os/axis_modules.py route "Create a charity funding workflow"
 ```
 
@@ -189,6 +190,12 @@ The first registered capability module is:
 voice_intake
 ```
 
+Voice reply is also registered:
+
+```text
+voice_reply
+```
+
 ## Voice Intake
 
 ```powershell
@@ -204,6 +211,28 @@ Planned flow:
 ```text
 voice -> transcript -> review -> route -> draft/answer/proposed action -> approval
 ```
+
+## Voice Reply
+
+```powershell
+python tools/local_os/axis_speak.py status
+python tools/local_os/axis_speak.py say "Hello Wayne, Axis voice reply is configured."
+```
+
+Voice Reply uses:
+
+```text
+primary: Kokoro-FastAPI-style OpenAI-compatible speech endpoint
+fallback: Piper
+```
+
+The config lives at:
+
+```text
+config/voice_reply.json
+```
+
+Voice reply is disabled by default until a local TTS provider is running.
 
 ## Capture New Knowledge
 

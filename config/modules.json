@@ -328,6 +328,54 @@
         "Treat relationship, client, health, finance, legal, and safeguarding content as sensitive.",
         "Require review before turning voice notes into relationship memory, client records, or public outputs."
       ]
+    },
+    "voice_reply": {
+      "name": "Voice Reply",
+      "status": "active_capability_spec",
+      "type": "capability_module",
+      "purpose": "Local text-to-speech reply layer for Axis Local OS using a Kokoro-FastAPI-style primary provider with Piper fallback.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/VOICE_REPLY.md",
+        "config/voice_reply.json"
+      ],
+      "workflow_docs": [
+        "docs/modules/VOICE_REPLY.md"
+      ],
+      "governance_docs": [
+        "docs/modules/VOICE_REPLY.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "template_docs": [],
+      "commands": [
+        "AXIS: VOICE REPLY STATUS",
+        "AXIS: SPEAK THIS",
+        "AXIS: ANSWER WITH VOICE"
+      ],
+      "routing_keywords": [
+        "voice reply",
+        "talk back",
+        "reply back",
+        "speak reply",
+        "spoken reply",
+        "speak back",
+        "read aloud",
+        "read the answer aloud",
+        "text to speech",
+        "tts",
+        "kokoro",
+        "piper",
+        "audio reply",
+        "speak this"
+      ],
+      "governance_rules": [
+        "Do not speak content before it has been generated as text.",
+        "Do not speak private relationship notes by default.",
+        "Do not speak client-sensitive content unless explicitly requested.",
+        "Do not send spoken content as a message.",
+        "Store generated audio under ignored local runtime state.",
+        "Keep the text answer and source/audit trail available even when audio is generated."
+      ]
     }
   }
 }
