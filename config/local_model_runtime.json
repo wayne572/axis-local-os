@@ -11,6 +11,29 @@
         "glm"
       ],
       "health_endpoint": "/api/tags"
+    },
+    "claude": {
+      "type": "claude",
+      "base_url": "https://api.anthropic.com",
+      "primary_model": "claude-opus-4-7",
+      "fallback_models": [
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5-20251001"
+      ],
+      "health_endpoint": "/v1/models",
+      "api_key_env": "ANTHROPIC_API_KEY",
+      "anthropic_version": "2023-06-01"
+    },
+    "openai": {
+      "type": "openai",
+      "base_url": "https://api.openai.com",
+      "primary_model": "gpt-5",
+      "fallback_models": [
+        "gpt-4o",
+        "gpt-4o-mini"
+      ],
+      "health_endpoint": "/v1/models",
+      "api_key_env": "OPENAI_API_KEY"
     }
   }
 }

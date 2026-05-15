@@ -50,8 +50,8 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(description="Ask Axis Local OS with retrieved sources")
     parser.add_argument("question", help="Question to answer from local Axis context")
-    parser.add_argument("--model", default="gemma4:latest", help="Local Ollama model to use")
-    parser.add_argument("--provider", default=None, help="Provider name from config/local_model_runtime.json")
+    parser.add_argument("--model", default=None, help="Override model. Defaults to the provider's primary_model.")
+    parser.add_argument("--provider", default=None, help="Provider name (ollama, claude, openai). Defaults to default_provider in config.")
     parser.add_argument("--limit", type=int, default=3, help="Number of KB chunks to inject")
     parser.add_argument("--timeout", type=int, default=DEFAULT_GENERATE_TIMEOUT_SECONDS)
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")

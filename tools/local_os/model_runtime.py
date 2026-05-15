@@ -13,10 +13,31 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG_PATH = ROOT / "config" / "local_model_runtime.json"
+ROUTING_PATH = ROOT / "config" / "model_routing.json"
+ENV_PATH = ROOT / ".env"
 AUDIT_DIR = ROOT / ".axis" / "audit"
 MODEL_AUDIT_PATH = AUDIT_DIR / "model_runtime.jsonl"
 DEFAULT_TIMEOUT_SECONDS = 5
 DEFAULT_GENERATE_TIMEOUT_SECONDS = 120
+HOSTED_TIMEOUT_SECONDS = 60
+
+
+def _load_env_file() -> None:
+    if not ENV_PATH.exists():
+        return
+    import os
+    for raw in ENV_PATH.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+_load_env_file()
 AUTHORITY_SOURCE_BOOSTS = {
     "AXIS_OS_CODEX_CURRENT\\AXIS_LOCAL_OS_SPEC.md": 20.0,
     "AXIS_OS_CODEX_CURRENT\\AXIS_BUILD_PLAN.md": 3.0,
@@ -35,6 +56,8 @@ class RuntimeConfig:
     primary_model: str
     fallback_models: list[str]
     health_endpoint: str
+    api_key_env: str | None = None
+    anthropic_version: str | None = None
 
 
 @dataclass
@@ -85,6 +108,8 @@ def get_runtime_config(provider_name: str | None = None) -> RuntimeConfig:
         primary_model=provider["primary_model"],
         fallback_models=list(provider.get("fallback_models", [])),
         health_endpoint=provider.get("health_endpoint", "/api/tags"),
+        api_key_env=provider.get("api_key_env"),
+        anthropic_version=provider.get("anthropic_version"),
     )
 
 
@@ -92,16 +117,184 @@ def fetch_json(
     url: str,
     timeout: int = DEFAULT_TIMEOUT_SECONDS,
     payload: dict[str, Any] | None = None,
+    extra_headers: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     data = None
     headers = {"Accept": "application/json"}
     if payload is not None:
         data = json.dumps(payload).encode("utf-8")
         headers["Content-Type"] = "application/json"
+    if extra_headers:
+        headers.update(extra_headers)
     request = Request(url, data=data, headers=headers)
     with urlopen(request, timeout=timeout) as response:
         raw = response.read().decode("utf-8")
     return json.loads(raw)
+
+
+def get_api_key(config: RuntimeConfig) -> str | None:
+    import os
+    if not config.api_key_env:
+        return None
+    return os.environ.get(config.api_key_env) or None
+
+
+def _redacted_health(config: RuntimeConfig, available: bool, message: str, installed: list[str] | None = None) -> RuntimeHealth:
+    return RuntimeHealth(
+        provider=config.provider_name,
+        provider_type=config.provider_type,
+        base_url=config.base_url,
+        available=available,
+        primary_model=config.primary_model,
+        primary_model_installed=False,
+        installed_models=installed or [],
+        fallback_models=config.fallback_models,
+        message=message,
+    )
+
+
+def claude_health(config: RuntimeConfig) -> RuntimeHealth:
+    key = get_api_key(config)
+    if not key:
+        return _redacted_health(config, False, f"Missing API key. Set {config.api_key_env} in .env or environment.")
+    url = f"{config.base_url}{config.health_endpoint}"
+    headers = {
+        "x-api-key": key,
+        "anthropic-version": config.anthropic_version or "2023-06-01",
+    }
+    try:
+        payload = fetch_json(url, timeout=DEFAULT_TIMEOUT_SECONDS, extra_headers=headers)
+    except HTTPError as error:
+        return _redacted_health(config, False, f"Claude responded with HTTP {error.code}. Check key validity and model access.")
+    except URLError:
+        return _redacted_health(config, False, "Claude API is not reachable. Check network or DNS.")
+    except TimeoutError:
+        return _redacted_health(config, False, "Claude health check timed out.")
+    except json.JSONDecodeError:
+        return _redacted_health(config, False, "Claude returned a non-JSON response.")
+
+    installed = sorted(model.get("id", "") for model in payload.get("data", []) if model.get("id"))
+    primary_installed = config.primary_model in installed
+    msg = "Claude API reachable and primary model is in the allowed list." if primary_installed else (
+        f"Claude API reachable but primary model `{config.primary_model}` is not in the visible model list."
+    )
+    return RuntimeHealth(
+        provider=config.provider_name,
+        provider_type=config.provider_type,
+        base_url=config.base_url,
+        available=True,
+        primary_model=config.primary_model,
+        primary_model_installed=primary_installed,
+        installed_models=installed,
+        fallback_models=config.fallback_models,
+        message=msg,
+    )
+
+
+def openai_health(config: RuntimeConfig) -> RuntimeHealth:
+    key = get_api_key(config)
+    if not key:
+        return _redacted_health(config, False, f"Missing API key. Set {config.api_key_env} in .env or environment.")
+    url = f"{config.base_url}{config.health_endpoint}"
+    headers = {"Authorization": f"Bearer {key}"}
+    try:
+        payload = fetch_json(url, timeout=DEFAULT_TIMEOUT_SECONDS, extra_headers=headers)
+    except HTTPError as error:
+        return _redacted_health(config, False, f"OpenAI responded with HTTP {error.code}. Check key validity.")
+    except URLError:
+        return _redacted_health(config, False, "OpenAI API is not reachable.")
+    except TimeoutError:
+        return _redacted_health(config, False, "OpenAI health check timed out.")
+    except json.JSONDecodeError:
+        return _redacted_health(config, False, "OpenAI returned a non-JSON response.")
+
+    installed = sorted(model.get("id", "") for model in payload.get("data", []) if model.get("id"))
+    primary_installed = config.primary_model in installed
+    msg = "OpenAI API reachable and primary model is in the allowed list." if primary_installed else (
+        f"OpenAI API reachable but primary model `{config.primary_model}` is not in the visible model list."
+    )
+    return RuntimeHealth(
+        provider=config.provider_name,
+        provider_type=config.provider_type,
+        base_url=config.base_url,
+        available=True,
+        primary_model=config.primary_model,
+        primary_model_installed=primary_installed,
+        installed_models=installed,
+        fallback_models=config.fallback_models,
+        message=msg,
+    )
+
+
+def claude_generate(prompt: str, config: RuntimeConfig, model: str, timeout: int) -> tuple[str, bool, str, dict[str, Any]]:
+    key = get_api_key(config)
+    if not key:
+        return "", False, f"Missing API key. Set {config.api_key_env} in .env.", {}
+    url = f"{config.base_url}/v1/messages"
+    headers = {
+        "x-api-key": key,
+        "anthropic-version": config.anthropic_version or "2023-06-01",
+    }
+    payload = {
+        "model": model,
+        "max_tokens": 1024,
+        "messages": [{"role": "user", "content": prompt}],
+    }
+    try:
+        raw = fetch_json(url, timeout=timeout, payload=payload, extra_headers=headers)
+    except HTTPError as error:
+        return "", False, f"Claude generation failed with HTTP {error.code}.", {}
+    except URLError:
+        return "", False, "Claude API is not reachable.", {}
+    except TimeoutError:
+        return "", False, "Claude generation timed out.", {}
+    except json.JSONDecodeError:
+        return "", False, "Claude returned a non-JSON response.", {}
+
+    content_blocks = raw.get("content", [])
+    text = "".join(block.get("text", "") for block in content_blocks if block.get("type") == "text")
+    usage = raw.get("usage", {}) or {}
+    metrics = {
+        "prompt_tokens": usage.get("input_tokens"),
+        "completion_tokens": usage.get("output_tokens"),
+    }
+    done = bool(raw.get("stop_reason"))
+    msg = "Hosted Claude call completed. No tools executed, no memory updated."
+    return text, done, msg, metrics
+
+
+def openai_generate(prompt: str, config: RuntimeConfig, model: str, timeout: int) -> tuple[str, bool, str, dict[str, Any]]:
+    key = get_api_key(config)
+    if not key:
+        return "", False, f"Missing API key. Set {config.api_key_env} in .env.", {}
+    url = f"{config.base_url}/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {key}"}
+    payload = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.2,
+    }
+    try:
+        raw = fetch_json(url, timeout=timeout, payload=payload, extra_headers=headers)
+    except HTTPError as error:
+        return "", False, f"OpenAI generation failed with HTTP {error.code}.", {}
+    except URLError:
+        return "", False, "OpenAI API is not reachable.", {}
+    except TimeoutError:
+        return "", False, "OpenAI generation timed out.", {}
+    except json.JSONDecodeError:
+        return "", False, "OpenAI returned a non-JSON response.", {}
+
+    choices = raw.get("choices", [])
+    text = choices[0].get("message", {}).get("content", "") if choices else ""
+    usage = raw.get("usage", {}) or {}
+    metrics = {
+        "prompt_tokens": usage.get("prompt_tokens"),
+        "completion_tokens": usage.get("completion_tokens"),
+    }
+    done = bool(choices and choices[0].get("finish_reason"))
+    msg = "Hosted OpenAI call completed. No tools executed, no memory updated."
+    return text, done, msg, metrics
 
 
 def normalise_model_name(name: str) -> str:
@@ -187,9 +380,13 @@ def ollama_health(config: RuntimeConfig) -> RuntimeHealth:
 
 def check_health(provider_name: str | None = None) -> RuntimeHealth:
     config = get_runtime_config(provider_name)
-    if config.provider_type != "ollama":
-        raise SystemExit(f"Provider type '{config.provider_type}' is not implemented yet.")
-    return ollama_health(config)
+    if config.provider_type == "ollama":
+        return ollama_health(config)
+    if config.provider_type == "claude":
+        return claude_health(config)
+    if config.provider_type == "openai":
+        return openai_health(config)
+    raise SystemExit(f"Provider type '{config.provider_type}' is not implemented yet.")
 
 
 def write_model_audit(event: dict[str, Any]) -> None:
@@ -205,41 +402,39 @@ def generate_once(
     timeout: int = DEFAULT_GENERATE_TIMEOUT_SECONDS,
 ) -> ModelResponse:
     config = get_runtime_config(provider_name)
-    if config.provider_type != "ollama":
-        raise SystemExit(f"Provider type '{config.provider_type}' is not implemented yet.")
-
     selected_model = model or config.primary_model
-    url = f"{config.base_url}/api/generate"
-    payload = {
-        "model": selected_model,
-        "prompt": prompt,
-        "stream": False,
-        "options": {
-            "temperature": 0.2
-        },
-    }
+    metrics: dict[str, Any] = {}
 
-    try:
-        raw_response = fetch_json(url, timeout=timeout, payload=payload)
-        response_text = raw_response.get("response", "")
-        done = bool(raw_response.get("done", False))
-        message = "Model response generated. No tools were executed and no memory was updated."
-    except HTTPError as error:
-        response_text = ""
-        done = False
-        message = f"Ollama generation failed with HTTP {error.code}."
-    except URLError:
-        response_text = ""
-        done = False
-        message = "Ollama is not reachable. Run the health check before generating."
-    except TimeoutError:
-        response_text = ""
-        done = False
-        message = "Model generation timed out."
-    except json.JSONDecodeError:
-        response_text = ""
-        done = False
-        message = "Ollama returned a non-JSON generation response."
+    if config.provider_type == "ollama":
+        url = f"{config.base_url}/api/generate"
+        payload = {
+            "model": selected_model,
+            "prompt": prompt,
+            "stream": False,
+            "options": {"temperature": 0.2},
+        }
+        try:
+            raw_response = fetch_json(url, timeout=timeout, payload=payload)
+            response_text = raw_response.get("response", "")
+            done = bool(raw_response.get("done", False))
+            message = "Local model response generated. No tools were executed and no memory was updated."
+        except HTTPError as error:
+            response_text, done, message = "", False, f"Ollama generation failed with HTTP {error.code}."
+        except URLError:
+            response_text, done, message = "", False, "Ollama is not reachable. Run the health check before generating."
+        except TimeoutError:
+            response_text, done, message = "", False, "Model generation timed out."
+        except json.JSONDecodeError:
+            response_text, done, message = "", False, "Ollama returned a non-JSON generation response."
+
+    elif config.provider_type == "claude":
+        response_text, done, message, metrics = claude_generate(prompt, config, selected_model, min(timeout, HOSTED_TIMEOUT_SECONDS))
+
+    elif config.provider_type == "openai":
+        response_text, done, message, metrics = openai_generate(prompt, config, selected_model, min(timeout, HOSTED_TIMEOUT_SECONDS))
+
+    else:
+        raise SystemExit(f"Provider type '{config.provider_type}' is not implemented yet.")
 
     result = ModelResponse(
         provider=config.provider_name,
@@ -250,18 +445,22 @@ def generate_once(
         message=message,
         audit_path=str(MODEL_AUDIT_PATH.relative_to(ROOT)),
     )
-    write_model_audit(
-        {
-            "schema": "axis-local-os-model-runtime-v1",
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "provider": result.provider,
-            "model": result.model,
-            "prompt_chars": len(prompt),
-            "response_chars": len(response_text),
-            "done": done,
-            "message": message,
-        }
-    )
+    audit_event: dict[str, Any] = {
+        "schema": "axis-local-os-model-runtime-v1",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "provider": result.provider,
+        "provider_type": config.provider_type,
+        "model": result.model,
+        "endpoint": config.base_url,
+        "prompt_chars": len(prompt),
+        "response_chars": len(response_text),
+        "done": done,
+        "message": message,
+        "hosted": config.provider_type in {"claude", "openai"},
+    }
+    if metrics:
+        audit_event.update(metrics)
+    write_model_audit(audit_event)
     return result
 
 

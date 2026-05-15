@@ -1,0 +1,25 @@
+{
+  "schema": "axis-local-os-model-routing-v1",
+  "default": "local",
+  "providers": {
+    "local": "ollama",
+    "hosted_reasoning": "claude",
+    "hosted_fallback": "openai"
+  },
+  "allow_hosted_for": [
+    "reasoning",
+    "long_context",
+    "polish",
+    "code_review",
+    "client_proposal_draft"
+  ],
+  "always_local_for": [
+    "client_data",
+    "regulated",
+    "personal_memory",
+    "voice_intake_raw",
+    "relationship_capture"
+  ],
+  "per_client": {},
+  "notes": "Routing decisions run before any model call. A request flagged with an always_local_for tag cannot escape to a hosted provider, regardless of the default."
+}

@@ -582,3 +582,33 @@ preview = describe what would happen, get a receipt
 run --approve hash = present the receipt, run the safe-but-mutating thing
 run --approve hash --confirm-phrase command = present the receipt, type the command, run the dangerous thing
 Every step writes an audit event. Refusals included.
+
+
+2026-05-15 - The Adapter Is The Pluggable Part
+Lesson:
+
+The hosted model adapter is now wired. Axis Local OS can route a request to Claude or to OpenAI, under the same governed loop that already controls the local Ollama path.
+
+What changed:
+
+The runtime adapter abstraction that existed in theory now exists in code. provider_type is a real branch in check_health and generate_once. The three branches are ollama, claude, and openai. Adding a fourth provider later will be a matter of writing two functions (health and generate) and registering them in config.
+
+How keys are handled:
+
+API keys live in a gitignored .env file at the repo root. They are loaded once at process start by model_runtime.py. They are never written to audit events, never printed to stdout, never echoed in error messages. The audit event records which provider and which model were called, not the credential.
+
+How a missing key behaves:
+
+The system does not crash. It records a refusal in the audit log and prints a clear message saying which environment variable to set. The grounded answer path still injects retrieved sources, so the surface looks the same whether the call succeeded or halted on policy. That is the point: the operator does not have to learn a new mode to know what happened.
+
+What this enables:
+
+Wayne can ask Axis a hard question and route it to Claude or GPT once the key is set. The same retrieval and the same audit trail apply. The only thing that changes is which model wrote the sentences.
+
+What this does not enable yet:
+
+Per-request and per-client routing policy. The model_routing.json file is filed at config/model_routing.json with sensible defaults, but the governed loop does not yet read it to decide automatically. Today the user picks the provider with --provider on the command line. The next layer is automatic routing under the policy file. After that comes redaction sweep and source scope filter before any hosted call.
+
+Simple version:
+
+The pipe is connected. The taps are not yet on automatic.
