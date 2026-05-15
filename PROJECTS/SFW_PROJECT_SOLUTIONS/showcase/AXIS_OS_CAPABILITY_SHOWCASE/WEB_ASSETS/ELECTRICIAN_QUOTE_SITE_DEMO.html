@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local Electrician Quote Site Demo</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #536171;
+      --line: #dbe2e8;
+      --paper: #f6f8fa;
+      --panel: #ffffff;
+      --blue: #184f74;
+      --yellow: #f4b63f;
+      --yellow-soft: #fff5da;
+      --green: #2f7d59;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.5;
+    }
+    header {
+      background: #102b40;
+      color: white;
+      padding: 18px;
+    }
+    .wrap {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 34px;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 14px;
+      font-size: 14px;
+    }
+    .nav-links a {
+      color: #dceaf2;
+      text-decoration: none;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 26px;
+      align-items: center;
+      padding: 10px 0 34px;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    .intro {
+      max-width: 640px;
+      color: #dbe8ef;
+      font-size: 19px;
+      margin: 0 0 20px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .primary {
+      background: var(--yellow);
+      color: #1c2833;
+    }
+    .secondary {
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
+    }
+    .quote-card {
+      background: white;
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .quote-card h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+    .quote-card label {
+      display: block;
+      margin: 12px 0 5px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .quote-card input,
+    .quote-card select,
+    .quote-card textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+      font: inherit;
+    }
+    .quote-card textarea { min-height: 88px; resize: vertical; }
+    main {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+    }
+    section { margin-bottom: 28px; }
+    h2 {
+      font-size: 28px;
+      margin: 0 0 12px;
+      letter-spacing: 0;
+    }
+    h3 { margin: 0 0 8px; }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 7px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background: var(--yellow-soft);
+      color: #7a4f00;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .steps {
+      counter-reset: step;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .step:last-child { border-bottom: 0; }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: white;
+      font-weight: 700;
+    }
+    .trust {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .notice {
+      border-left: 5px solid var(--green);
+      background: #eef8f2;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    footer {
+      background: #102b40;
+      color: #dceaf2;
+      padding: 20px 18px;
+    }
+    @media (max-width: 800px) {
+      .hero,
+      .grid,
+      .trust {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 22px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <div class="brand">Demo Electrical Services</div>
+        <div class="nav-links">
+          <a href="#services">Services</a>
+          <a href="#quote">Request a Quote</a>
+          <a href="#process">How It Works</a>
+          <a href="#trust">Trust</a>
+        </div>
+      </nav>
+      <div class="hero">
+        <div>
+          <h1>Reliable local electrical work with clear quotes.</h1>
+          <p class="intro">Domestic and small commercial electrical services for repairs, installations, inspections, and upgrades. Tell us what you need and we will come back with the right next step.</p>
+          <div class="actions">
+            <a class="button primary" href="#quote">Request a quote</a>
+            <a class="button secondary" href="#services">View services</a>
+          </div>
+        </div>
+        <form class="quote-card" id="quote">
+          <h2>Request a Quote</h2>
+          <p class="muted">Send the basic details and we will confirm what is needed before pricing.</p>
+          <label for="name">Name</label>
+          <input id="name" name="name" placeholder="Your name">
+          <label for="service">What do you need?</label>
+          <select id="service" name="service">
+            <option>Electrical repair</option>
+            <option>New socket or lighting</option>
+            <option>Consumer unit / fuse board</option>
+            <option>Inspection or safety certificate</option>
+            <option>Other electrical work</option>
+          </select>
+          <label for="details">Job details</label>
+          <textarea id="details" name="details" placeholder="Tell us what is happening, where the job is, and any deadline."></textarea>
+          <a class="button primary" href="mailto:hello@example.com?subject=Electrical%20quote%20request">Send quote request</a>
+        </form>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section id="services">
+      <h2>Electrical Services</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="badge">Repairs</span>
+          <h3>Fault finding and repairs</h3>
+          <p class="muted">Help with sockets, lights, tripping circuits, and electrical issues that need diagnosing safely.</p>
+        </article>
+        <article class="card">
+          <span class="badge">Installations</span>
+          <h3>Lighting, sockets, and upgrades</h3>
+          <p class="muted">Practical upgrades for homes, rentals, offices, and small commercial spaces.</p>
+        </article>
+        <article class="card">
+          <span class="badge">Safety</span>
+          <h3>Inspections and certificates</h3>
+          <p class="muted">Electrical safety checks and clear advice on what needs attention.</p>
+        </article>
+      </div>
+    </section>
+    <section id="process">
+      <h2>How It Works</h2>
+      <div class="card steps">
+        <div class="step">
+          <div>
+            <h3>Send the job details</h3>
+            <p class="muted">Use the quote form and include the location, issue, and any deadline.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>We confirm what is needed</h3>
+            <p class="muted">Some jobs can be estimated from details. Others need a visit first.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>You get a clear next step</h3>
+            <p class="muted">You will know whether it is a quote, inspection, callout, or further information request.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="trust">
+      <h2>Why Customers Book</h2>
+      <div class="trust">
+        <div class="notice">
+          <h3>Clear communication</h3>
+          <p>No vague promises. You get a practical next step and a clear explanation of what the job needs.</p>
+        </div>
+        <div class="notice">
+          <h3>Safety first</h3>
+          <p>Electrical work is handled carefully, with safety, compliance, and the right advice at the centre.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">Demo page generated for the Axis OS Capability Showcase. Replace all demo details before real use.</div>
+  </footer>
+</body>
+</html>

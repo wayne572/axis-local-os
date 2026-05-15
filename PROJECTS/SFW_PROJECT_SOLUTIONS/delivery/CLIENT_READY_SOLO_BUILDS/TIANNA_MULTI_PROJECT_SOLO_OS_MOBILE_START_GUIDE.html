@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tianna Multi-Project Solo OS Start Guide</title>
+  <style>
+    :root {
+      --ink: #15202b;
+      --muted: #64717d;
+      --paper: #fffdf8;
+      --wash: #f1ece4;
+      --line: #ded6ca;
+      --deep: #101820;
+      --green: #236067;
+      --rust: #9a5b32;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--wash);
+      color: var(--ink);
+      line-height: 1.62;
+      font-size: 17px;
+    }
+    header {
+      padding: 36px 18px 26px;
+      background: var(--deep);
+      color: #fff;
+      border-bottom: 5px solid var(--green);
+    }
+    .wrap {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      color: #b8c9cc;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+    .intro {
+      margin: 14px 0 0;
+      color: #d8e1e3;
+      font-size: 17px;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 12px;
+      background: rgba(255,253,248,.97);
+      border-bottom: 1px solid var(--line);
+    }
+    nav a {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--deep);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 18px 12px 44px;
+    }
+    .card {
+      margin-bottom: 16px;
+      padding: 22px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: 0 10px 28px rgba(16,24,32,.06);
+    }
+    .label {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      line-height: 1.16;
+      color: var(--deep);
+    }
+    h3 {
+      margin: 24px 0 8px;
+      font-size: 21px;
+      line-height: 1.2;
+      color: var(--green);
+    }
+    h4 {
+      margin: 18px 0 8px;
+      color: var(--rust);
+      font-size: 18px;
+    }
+    p { margin: 0 0 12px; }
+    ul { margin: 0 0 18px 19px; padding: 0; }
+    li { margin: 5px 0; padding-left: 2px; }
+    code {
+      background: #efe9df;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    pre {
+      overflow-x: auto;
+      background: #17212b;
+      color: #f9fbfb;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+    footer {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 16px 34px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    @media (min-width: 760px) {
+      body { font-size: 18px; }
+      header { padding: 48px 28px 30px; }
+      h1 { font-size: 42px; }
+      main { padding: 28px 18px 56px; }
+      .card { padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Axis AI | Mobile Start Guide</div>
+      <h1>Tianna Multi-Project Solo OS</h1>
+      <p class="intro">A phone-friendly guide for saving, unzipping, setting up, and starting Tianna's personal project operating system.</p>
+    </div>
+  </header>
+  <nav aria-label="Guide sections"><a href="#welcome">Welcome</a><a href="#start-guide">Start Guide</a><a href="#setup-questions">Setup Questions</a><a href="#first-handover">First Handover</a></nav>
+  <main><section id="welcome" class="card"><div class="label">Tianna OS</div><h1 id="tianna-multi-project-solo-os-email-setup-guide">Tianna Multi-Project Solo OS - Email Setup Guide</h1>
+<p>Hi Tianna,</p>
+<p>This folder is your personal Axis AI operating system.</p>
+<p>It is designed to help you manage multiple projects, ideas, follow-ups, decisions, and life admin without needing to keep everything in your head.</p>
+<h2 id="what-you-have-received">What You Have Received</h2>
+<p>You should receive a zip file called:</p>
+<pre><code>
+TIANNA_MULTI_PROJECT_SOLO_OS.zip
+</code></pre>
+<p>Inside it is a folder called:</p>
+<pre><code>
+TIANNA_MULTI_PROJECT_SOLO_OS
+</code></pre>
+<p>That folder contains your setup guide, daily command centre, project tracker, weekly review, decision log, and other support files.</p>
+<h2 id="step-1-save-the-zip-file">Step 1 - Save The Zip File</h2>
+<p>Save the zip file somewhere easy to find, such as:</p>
+<ul>
+<li>Downloads</li>
+<li>Desktop</li>
+<li>Documents</li>
+<li>iCloud Drive</li>
+<li>OneDrive</li>
+<li>Google Drive</li>
+</ul>
+<p>Choose a place you can access again easily.</p>
+<h2 id="step-2-unzip-the-folder">Step 2 - Unzip The Folder</h2>
+<p>Right-click or tap the zip file and choose:</p>
+<pre><code>
+Extract All
+</code></pre>
+<p>or:</p>
+<pre><code>
+Unzip
+</code></pre>
+<p>After unzipping, you should see the folder:</p>
+<pre><code>
+TIANNA_MULTI_PROJECT_SOLO_OS
+</code></pre>
+<h2 id="step-3-keep-the-folder-together">Step 3 - Keep The Folder Together</h2>
+<p>Do not move individual files out of the folder.</p>
+<p>The system works best when everything stays together in one folder.</p>
+<p>If you want to move it, move the whole folder.</p>
+<h2 id="step-4-open-this-file-first">Step 4 - Open This File First</h2>
+<p>Open:</p>
+<pre><code>
+CLIENT_STARTUP_GUIDE.md
+</code></pre>
+<p>This explains what the system does and how to start using it.</p>
+<h2 id="step-5-complete-the-setup-questions">Step 5 - Complete The Setup Questions</h2>
+<p>Next, open:</p>
+<pre><code>
+SETUP_QUESTIONNAIRE.md
+</code></pre>
+<p>Answer the questions in simple notes.</p>
+<p>You do not need perfect answers. The point is to get your projects and responsibilities out of your head and into the system.</p>
+<h2 id="step-6-start-with-your-projects">Step 6 - Start With Your Projects</h2>
+<p>Open:</p>
+<pre><code>
+BUSINESS/SOLO_BUSINESS_TRACKER.md
+</code></pre>
+<p>Add your active projects.</p>
+<p>For each project, write:</p>
+<ul>
+<li>project name</li>
+<li>status</li>
+<li>priority</li>
+<li>next action</li>
+<li>deadline, if there is one</li>
+<li>blocker, if there is one</li>
+</ul>
+<h2 id="step-7-add-open-loops">Step 7 - Add Open Loops</h2>
+<p>Open:</p>
+<pre><code>
+TRACKERS/ACTIVE_LOOPS.md
+</code></pre>
+<p>Add anything unfinished, promised, pending, or mentally noisy.</p>
+<p>Examples:</p>
+<ul>
+<li>someone to message</li>
+<li>something to book</li>
+<li>a task you keep remembering</li>
+<li>a decision you need to make</li>
+<li>something you are waiting for</li>
+</ul>
+<h2 id="step-8-use-the-start-command">Step 8 - Use The Start Command</h2>
+<p>When using the folder with an AI assistant such as Claude or ChatGPT, use:</p>
+<pre><code>
+AXIS: TIANNA START
+</code></pre>
+<p>Then ask for the mode you need:</p>
+<ul>
+<li>Daily focus</li>
+<li>Project review</li>
+<li>Weekly reset</li>
+<li>Idea capture</li>
+<li>Decision help</li>
+<li>Admin clear-down</li>
+</ul>
+<h2 id="best-first-prompt">Best First Prompt</h2>
+<p>Use this:</p>
+<pre><code>
+AXIS: TIANNA START
+
+Help me set up my active projects, open loops, life admin, and first weekly priorities.
+</code></pre>
+<h2 id="if-you-feel-overwhelmed">If You Feel Overwhelmed</h2>
+<p>Use this:</p>
+<pre><code>
+I have too much going on. Review my projects, open loops, and admin, then help me choose one must-do, one should-do, and one small momentum action.
+</code></pre>
+<h2 id="first-week-goal">First Week Goal</h2>
+<p>For the first week, do not try to make the system perfect.</p>
+<p>Just use it to capture:</p>
+<ul>
+<li>active projects</li>
+<li>open loops</li>
+<li>follow-ups</li>
+<li>admin</li>
+<li>decisions</li>
+<li>ideas</li>
+</ul>
+<p>The first win is getting everything visible.</p>
+<h2 id="important">Important</h2>
+<p>This system is here to support your clarity and planning.</p>
+<p>It does not make medical, legal, financial, employment, or safety decisions for you.</p>
+<p>For important sensitive decisions, use it to organise your thoughts and then speak to the right person.</p></section>
+<section id="start-guide" class="card"><div class="label">Tianna OS</div><h1 id="tianna-multi-project-solo-os-client-startup-guide">Tianna Multi-Project Solo OS - Client Startup Guide</h1>
+<h2 id="what-this-helps-with">What This Helps With</h2>
+<p>This system helps Tianna manage multiple projects, ideas, admin tasks, follow-ups, and decisions without carrying everything in her head.</p>
+<p>It is built to answer:</p>
+<ul>
+<li>What matters today?</li>
+<li>Which projects are active?</li>
+<li>What needs following up?</li>
+<li>What is still open?</li>
+<li>What can wait?</li>
+<li>What decision needs making?</li>
+<li>What should I focus on this week?</li>
+</ul>
+<h2 id="start-here">Start Here</h2>
+<p>If you received this as a zip file by email, open this first:</p>
+<p><code>EMAIL_SETUP_GUIDE.md</code></p>
+<p>That guide explains how to save, unzip, and keep the folder together.</p>
+<p>Use this command:</p>
+<pre><code>
+AXIS: TIANNA START
+</code></pre>
+<p>Then choose one mode:</p>
+<ul>
+<li>Daily focus</li>
+<li>Project review</li>
+<li>Weekly reset</li>
+<li>Idea capture</li>
+<li>Decision help</li>
+<li>Admin clear-down</li>
+</ul>
+<h2 id="best-first-step">Best First Step</h2>
+<p>Before using the system fully, complete:</p>
+<p><code>SETUP_QUESTIONNAIRE.md</code></p>
+<p>Then add:</p>
+<ul>
+<li>Active projects into <code>BUSINESS/SOLO_BUSINESS_TRACKER.md</code></li>
+<li>Open loops into <code>TRACKERS/ACTIVE_LOOPS.md</code></li>
+<li>Admin into <code>LIFE_ADMIN/PERSONAL_ADMIN_TRACKER.md</code></li>
+<li>Pending decisions into <code>DECISIONS/DECISION_LOG.md</code></li>
+</ul>
+<h2 id="daily-use">Daily Use</h2>
+<p>Open:</p>
+<p><code>COMMAND_CENTRE/DAILY_COMMAND_CENTRE.md</code></p>
+<p>Choose:</p>
+<ul>
+<li>one must-do</li>
+<li>one should-do</li>
+<li>one small momentum action</li>
+</ul>
+<h2 id="weekly-use">Weekly Use</h2>
+<p>Open:</p>
+<p><code>ROUTINES/WEEKLY_REVIEW.md</code></p>
+<p>Review:</p>
+<ul>
+<li>what moved forward</li>
+<li>what stalled</li>
+<li>what needs a decision</li>
+<li>what can be paused</li>
+<li>what matters next week</li>
+</ul>
+<h2 id="important-rule">Important Rule</h2>
+<p>Not every idea needs to become a project.</p>
+<p>Use:</p>
+<p><code>IDEAS/IDEA_TO_ACTION.md</code></p>
+<p>to decide whether to act now, test small, park, or delete.</p>
+<h2 id="when-overwhelmed">When Overwhelmed</h2>
+<p>Use this prompt:</p>
+<pre><code>
+I have too much going on. Review my projects, open loops, and admin, then help me choose one must-do, one should-do, and one small momentum action.
+</code></pre>
+<h2 id="first-30-days">First 30 Days</h2>
+<p>For the first month, the aim is simple:</p>
+<ul>
+<li>get everything out of her head</li>
+<li>keep project status visible</li>
+<li>reduce missed follow-ups</li>
+<li>make weekly decisions easier</li>
+<li>stop inactive ideas creating pressure</li>
+</ul></section>
+<section id="setup-questions" class="card"><div class="label">Tianna OS</div><h1 id="tianna-setup-questionnaire">Tianna Setup Questionnaire</h1>
+<p>Status: setup required</p>
+<p>Purpose: Gather the information needed to personalise Tianna's OS.</p>
+<h2 id="current-projects">Current Projects</h2>
+<ul>
+<li>What projects are currently active?</li>
+<li>Which projects matter most right now?</li>
+<li>Which projects have deadlines?</li>
+<li>Which projects are exciting?</li>
+<li>Which projects feel heavy?</li>
+<li>Which projects should probably be paused?</li>
+</ul>
+<h2 id="responsibilities">Responsibilities</h2>
+<ul>
+<li>What recurring responsibilities does Tianna manage?</li>
+<li>What happens weekly?</li>
+<li>What happens monthly?</li>
+<li>What does she often forget or leave late?</li>
+</ul>
+<h2 id="planning-style">Planning Style</h2>
+<ul>
+<li>Does Tianna prefer daily plans or weekly plans?</li>
+<li>Does she like lists, tables, short prompts, or guided questions?</li>
+<li>What makes planning feel overwhelming?</li>
+<li>What makes her feel in control?</li>
+</ul>
+<h2 id="follow-ups-and-people">Follow-Ups And People</h2>
+<ul>
+<li>Who does Tianna need to keep in touch with?</li>
+<li>What promises or follow-ups are currently open?</li>
+<li>Are there any relationships linked to projects?</li>
+</ul>
+<h2 id="life-admin">Life Admin</h2>
+<ul>
+<li>What personal admin is currently open?</li>
+<li>Any renewals, appointments, forms, or bookings due?</li>
+<li>What admin causes the most background stress?</li>
+</ul>
+<h2 id="decision-support">Decision Support</h2>
+<ul>
+<li>What decisions are currently pending?</li>
+<li>What choices keep coming back?</li>
+<li>What does Tianna need help weighing up?</li>
+</ul>
+<h2 id="first-week-setup">First Week Setup</h2>
+<ul>
+<li>Add active projects.</li>
+<li>Add open loops.</li>
+<li>Add life admin.</li>
+<li>Add pending decisions.</li>
+<li>Pick the first three project priorities.</li>
+<li>Run the first weekly review.</li>
+</ul></section>
+<section id="first-handover" class="card"><div class="label">Tianna OS</div><h1 id="tianna-solo-os-handover-notes">Tianna Solo OS Handover Notes</h1>
+<p>Status: ready for handover</p>
+<h2 id="handover-goal">Handover Goal</h2>
+<p>Tianna should leave the handover knowing:</p>
+<ul>
+<li>where to start each day</li>
+<li>how to add active projects</li>
+<li>how to capture open loops</li>
+<li>how to choose weekly priorities</li>
+<li>how to park ideas without losing them</li>
+<li>how to ask for decision support</li>
+</ul>
+<h2 id="handover-agenda">Handover Agenda</h2>
+<ul>
+<li>Explain the purpose of the OS.</li>
+<li>If sent by email, open <code>EMAIL_SETUP_GUIDE.md</code>.</li>
+<li>Confirm the zip file has been unzipped and the folder is kept together.</li>
+<li>Open <code>START_HERE.md</code>.</li>
+<li>Run <code>AXIS: TIANNA START</code>.</li>
+<li>Complete the first section of <code>SETUP_QUESTIONNAIRE.md</code>.</li>
+<li>Add at least three active projects.</li>
+<li>Add at least three open loops.</li>
+<li>Add one life admin task.</li>
+<li>Add one pending decision.</li>
+<li>Run a mini weekly review.</li>
+<li>Agree first week focus.</li>
+</ul>
+<h2 id="first-week-focus">First Week Focus</h2>
+<p>Suggested first-week goal:</p>
+<p>Get every active project, open loop, and admin task out of Tianna's head and into the system.</p>
+<h2 id="success-signs">Success Signs</h2>
+<ul>
+<li>Tianna knows what to do first each day.</li>
+<li>She can see her active projects.</li>
+<li>She has fewer floating mental reminders.</li>
+<li>She knows which projects are active and which are parked.</li>
+<li>She can identify a next action without needing to rethink everything.</li>
+</ul></section></main>
+  <footer>
+    <p>Start command: <strong>AXIS: TIANNA START</strong></p>
+  </footer>
+</body>
+</html>

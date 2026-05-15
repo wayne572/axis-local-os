@@ -1,0 +1,32 @@
+# Axis Local OS local/generated state
+.axis/audit/
+.axis/memory_review/
+.kb/
+
+# Python/runtime cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments and secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.pfx
+*.p12
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+Thumbs.db
+.DS_Store
+
+# Generated/exported delivery artifacts
+*.zip
+*.pdf
+

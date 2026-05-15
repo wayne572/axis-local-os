@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Axis OS Capability Showcase</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #526070;
+      --paper: #f5f7f9;
+      --panel: #ffffff;
+      --line: #d9e0e7;
+      --teal: #176b87;
+      --green: #2f7d59;
+      --red: #9f3a45;
+      --amber: #9a6b12;
+      --blue-soft: #e8f3f6;
+      --green-soft: #e9f6ef;
+      --amber-soft: #fff3d8;
+      --red-soft: #f9e7e9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    header {
+      background: #102733;
+      color: #fff;
+      padding: 28px 18px 18px;
+      border-bottom: 6px solid var(--teal);
+    }
+    .wrap {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .status {
+      color: #d6e9ef;
+      font-size: 14px;
+    }
+    h1 {
+      max-width: 850px;
+      margin: 0 0 12px;
+      font-size: clamp(34px, 5vw, 66px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    .intro {
+      max-width: 720px;
+      margin: 0 0 20px;
+      color: #d8e5ea;
+      font-size: 19px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 24px;
+    }
+    .command-panel {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .command-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      padding: 10px 0;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 14px;
+    }
+    .command-line:last-child { border-bottom: 0; }
+    .hero-screen {
+      background: #f8fbfc;
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.28);
+      min-height: 270px;
+    }
+    .screen-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 10px;
+      background: #fff;
+    }
+    .metric strong {
+      display: block;
+      font-size: 23px;
+      color: var(--teal);
+    }
+    main {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 22px 18px 44px;
+    }
+    section {
+      margin: 0 0 28px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+    }
+    .card p { color: var(--muted); }
+    .tag {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 4px 7px;
+      border-radius: 5px;
+      background: var(--blue-soft);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .input-box,
+    .output-box {
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      min-height: 250px;
+    }
+    .input-box { border-top: 5px solid var(--red); }
+    .output-box { border-top: 5px solid var(--green); }
+    .note-list {
+      padding-left: 20px;
+      margin: 0;
+    }
+    .note-list li { margin: 8px 0; }
+    .dashboard {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 14px;
+    }
+    .side-nav {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .nav-item {
+      padding: 9px 10px;
+      border-radius: 6px;
+      margin-bottom: 5px;
+      color: var(--muted);
+    }
+    .nav-item.active {
+      background: var(--blue-soft);
+      color: var(--teal);
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      padding: 9px 8px;
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-size: 12px; }
+    .pill {
+      display: inline-block;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .pill.green { color: var(--green); background: var(--green-soft); }
+    .pill.amber { color: var(--amber); background: var(--amber-soft); }
+    .pill.red { color: var(--red); background: var(--red-soft); }
+    .website-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .mock-site {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .mock-hero {
+      background: #edf7f1;
+      padding: 22px;
+      min-height: 150px;
+    }
+    .mock-hero h3 {
+      font-size: 28px;
+      max-width: 460px;
+    }
+    .mock-section {
+      padding: 16px 22px;
+      border-top: 1px solid var(--line);
+    }
+    .service-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .service {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 10px;
+      background: #fafafa;
+    }
+    .cta {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--teal);
+      color: white;
+      padding: 10px 13px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .video {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      min-height: 130px;
+    }
+    .video span {
+      display: block;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    code {
+      background: var(--blue-soft);
+      padding: 2px 5px;
+      border-radius: 5px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.95em;
+    }
+    @media (max-width: 900px) {
+      .hero-grid,
+      .compare,
+      .dashboard,
+      .website-preview {
+        grid-template-columns: 1fr;
+      }
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 560px) {
+      header { padding-top: 20px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .metric-row,
+      .grid,
+      .video-grid,
+      .service-row {
+        grid-template-columns: 1fr;
+      }
+      h1 { font-size: 38px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">Axis OS Capability Showcase</div>
+        <div class="status">Fictional demos | No client data</div>
+      </div>
+      <h1>From messy input to working business assets.</h1>
+      <p class="intro">Axis OS demonstrates how everyday notes, business problems, life admin, and rough ideas can become trackers, dashboards, websites, delivery packs, and next actions.</p>
+      <div class="hero-grid">
+        <div class="command-panel" aria-label="Demo commands">
+          <div class="command-line"><span>AXIS: VOICE NOTE TO ACTION</span><span>messy thought -> plan</span></div>
+          <div class="command-line"><span>AXIS: LIFE ADMIN RESCUE</span><span>overwhelm -> order</span></div>
+          <div class="command-line"><span>AXIS: BUSINESS BUILDER</span><span>leads -> revenue actions</span></div>
+          <div class="command-line"><span>AXIS: WEBSITE BUILD</span><span>idea -> web page</span></div>
+          <div class="command-line"><span>AXIS: AUDIT REVIEW</span><span>pain points -> build scope</span></div>
+        </div>
+        <div class="hero-screen">
+          <div class="screen-head">
+            <span>Demo Command Centre</span>
+            <span>Today</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric"><strong>3</strong><span>priority actions</span></div>
+            <div class="metric"><strong>5</strong><span>open loops</span></div>
+            <div class="metric"><strong>1</strong><span>asset created</span></div>
+          </div>
+          <table>
+            <thead><tr><th>Output</th><th>State</th></tr></thead>
+            <tbody>
+              <tr><td>Lead tracker</td><td><span class="pill green">ready</span></td></tr>
+              <tr><td>Website first draft</td><td><span class="pill amber">review</span></td></tr>
+              <tr><td>Admin clear-down</td><td><span class="pill green">next actions</span></td></tr>
+              <tr><td>Audit build scope</td><td><span class="pill amber">prioritise</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>What Axis Can Demonstrate</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">Life</span>
+          <h3>Life Admin Rescue</h3>
+          <p>Sort bills, appointments, forms, renewals, and household tasks into first actions.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Solo</span>
+          <h3>Daily Command</h3>
+          <p>Turn a busy day into must-do, should-do, follow-ups, admin, and momentum.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Business</span>
+          <h3>Lead Follow-Up</h3>
+          <p>Create a simple sales rhythm from scattered WhatsApp, email, referral, and social leads.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Web</span>
+          <h3>Website Build</h3>
+          <p>Turn a rough business idea into page structure, copy, CTA, FAQ, and launch steps.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Before And After</h2>
+      <div class="compare">
+        <div class="input-box">
+          <h3>Messy Input</h3>
+          <p class="muted">A realistic voice-note style dump.</p>
+          <p>I need to call the accountant, sort that school form, reply to Sarah, figure out the website thing, and I keep forgetting the invoice. Also I had an idea for a short video about landlords but I do not know where to put it.</p>
+        </div>
+        <div class="output-box">
+          <h3>Axis Output</h3>
+          <ul class="note-list">
+            <li>Invoice and school form become today's priority.</li>
+            <li>Sarah reply becomes a follow-up action.</li>
+            <li>Website question becomes a decision item.</li>
+            <li>Landlord video becomes a parked content idea.</li>
+            <li>Tracker update is suggested, not claimed as automatic.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Operating Dashboard Example</h2>
+      <div class="dashboard">
+        <nav class="side-nav" aria-label="Demo dashboard navigation">
+          <div class="nav-item active">Command Centre</div>
+          <div class="nav-item">Open Loops</div>
+          <div class="nav-item">Leads</div>
+          <div class="nav-item">Admin</div>
+          <div class="nav-item">Decisions</div>
+          <div class="nav-item">Weekly Review</div>
+        </nav>
+        <div class="card">
+          <h3>Small Business Follow-Up Board</h3>
+          <table>
+            <thead>
+              <tr><th>Lead</th><th>Source</th><th>Next Step</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Demo lead 1</td><td>WhatsApp</td><td>Ask for service details</td><td><span class="pill green">active</span></td></tr>
+              <tr><td>Demo lead 2</td><td>Instagram</td><td>Send package summary</td><td><span class="pill amber">today</span></td></tr>
+              <tr><td>Demo lead 3</td><td>Referral</td><td>Offer short call</td><td><span class="pill red">overdue</span></td></tr>
+              <tr><td>Demo lead 4</td><td>Email</td><td>Draft quote response</td><td><span class="pill green">ready</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Website Build Demo</h2>
+      <div class="website-preview">
+        <div class="card">
+          <h3>Input</h3>
+          <p>I need a simple website for my mobile beauty business. I want people to see what I do, trust me, and book a consultation.</p>
+          <h3>Axis Builds</h3>
+          <ul class="note-list">
+            <li>Homepage structure</li>
+            <li>Service copy</li>
+            <li>Booking CTA</li>
+            <li>FAQ</li>
+            <li>Launch checklist</li>
+          </ul>
+        </div>
+        <div class="mock-site" aria-label="Example website preview">
+          <div class="mock-hero">
+            <h3>Mobile beauty services brought to your home.</h3>
+            <p>Brows, lashes, and occasion makeup with clear pricing and calm appointment prep.</p>
+            <a class="cta" href="#contact">Book a consultation</a>
+          </div>
+          <div class="mock-section">
+            <h3>Services</h3>
+            <div class="service-row">
+              <div class="service">Brows</div>
+              <div class="service">Lashes</div>
+              <div class="service">Makeup</div>
+            </div>
+          </div>
+          <div class="mock-section">
+            <h3>How It Works</h3>
+            <p>Send your preferred date, location, and service. Receive a clear confirmation before the appointment.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>YouTube Demo Run</h2>
+      <div class="video-grid">
+        <article class="video">
+          <span>Video 1</span>
+          <h3>Messy Notes To OS</h3>
+          <p>Show the big before and after.</p>
+        </article>
+        <article class="video">
+          <span>Video 2</span>
+          <h3>Website In A Day</h3>
+          <p>Turn one rough business idea into a visible page.</p>
+        </article>
+        <article class="video">
+          <span>Video 3</span>
+          <h3>Small Business Leads</h3>
+          <p>Show lead capture, follow-up, and revenue action.</p>
+        </article>
+        <article class="video">
+          <span>Video 4</span>
+          <h3>Life Admin Rescue</h3>
+          <p>Make the system feel useful for ordinary life.</p>
+        </article>
+        <article class="video">
+          <span>Video 5</span>
+          <h3>Audit To Build</h3>
+          <p>Show how business pain becomes a build plan.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
