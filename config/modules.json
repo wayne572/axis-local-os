@@ -477,6 +477,60 @@
         "No silent fallback to local on hosted failure - halt and ask Wayne.",
         "Retrieval grounding still applies - hosted fluency does not override source authority."
       ]
+    },
+    "response_fidelity_policy": {
+      "name": "Response Fidelity Policy",
+      "status": "capability_spec_pending_build",
+      "type": "capability_module",
+      "purpose": "Governs automated client-facing replies so every outbound message is canonical, directly quoted, verified against SOP, or held for human approval. Makes SOP-grounded automation safe to deploy.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/RESPONSE_FIDELITY_POLICY.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "workflow_docs": [
+        "docs/modules/RESPONSE_FIDELITY_POLICY.md"
+      ],
+      "governance_docs": [
+        "docs/modules/RESPONSE_FIDELITY_POLICY.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "template_docs": [],
+      "commands": [
+        "AXIS: REPLY CLASSIFY",
+        "AXIS: REPLY DRAFT",
+        "AXIS: REPLY VERIFY",
+        "AXIS: DRIFT REPORT",
+        "AXIS: SOP INGEST"
+      ],
+      "routing_keywords": [
+        "auto reply",
+        "automated response",
+        "client reply",
+        "support reply",
+        "faq",
+        "sop",
+        "policy reply",
+        "canned response",
+        "ticket reply",
+        "email auto",
+        "response fidelity",
+        "quote source",
+        "citation",
+        "verify draft",
+        "drift report"
+      ],
+      "governance_rules": [
+        "The client's SOP is authority. The model is not.",
+        "Default tier is D (human approval). No automated send without explicit policy mapping.",
+        "Retrieval below threshold halts the reply; no best-effort sends.",
+        "Every outbound reply is audited with policy and SOP version hashes.",
+        "A wrong reply must be traceable to a specific source chunk within one audit query.",
+        "Citations are part of the reply, not optional metadata.",
+        "Stale SOP citations require human confirmation before send.",
+        "Internal-only sources never appear in customer-facing replies.",
+        "Forbidden phrase patterns and outbound length caps are policy, not suggestions."
+      ]
     }
   }
 }

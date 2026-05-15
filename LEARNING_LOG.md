@@ -509,3 +509,39 @@ Axis Local OS = the operator who decides who gets the question, what they hear, 
 Status:
 
 The spec is filed at docs/modules/HOSTED_MODEL_ADAPTER.md. The module is registered. The build order in AXIS_LOCAL_OS_SPEC.md has been updated. Build is queued behind the remaining coding-agent surfaces (approval-gated execution, destructive path).
+
+
+2026-05-15 - Fidelity Is A Tier Decision, Not A Model Decision
+Lesson:
+
+A customer who asks "can your AI always match our SOP?" is really asking "can your AI be trusted to send replies on our behalf?" The answer should not be a promise about model accuracy. It should be a policy about which tier of response a given use case gets.
+
+Why:
+
+No language model can guarantee 100% fidelity to a document. Even retrieved-grounded models paraphrase, and paraphrase can drift. The way to make outbound automation safe is not to make the model perfect. It is to remove the model from the decision when the stakes are high enough.
+
+The four tiers:
+
+Tier A - Canonical. Pre-written SOP replies. The model is allowed only to choose which canned response to send. No paraphrasing. 100% fidelity by construction.
+
+Tier B - Quote-grounded. The reply must contain a direct quote from the SOP with a citation. The model is fluency around the quote, never the substance. Refuses if retrieval is weak.
+
+Tier C - Synthesised and verified. The model composes, and a second model call checks the draft against the cited source for contradiction, exceeding, or invention. The verifier is itself audited.
+
+Tier D - Draft only. Model drafts, human approves. No automated send.
+
+Why this beats trying to make one model behave perfectly:
+
+The customer chooses the tier per use case. Support FAQ might be Tier B. Complaint acknowledgements might be Tier A. Booking changes might be Tier C. Data subject requests should be Tier D. The policy is a small text file Wayne and the customer can read together.
+
+The system enforces the rule the SOP is authority and the model is fluency. The customer is not asked to trust the AI. They are asked to trust their own SOP.
+
+What this lets Wayne promise:
+
+"Every automated reply is either word-for-word from your SOP, a direct quote with citation, or held back for your team. Every reply is logged with the exact source it came from. If your SOP is right, your replies will be right. If a reply is ever wrong, we can show you exactly which document let it through and fix the document, not the AI."
+
+That promise is defensible. The customer's SOP becomes the truth. Axis becomes the enforcer. When the SOP changes, drift detection finds the prior replies that depended on the old version, so wrong replies become recoverable, not catastrophic.
+
+Status:
+
+Spec filed at docs/modules/RESPONSE_FIDELITY_POLICY.md. Module registered. Build order updated. Slotted as step 5, immediately after the hosted model adapter, because both are governance-over-output decisions and both belong in the foundation before any client auto-reply deployment.
