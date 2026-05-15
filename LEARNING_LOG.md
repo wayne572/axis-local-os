@@ -356,3 +356,54 @@ Axis can now transcribe a local audio question and stop before answering. If Way
 First result:
 
 A test question, "What is Axis Local OS?", was transcribed as "What is access local OS?" but still produced a sourced answer from the Axis spec. This proves the answer path works, but it also shows the next practical improvement: Wayne needs a way to correct the transcript before confirmation.
+
+
+2026-05-15 - Coding Agent Before Coding Autonomy
+Lesson:
+
+Before Axis can change code, it has to be able to show what the change would be, decide whether the change is allowed, and write a record of the decision. Execution comes last, not first.
+
+Why:
+
+The constitution says no execution without review. Until Axis can actually do something, that promise is theoretical. But "actually do something" does not mean "run anything Wayne types." It means a small, governed crossing from thinker to doer.
+
+The safe order:
+
+preview -> decide approval level -> show the diff -> approve -> execute -> audit
+
+Each step is a separate surface. None of them are allowed to skip the others.
+
+Current implementation:
+
+axis_code.py preview classifies a command into read-only, mutating, external, or destructive. It assigns an approval level (none, review, approval, approval+confirm) and writes an audit event. It never runs anything.
+
+axis_code.py edit takes a target file path and a proposed new content source, computes a unified diff, captures hashes of the old and new content, and writes an audit event. It never writes to the target.
+
+axis_code.py run is the first surface that actually executes. It only runs commands the classifier marked as level "none" - read-only commands on the allowlist and version checks. Anything else halts with a clear reason and is still logged.
+
+What this proves:
+
+It is possible to give Axis the ability to act locally without giving it the ability to mutate anything important. The distance between thinker and doer is one allowlist and one classifier away.
+
+Simple version:
+
+preview = think out loud
+edit = show me the change you would make
+run = do the safe thing and prove it worked
+
+The mutating, external, and destructive paths are still spec-only. They get built next, each one as its own gated surface with its own confirm token.
+
+2026-05-15 - Allowlist Before Approval Logic
+Lesson:
+
+A short, explicit allowlist of read-only commands is more useful than a long, clever approval engine.
+
+Why:
+
+The allowlist is small enough to read in one sitting. It is small enough to argue about. And it covers most of what a coding assistant actually needs to do safely on day one: ls, pwd, cat, head, tail, wc, echo, git status, git log, git diff, git branch, version checks.
+
+Everything outside that list is approval-level by default. The classifier does not try to be clever about novel commands. Conservative defaults are the point.
+
+Takeaway:
+
+In governed systems, "I do not know what this is, so I will halt" is the correct behaviour. Cleverness is a liability when it lets the system act on an assumption.

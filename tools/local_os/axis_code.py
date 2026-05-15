@@ -6,11 +6,16 @@ import hashlib
 import json
 import re
 import shlex
+import subprocess
 import sys
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+
+OUTPUT_CHAR_LIMIT = 8000
+DEFAULT_RUN_TIMEOUT = 30
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -336,6 +341,141 @@ def edit_preview(target: Path, new_content: str, out_of_scope: bool) -> EditPrev
     return result
 
 
+@dataclass
+class RunResult:
+    schema: str
+    timestamp: str
+    command: str
+    working_dir: str
+    workspace_root: str
+    classification: str
+    approval_level: str
+    allowlist_match: bool
+    blocklist_match: bool
+    blocked_reasons: list[str]
+    notes: list[str]
+    executed: bool
+    exit_code: int | None
+    stdout: str
+    stderr: str
+    stdout_truncated: bool
+    stderr_truncated: bool
+    timed_out: bool
+    halt_reason: str | None
+    audit_path: str
+
+
+def truncate(text: str, limit: int = OUTPUT_CHAR_LIMIT) -> tuple[str, bool]:
+    if len(text) <= limit:
+        return text, False
+    return text[:limit] + "\n...[truncated]", True
+
+
+def run_command(command: str, working_dir: Path, timeout: int) -> RunResult:
+    classification, approval_level, allow, block, reasons, notes = classify_command(command)
+    halt_reason: str | None = None
+    executed = False
+    exit_code: int | None = None
+    stdout_text = ""
+    stderr_text = ""
+    stdout_truncated = False
+    stderr_truncated = False
+    timed_out = False
+
+    if approval_level != "none":
+        halt_reason = (
+            f"approval level `{approval_level}` is above `none`. Read-only execution path "
+            "only runs allowlisted, read-only commands. Use the preview path and seek approval."
+        )
+    elif block:
+        halt_reason = "command matches the blocklist"
+    else:
+        tokens = tokenize(command)
+        try:
+            proc = subprocess.run(
+                tokens,
+                cwd=str(working_dir),
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                check=False,
+                shell=False,
+            )
+            executed = True
+            exit_code = proc.returncode
+            stdout_text, stdout_truncated = truncate(proc.stdout or "")
+            stderr_text, stderr_truncated = truncate(proc.stderr or "")
+        except subprocess.TimeoutExpired as exc:
+            timed_out = True
+            halt_reason = f"command exceeded timeout of {timeout}s"
+            stdout_text, stdout_truncated = truncate(exc.stdout.decode("utf-8", "replace") if exc.stdout else "")
+            stderr_text, stderr_truncated = truncate(exc.stderr.decode("utf-8", "replace") if exc.stderr else "")
+        except FileNotFoundError as exc:
+            halt_reason = f"executable not found: {exc.filename}"
+        except OSError as exc:
+            halt_reason = f"os error: {exc}"
+
+    result = RunResult(
+        schema="axis-local-os-coding-agent-run-v1",
+        timestamp=now_utc().isoformat(),
+        command=command,
+        working_dir=str(working_dir),
+        workspace_root=str(ROOT),
+        classification=classification,
+        approval_level=approval_level,
+        allowlist_match=allow,
+        blocklist_match=block,
+        blocked_reasons=reasons,
+        notes=notes,
+        executed=executed,
+        exit_code=exit_code,
+        stdout=stdout_text,
+        stderr=stderr_text,
+        stdout_truncated=stdout_truncated,
+        stderr_truncated=stderr_truncated,
+        timed_out=timed_out,
+        halt_reason=halt_reason,
+        audit_path=str(AUDIT_PATH.relative_to(ROOT)),
+    )
+    write_audit_event(result)
+    return result
+
+
+def render_run_text(result: RunResult) -> str:
+    lines = [
+        "# Axis Coding Agent - Run",
+        "",
+        f"Command: {result.command}",
+        f"Working dir: {result.working_dir}",
+        f"Classification: {result.classification}",
+        f"Approval level: {result.approval_level}",
+        f"Allowlist match: {result.allowlist_match}",
+        f"Blocklist match: {result.blocklist_match}",
+        f"Executed: {result.executed}",
+        f"Exit code: {result.exit_code}",
+        f"Timed out: {result.timed_out}",
+    ]
+    if result.blocked_reasons:
+        lines.extend(["", "## Blocked Reasons"])
+        lines.extend(f"- {reason}" for reason in result.blocked_reasons)
+    if result.notes:
+        lines.extend(["", "## Notes"])
+        lines.extend(f"- {note}" for note in result.notes)
+    if result.halt_reason:
+        lines.extend(["", "## Halt Reason", "", result.halt_reason])
+    if result.executed:
+        lines.extend(["", "## stdout", ""])
+        lines.append(result.stdout if result.stdout else "(empty)")
+        if result.stdout_truncated:
+            lines.append("(stdout truncated)")
+        if result.stderr.strip():
+            lines.extend(["", "## stderr", "", result.stderr])
+            if result.stderr_truncated:
+                lines.append("(stderr truncated)")
+    lines.extend(["", "## Audit", "", result.audit_path])
+    return "\n".join(lines)
+
+
 def render_edit_text(result: EditPreviewResult) -> str:
     lines = [
         "# Axis Coding Agent - Edit Preview",
@@ -456,7 +596,13 @@ def main() -> None:
     edit_parser.add_argument("--out-of-scope", action="store_true", help="Acknowledge that the target is outside the workspace root")
     edit_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
 
-    for name in ("run", "apply", "undo"):
+    run_parser = subparsers.add_parser("run", help="Execute a read-only allowlisted command (level `none` only)")
+    run_parser.add_argument("cmd", help="Command string to execute")
+    run_parser.add_argument("--cwd", default=str(ROOT), help="Working directory")
+    run_parser.add_argument("--timeout", type=int, default=DEFAULT_RUN_TIMEOUT, help="Timeout in seconds")
+    run_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
+
+    for name in ("apply", "undo"):
         sub = subparsers.add_parser(name, help=f"{name} - not yet implemented")
         sub.add_argument("rest", nargs=argparse.REMAINDER)
 
@@ -469,6 +615,14 @@ def main() -> None:
         else:
             print(render_text(result))
         return
+
+    if args.command == "run":
+        result_run = run_command(args.cmd, Path(args.cwd).resolve(), args.timeout)
+        if args.json:
+            print(json.dumps(asdict(result_run), indent=2, ensure_ascii=True))
+        else:
+            print(render_run_text(result_run))
+        sys.exit(0 if result_run.executed and result_run.exit_code == 0 else (result_run.exit_code or 1))
 
     if args.command == "edit":
         if args.stdin:
