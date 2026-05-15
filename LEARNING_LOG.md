@@ -678,3 +678,39 @@ Every Axis Local OS deployment is single-operator. The profile and the scope are
 Simple version:
 
 The system stopped being a generic OS today. It became Wayne is OS. Everything from here builds on that.
+
+
+2026-05-15 - The Copilot Has Read Everything
+Lesson:
+
+Until today, the KB only saw the Axis Local OS repo. The copilot is profile and scope existed on paper, but when Wayne asked a question, retrieval was scoped to this one folder. That is not a copilot. That is a system that pretends to know him.
+
+What changed:
+
+kb_ingest.py now reads config/copilot_scope.json on every build. The scope file lists ten ingest roots that span everything Wayne has built across Axis: this repo, Axis OS v3 at D:/Wayne AI OS/Axis OS_v3/, the latest sellable builds, the Wayne Francis content folders, the pricing master HTML, the sales master HTML, the per-client folders, the outreach archive, the general outputs.
+
+After this build, the index holds 3,779 chunks across 9 root locations. The top three by chunk count: the Axis Local OS repo (1,223 chunks), Axis OS v3 (1,006 chunks), and the Wayne Francis outputs folder (964 chunks). The client folders contribute 254 chunks, tagged always_local so they cannot reach a hosted model without explicit per-call approval.
+
+What each chunk now carries:
+
+Every chunk now records a scope_tag (internal_only / always_local), a kind (build / operator_system / sales_asset / delivery_template / personal_content / outreach_archive / general_outputs / pricing_authority / sales_authority / client_data), an ingest_label naming the root it came from, an authority_boost score for retrieval ranking, and a client_slug if the chunk came from a per-client subfolder. These fields are what the hosted-model adapter is source-scope filter and the response-fidelity policy will read when they ship.
+
+Why scope tagging matters:
+
+Without a scope tag, every chunk looks the same to the retrieval layer. With it, the system can refuse to send a client_data chunk to a hosted provider, can boost pricing_authority chunks above general material when Wayne asks about offers, and can isolate one client is context from another when routing per-client work.
+
+Side note - schema bump:
+
+The index schema bumped from axis-kb-index-v1 to v2 because the per-chunk fields changed. kb_search.py reads the existing fields by key, so the bump is forward-compatible. Any downstream tool that depended on the v1 shape gets the new fields for free.
+
+What still needs building:
+
+The retrieval ranker should use authority_boost. Today the kb_search and model_runtime files have a hard-coded boost map. The natural next step is to read authority_boost off each chunk so the scope file is the single source of truth.
+
+The source-scope filter for hosted-model calls needs to actually consult chunk.scope_tag before sending context to Claude or OpenAI. Today the chunks carry the tag but the hosted adapter does not yet read it.
+
+The per-client routing layer needs to consult chunk.client_slug. Today the tag is recorded but not enforced at retrieval time.
+
+Simple version:
+
+Wayne can now ask Axis a question and get answers that draw on everything he has ever written across the Axis ecosystem, not just one folder. The copilot has read what Wayne has built. The next layer of governance reads the chunk tags to decide what is allowed to leave the machine.

@@ -17,7 +17,7 @@
     },
     {
       "label": "latest_sellable_builds",
-      "path": "D:/Wayne AI OS/Axis OS_v3/LATEST_SELLABLE_BUILDS",
+      "path": "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS",
       "kind": "delivery_template",
       "scope_tag": "internal_only"
     },

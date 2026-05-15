@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import argparse
+import fnmatch
 import json
 import re
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from html import unescape
 from pathlib import Path
@@ -11,8 +13,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = ROOT / ".kb"
 OUTPUT_PATH = OUTPUT_DIR / "index.json"
+SCOPE_PATH = ROOT / "config" / "copilot_scope.json"
 
-SOURCE_DIRS = [
+DEFAULT_SOURCE_DIRS = [
     ROOT,
     ROOT / "CORE",
     ROOT / "OS_GUIDES",
@@ -23,13 +26,24 @@ SOURCE_DIRS = [
 ]
 
 ALLOWED_EXTENSIONS = {".md", ".txt", ".html"}
-EXCLUDED_PARTS = {".git", ".claude", ".kb", "__pycache__"}
+EXCLUDED_PARTS = {".git", ".claude", ".kb", "__pycache__", ".axis", "node_modules"}
 EXCLUDED_RELATIVE_PREFIXES = {
     "CORE/KNOWLEDGE_BASE",
     "tools/rag",
 }
 CHUNK_WORDS = 220
 CHUNK_OVERLAP = 45
+MAX_FILE_BYTES = 2_500_000
+
+
+@dataclass
+class ScopeRoot:
+    label: str
+    path: Path
+    kind: str
+    scope_tag: str
+    authority_boost: float = 0.0
+    per_client_subfolders: bool = False
 
 
 @dataclass
@@ -43,9 +57,46 @@ class Chunk:
     tokens: list[str]
     indexed_at: str
     modified_at: str
+    scope_tag: str = "internal_only"
+    kind: str = "build"
+    ingest_label: str = "axis_local_os_repo"
+    authority_boost: float = 0.0
+    client_slug: str | None = None
 
 
-def should_index(path: Path) -> bool:
+def load_scope_config(scope_path: Path = SCOPE_PATH) -> tuple[list[ScopeRoot], list[str]]:
+    if not scope_path.exists():
+        return [], []
+    try:
+        data = json.loads(scope_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return [], []
+    roots: list[ScopeRoot] = []
+    for entry in data.get("ingest_roots", []):
+        raw_path = entry.get("path")
+        if not raw_path:
+            continue
+        if raw_path == ".":
+            resolved = ROOT
+        else:
+            resolved = Path(raw_path)
+            if not resolved.is_absolute():
+                resolved = (ROOT / raw_path).resolve()
+        roots.append(
+            ScopeRoot(
+                label=entry.get("label", resolved.name or "unknown"),
+                path=resolved,
+                kind=entry.get("kind", "build"),
+                scope_tag=entry.get("scope_tag", "internal_only"),
+                authority_boost=float(entry.get("authority_boost", 0.0)),
+                per_client_subfolders=bool(entry.get("per_client_subfolders", False)),
+            )
+        )
+    excludes = list(data.get("exclude_patterns", []))
+    return roots, excludes
+
+
+def should_index(path: Path, extra_excludes: list[str] | None = None) -> bool:
     if path.suffix.lower() not in ALLOWED_EXTENSIONS:
         return False
     if any(part in EXCLUDED_PARTS for part in path.parts):
@@ -58,28 +109,71 @@ def should_index(path: Path) -> bool:
         pass
     if path.name.lower().endswith(".review.html"):
         return False
+    if extra_excludes:
+        name = path.name
+        rel_parts = path.parts
+        for pattern in extra_excludes:
+            if fnmatch.fnmatch(name, pattern):
+                return False
+            if any(fnmatch.fnmatch(part, pattern) for part in rel_parts):
+                return False
+    try:
+        if path.stat().st_size > MAX_FILE_BYTES:
+            return False
+    except OSError:
+        return False
     return True
 
 
-def iter_source_files() -> list[Path]:
+def resolve_client_slug(path: Path, root: ScopeRoot) -> str | None:
+    if not root.per_client_subfolders:
+        return None
+    try:
+        rel = path.relative_to(root.path)
+    except ValueError:
+        return None
+    parts = rel.parts
+    if not parts:
+        return None
+    return parts[0]
+
+
+def iter_scope_files(roots: list[ScopeRoot], extra_excludes: list[str]) -> list[tuple[Path, ScopeRoot]]:
     seen: set[Path] = set()
-    files: list[Path] = []
-    for source_dir in SOURCE_DIRS:
-        if not source_dir.exists():
+    files: list[tuple[Path, ScopeRoot]] = []
+    for root in roots:
+        if not root.path.exists():
             continue
-        if source_dir.is_file() and should_index(source_dir):
-            resolved = source_dir.resolve()
+        if root.path.is_file() and should_index(root.path, extra_excludes):
+            resolved = root.path.resolve()
             if resolved not in seen:
                 seen.add(resolved)
-                files.append(resolved)
+                files.append((resolved, root))
             continue
-        for path in source_dir.rglob("*"):
-            if path.is_file() and should_index(path):
+        for path in root.path.rglob("*"):
+            try:
+                if not path.is_file():
+                    continue
+            except OSError:
+                continue
+            if not should_index(path, extra_excludes):
+                continue
+            try:
                 resolved = path.resolve()
-                if resolved not in seen:
-                    seen.add(resolved)
-                    files.append(resolved)
-    return sorted(files)
+            except OSError:
+                continue
+            if resolved in seen:
+                continue
+            seen.add(resolved)
+            files.append((resolved, root))
+    return sorted(files, key=lambda pair: str(pair[0]).lower())
+
+
+def default_roots() -> list[ScopeRoot]:
+    return [
+        ScopeRoot(label="axis_local_os_repo", path=src, kind="build", scope_tag="internal_only")
+        for src in DEFAULT_SOURCE_DIRS
+    ]
 
 
 def clean_text(raw: str, suffix: str) -> str:
@@ -137,15 +231,19 @@ def relative_to_workspace(path: Path) -> str:
         return str(path)
 
 
-def build_index() -> dict:
+def build_index(roots: list[ScopeRoot], extra_excludes: list[str]) -> dict:
     indexed_at = datetime.now(timezone.utc).isoformat()
     chunks: list[Chunk] = []
-    files = iter_source_files()
+    files = iter_scope_files(roots, extra_excludes)
 
-    for path in files:
+    skipped = 0
+    per_root_counts: dict[str, int] = {}
+
+    for path, root in files:
         try:
             raw = path.read_text(encoding="utf-8", errors="ignore")
         except OSError:
+            skipped += 1
             continue
         text = clean_text(raw, path.suffix)
         if not text:
@@ -153,6 +251,7 @@ def build_index() -> dict:
         title = extract_title(text, path)
         modified_at = datetime.fromtimestamp(path.stat().st_mtime, timezone.utc).isoformat()
         source_path = relative_to_workspace(path)
+        client_slug = resolve_client_slug(path, root)
         for index, chunk in enumerate(chunk_text(text), start=1):
             chunk_id = f"{source_path}::chunk-{index}"
             chunks.append(
@@ -166,23 +265,70 @@ def build_index() -> dict:
                     tokens=tokenize(chunk),
                     indexed_at=indexed_at,
                     modified_at=modified_at,
+                    scope_tag=root.scope_tag,
+                    kind=root.kind,
+                    ingest_label=root.label,
+                    authority_boost=root.authority_boost,
+                    client_slug=client_slug,
                 )
             )
+            per_root_counts[root.label] = per_root_counts.get(root.label, 0) + 1
 
     return {
-        "schema": "axis-kb-index-v1",
+        "schema": "axis-kb-index-v2",
         "root": str(ROOT),
         "indexed_at": indexed_at,
         "chunk_count": len(chunks),
+        "per_root_chunk_counts": per_root_counts,
+        "skipped_files": skipped,
         "chunks": [asdict(chunk) for chunk in chunks],
     }
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Build the Axis Local OS knowledge-base index")
+    parser.add_argument(
+        "--scope",
+        default=str(SCOPE_PATH),
+        help="Path to copilot_scope.json. Pass 'none' to use the default repo-only roots.",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Scan files and print counts without writing the index.",
+    )
+    args = parser.parse_args()
+
+    scope_path = None if args.scope.lower() == "none" else Path(args.scope)
+    if scope_path is not None and scope_path.exists():
+        roots, extra_excludes = load_scope_config(scope_path)
+        print(f"Loaded scope: {scope_path}")
+        print(f"Scope roots: {len(roots)}")
+    else:
+        roots = default_roots()
+        extra_excludes = []
+        if scope_path is not None:
+            print(f"Scope file not found at {scope_path}. Falling back to default roots.")
+        else:
+            print("Scope disabled. Using default roots.")
+
+    if not roots:
+        print("No ingest roots resolved. Nothing to do.")
+        return
+
+    for root in roots:
+        status = "found" if root.path.exists() else "missing"
+        print(f"  [{root.scope_tag:14s}] {root.label:28s} {status:7s} {root.path}")
+
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    index = build_index()
+    index = build_index(roots, extra_excludes)
+    print(f"Indexed {index['chunk_count']} chunks across {len(index['per_root_chunk_counts'])} root(s)")
+    for label, count in sorted(index["per_root_chunk_counts"].items(), key=lambda kv: -kv[1]):
+        print(f"  {label:28s} {count} chunks")
+    if args.dry_run:
+        print("(dry run; nothing written)")
+        return
     OUTPUT_PATH.write_text(json.dumps(index, indent=2), encoding="utf-8")
-    print(f"Indexed {index['chunk_count']} chunks")
     print(f"Wrote {OUTPUT_PATH}")
 
 
