@@ -108,6 +108,7 @@ class PreviewResult:
     blocked_reasons: list[str]
     notes: list[str]
     executed: bool
+    preview_hash: str
     audit_path: str
 
 
@@ -674,6 +675,10 @@ class RunResult:
     blocklist_match: bool
     blocked_reasons: list[str]
     notes: list[str]
+    approved_via_preview_hash: str | None
+    matched_preview_timestamp: str | None
+    matched_preview_age_seconds: int | None
+    confirm_phrase_matched: bool
     executed: bool
     exit_code: int | None
     stdout: str
@@ -691,7 +696,13 @@ def truncate(text: str, limit: int = OUTPUT_CHAR_LIMIT) -> tuple[str, bool]:
     return text[:limit] + "\n...[truncated]", True
 
 
-def run_command(command: str, working_dir: Path, timeout: int) -> RunResult:
+def run_command(
+    command: str,
+    working_dir: Path,
+    timeout: int,
+    approve_hash: str | None = None,
+    confirm_phrase: str | None = None,
+) -> RunResult:
     classification, approval_level, allow, block, reasons, notes = classify_command(command)
     halt_reason: str | None = None
     executed = False
@@ -701,15 +712,69 @@ def run_command(command: str, working_dir: Path, timeout: int) -> RunResult:
     stdout_truncated = False
     stderr_truncated = False
     timed_out = False
+    matched_ts: str | None = None
+    matched_age: int | None = None
+    confirm_matched = False
 
-    if approval_level != "none":
-        halt_reason = (
-            f"approval level `{approval_level}` is above `none`. Read-only execution path "
-            "only runs allowlisted, read-only commands. Use the preview path and seek approval."
-        )
-    elif block:
-        halt_reason = "command matches the blocklist"
+    expected_hash = compute_preview_hash(command, working_dir, classification, approval_level)
+    can_run = False
+
+    if approval_level == "none" and not block:
+        can_run = True
+    elif approve_hash:
+        if approve_hash != expected_hash:
+            halt_reason = (
+                f"approve hash does not match this command's preview hash. "
+                f"expected={expected_hash}, got={approve_hash}. Re-run `preview` and use the printed hash."
+            )
+        else:
+            match = find_matching_command_preview(approve_hash)
+            if match is None:
+                halt_reason = "no matching preview audit entry for this hash. Run `preview` first."
+            else:
+                matched_ts = match.get("timestamp")
+                preview_dt = parse_iso(matched_ts) if matched_ts else None
+                if preview_dt is None:
+                    halt_reason = "matched preview is missing a parseable timestamp"
+                else:
+                    age = (now_utc() - preview_dt).total_seconds()
+                    matched_age = int(age)
+                    if age > APPLY_PREVIEW_MAX_AGE_SECONDS:
+                        halt_reason = (
+                            f"matched preview is {int(age)}s old (limit {APPLY_PREVIEW_MAX_AGE_SECONDS}s). "
+                            "Re-run `preview` to refresh."
+                        )
+                    elif approval_level == "approval+confirm":
+                        if confirm_phrase is None:
+                            halt_reason = (
+                                "blocklist command requires --confirm-phrase. Pass the exact command "
+                                "string verbatim to prove this is intentional."
+                            )
+                        elif confirm_phrase != command:
+                            halt_reason = (
+                                "confirm phrase does not match the command verbatim. Type the command "
+                                "exactly as it appears in the preview."
+                            )
+                        else:
+                            confirm_matched = True
+                            can_run = True
+                    elif approval_level in {"review", "approval"}:
+                        can_run = True
+                    else:
+                        halt_reason = f"approval level `{approval_level}` cannot be approved by hash alone"
     else:
+        if block:
+            halt_reason = (
+                "command matches the blocklist. Run `preview` first, then `run --approve <hash> "
+                "--confirm-phrase \"<exact command>\"` to override."
+            )
+        else:
+            halt_reason = (
+                f"approval level `{approval_level}` requires --approve <preview_hash>. "
+                "Run `preview` to obtain it, then re-run with the hash."
+            )
+
+    if can_run:
         tokens = tokenize(command)
         try:
             proc = subprocess.run(
@@ -747,6 +812,10 @@ def run_command(command: str, working_dir: Path, timeout: int) -> RunResult:
         blocklist_match=block,
         blocked_reasons=reasons,
         notes=notes,
+        approved_via_preview_hash=approve_hash,
+        matched_preview_timestamp=matched_ts,
+        matched_preview_age_seconds=matched_age,
+        confirm_phrase_matched=confirm_matched,
         executed=executed,
         exit_code=exit_code,
         stdout=stdout_text,
@@ -771,6 +840,10 @@ def render_run_text(result: RunResult) -> str:
         f"Approval level: {result.approval_level}",
         f"Allowlist match: {result.allowlist_match}",
         f"Blocklist match: {result.blocklist_match}",
+        f"Approved via preview_hash: {result.approved_via_preview_hash or 'n/a'}",
+        f"Matched preview timestamp: {result.matched_preview_timestamp or 'n/a'}",
+        f"Matched preview age (s): {result.matched_preview_age_seconds if result.matched_preview_age_seconds is not None else 'n/a'}",
+        f"Confirm phrase matched: {result.confirm_phrase_matched}",
         f"Executed: {result.executed}",
         f"Exit code: {result.exit_code}",
         f"Timed out: {result.timed_out}",
@@ -843,8 +916,14 @@ def render_edit_text(result: EditPreviewResult) -> str:
     return "\n".join(lines)
 
 
+def compute_preview_hash(command: str, working_dir: Path, classification: str, approval_level: str) -> str:
+    body = f"{command}|{working_dir}|{classification}|{approval_level}"
+    return hashlib.sha256(body.encode("utf-8")).hexdigest()
+
+
 def preview(command: str, working_dir: Path) -> PreviewResult:
     classification, approval_level, allow, block, reasons, notes = classify_command(command)
+    preview_hash = compute_preview_hash(command, working_dir, classification, approval_level)
     result = PreviewResult(
         schema="axis-local-os-coding-agent-preview-v1",
         timestamp=now_utc().isoformat(),
@@ -858,10 +937,29 @@ def preview(command: str, working_dir: Path) -> PreviewResult:
         blocked_reasons=reasons,
         notes=notes,
         executed=False,
+        preview_hash=preview_hash,
         audit_path=str(AUDIT_PATH.relative_to(ROOT)),
     )
     write_audit_event(result)
     return result
+
+
+def find_matching_command_preview(preview_hash: str) -> dict[str, Any] | None:
+    if not AUDIT_PATH.exists():
+        return None
+    match: dict[str, Any] | None = None
+    with AUDIT_PATH.open("r", encoding="utf-8") as handle:
+        for raw in handle:
+            try:
+                event = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            if event.get("schema") != "axis-local-os-coding-agent-preview-v1":
+                continue
+            if event.get("preview_hash") != preview_hash:
+                continue
+            match = event
+    return match
 
 
 def render_text(result: PreviewResult) -> str:
@@ -876,6 +974,7 @@ def render_text(result: PreviewResult) -> str:
         f"Allowlist match: {result.allowlist_match}",
         f"Blocklist match: {result.blocklist_match}",
         f"Executed: {result.executed}",
+        f"Preview hash: {result.preview_hash}",
     ]
     if result.blocked_reasons:
         lines.extend(["", "## Blocked Reasons"])
@@ -885,13 +984,17 @@ def render_text(result: PreviewResult) -> str:
         lines.extend(f"- {note}" for note in result.notes)
     lines.extend(["", "## Decision", ""])
     if result.blocklist_match:
-        lines.append("HALT. This command matches the blocklist. Requires explicit Wayne approval and a typed confirm token before any execution path is built.")
+        lines.append(
+            "HALT. This command matches the blocklist. To run anyway, pass "
+            "`--approve <preview_hash> --confirm-phrase \"<exact command>\"` to `run`. "
+            "The confirm phrase must equal the command string verbatim."
+        )
     elif result.approval_level == "none":
-        lines.append("This command is read-only and within the allowlist. Safe to execute once the executor path is built.")
+        lines.append("This command is read-only and within the allowlist. Safe to execute with `run` directly.")
     elif result.approval_level == "review":
-        lines.append("This command needs review. A diff or change summary must be shown before any write.")
+        lines.append("Run with `--approve <preview_hash>` to execute. The preview must be under 30 minutes old.")
     else:
-        lines.append("This command needs explicit approval. The preview must be shown and confirmed in the same loop turn before execution.")
+        lines.append("Approval-level. Run with `--approve <preview_hash>` to execute. The preview must be under 30 minutes old.")
     lines.extend(["", "## Audit", "", result.audit_path])
     return "\n".join(lines)
 
@@ -916,10 +1019,12 @@ def main() -> None:
     edit_parser.add_argument("--out-of-scope", action="store_true", help="Acknowledge that the target is outside the workspace root")
     edit_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
 
-    run_parser = subparsers.add_parser("run", help="Execute a read-only allowlisted command (level `none` only)")
+    run_parser = subparsers.add_parser("run", help="Execute a command. Read-only runs directly; review/approval need --approve <hash>; destructive needs --confirm-phrase too.")
     run_parser.add_argument("cmd", help="Command string to execute")
     run_parser.add_argument("--cwd", default=str(ROOT), help="Working directory")
     run_parser.add_argument("--timeout", type=int, default=DEFAULT_RUN_TIMEOUT, help="Timeout in seconds")
+    run_parser.add_argument("--approve", dest="approve_hash", default=None, help="preview_hash from a recent `preview` audit entry")
+    run_parser.add_argument("--confirm-phrase", dest="confirm_phrase", default=None, help="For destructive commands: the exact command string, typed verbatim")
     run_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
 
     apply_parser = subparsers.add_parser("apply", help="Write a previously-previewed edit to disk, gated on diff_hash and old-sha drift check")
@@ -946,7 +1051,13 @@ def main() -> None:
         return
 
     if args.command == "run":
-        result_run = run_command(args.cmd, Path(args.cwd).resolve(), args.timeout)
+        result_run = run_command(
+            args.cmd,
+            Path(args.cwd).resolve(),
+            args.timeout,
+            approve_hash=args.approve_hash,
+            confirm_phrase=args.confirm_phrase,
+        )
         if args.json:
             print(json.dumps(asdict(result_run), indent=2, ensure_ascii=True))
         else:

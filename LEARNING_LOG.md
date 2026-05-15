@@ -545,3 +545,40 @@ That promise is defensible. The customer's SOP becomes the truth. Axis becomes t
 Status:
 
 Spec filed at docs/modules/RESPONSE_FIDELITY_POLICY.md. Module registered. Build order updated. Slotted as step 5, immediately after the hosted model adapter, because both are governance-over-output decisions and both belong in the foundation before any client auto-reply deployment.
+
+
+2026-05-15 - Approval Is A Receipt, Not A Flag
+Lesson:
+
+The coding agent now executes commands at every approval level, but not because the flag list got longer. It executes because each level has its own receipt and each receipt has its own rules.
+
+How it works:
+
+Level none - allowlisted, read-only. Runs directly. No receipt needed.
+
+Level review or approval - the user runs preview first. Preview prints a sha256 receipt called preview_hash, deterministic from command + working dir + classification + approval level. To run, the user passes back that same hash via --approve. The hash must match what the command would compute right now, and the audit entry that produced it must exist and be under thirty minutes old.
+
+Level approval-plus-confirm - the destructive path. Same preview_hash receipt, plus the user must type the command string verbatim as --confirm-phrase. Not the hash. The command itself. The point is friction. If the user cannot be bothered to retype rm path verbatim, the user should not be running rm.
+
+Why deterministic receipt:
+
+A nondeterministic receipt would mean the user could approve a different command than they previewed. The hash is stable so the user can copy it from the preview output and Axis can recompute it independently and check. If they do not match, halt.
+
+Why typed phrase for destructive:
+
+Hashes are abstract. A typed phrase is the user proving they read the command. It is the seatbelt that catches a paste-from-history.
+
+What this closes:
+
+Before today the coding agent could preview, edit, apply, undo, and run read-only commands. Mutating commands like git commit, git push, pip install, and destructive commands like rm could only be previewed. Now they can run, but only after a deliberate two-step confirmation, with the receipt and the typed phrase both audited.
+
+Side note - blocklist commands and approve hash:
+
+The classifier flags destructive commands as approval-plus-confirm before any --approve is considered. The preview audit entry captures that classification. The run path then refuses to execute on hash alone for that level. So a stolen or guessed hash is not enough. You also need the phrase.
+
+Simple version:
+
+preview = describe what would happen, get a receipt
+run --approve hash = present the receipt, run the safe-but-mutating thing
+run --approve hash --confirm-phrase command = present the receipt, type the command, run the dangerous thing
+Every step writes an audit event. Refusals included.
