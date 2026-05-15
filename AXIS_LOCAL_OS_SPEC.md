@@ -148,6 +148,10 @@ The Response Fidelity Policy (step 5) is what makes automated client-facing repl
 
 Command Centre Connectors (step 6) is the integration layer that turns Axis into the operator's command centre across Outlook, Microsoft 365, Google Workspace, Drive, Teams, Slack, CRMs, and finance tools. Security is the lead constraint: OAuth 2.0 with PKCE, OS-keychain credential storage, minimum-scope grants, per-client isolation, preview-and-approval writes, typed confirm phrases for destructive operations, and a full audit trail per connector call. Spec at `docs/modules/COMMAND_CENTRE_CONNECTORS.md`.
 
+## Operator Binding
+
+This Axis Local OS deployment is for Wayne Francis. The Wayne Copilot module binds the system to him specifically — operator profile at `CORE/OPERATOR_PROFILE.md`, KB ingest scope at `config/copilot_scope.json`, named workflows for audit-form response, daily / weekly / monthly cadence, teaching mode, and decision support mode. Single-operator deployment, not shareable. Spec at `docs/modules/WAYNE_COPILOT.md`.
+
 ## Current Implementation
 
 The current local seed implementation lives in:

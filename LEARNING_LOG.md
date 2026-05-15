@@ -646,3 +646,35 @@ The connector interface contract reuses the existing preview-and-approve receipt
 Status:
 
 Spec filed at docs/modules/COMMAND_CENTRE_CONNECTORS.md. Module registered. Build order updated. Slotted as step 6, after Response Fidelity Policy and before durable RAG. The first wave is Outlook and Gmail. After that, OneDrive and Drive. After that, Teams and Slack. CRMs and finance come last because read-only is easier to ship safely than write capability.
+
+
+2026-05-15 - This One Is Wayne is, And Knows It
+Lesson:
+
+Axis Local OS stops being abstract when the operator profile lands. Until today it was a system that could be configured for anyone. Now it is a system that knows it belongs to Wayne, knows his offers, his pricing, his clients, his brand, and his preferred way of being talked to.
+
+Why this matters:
+
+Configuration friction kills copilots. If Wayne has to remind the system every session that he sells Solo OS at £1,495 / £2,495 / £3,995, or that his client work saves under D:/Wayne Francis/Clients, or that he wants short answers and honest tradeoffs, the system is not a copilot. It is a chatbot with amnesia. The operator profile is the cure.
+
+What the profile carries:
+
+Identity, brand, contact details, business position, the full offer matrix, communication style (plain English first, honest assessment, lead with the answer), teaching mode (five-step structure), decision support mode (four-line structure), audit-form workflow, output locations, brand colours and fonts, compliance posture, session efficiency rules.
+
+The governed loop reads it on every interaction. Local models and hosted models both see the same operator-style rules in their prompts, so output is consistent across providers.
+
+What the scope file carries:
+
+The list of folders the KB should index for Wayne. The Axis Local OS repo, Axis OS v3, the latest sellable builds, the Wayne Francis content folders, the client folders, the pricing master HTML files (with retrieval authority boost). Each root has a scope tag that the hosted-model adapter is source-scope filter respects. Client data is tagged always_local. It never reaches a hosted provider.
+
+What gets built next on top:
+
+A KB ingest extension that reads the scope file. A prompt-builder hook that injects the profile is communication-style and teaching-mode rules. The audit-form workflow that takes a Readiness Review submission and returns fit score, offer match, automation candidates, and a Tier C draft reply. The daily / weekly / monthly cadence commands. The teaching-mode trigger. The decision-support trigger.
+
+What this means for the customer story:
+
+Every Axis Local OS deployment is single-operator. The profile and the scope are not multi-tenant features. They are how the system binds to one person. When Wayne deploys for a client, that is a separate Axis Local OS deployment with its own profile, its own scope, its own audit. The same architecture, configured for that one operator.
+
+Simple version:
+
+The system stopped being a generic OS today. It became Wayne is OS. Everything from here builds on that.

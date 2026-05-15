@@ -1,0 +1,98 @@
+{
+  "schema": "axis-local-os-copilot-scope-v1",
+  "operator": "wayne_francis",
+  "operator_profile": "CORE/OPERATOR_PROFILE.md",
+  "ingest_roots": [
+    {
+      "label": "axis_local_os_repo",
+      "path": ".",
+      "kind": "build",
+      "scope_tag": "internal_only"
+    },
+    {
+      "label": "axis_os_v3",
+      "path": "D:/Wayne AI OS/Axis OS_v3",
+      "kind": "operator_system",
+      "scope_tag": "internal_only"
+    },
+    {
+      "label": "latest_sellable_builds",
+      "path": "D:/Wayne AI OS/Axis OS_v3/LATEST_SELLABLE_BUILDS",
+      "kind": "delivery_template",
+      "scope_tag": "internal_only"
+    },
+    {
+      "label": "axis_ai_assets",
+      "path": "D:/Wayne Francis/Axis AI",
+      "kind": "sales_asset",
+      "scope_tag": "internal_only"
+    },
+    {
+      "label": "axis_pricing_master",
+      "path": "D:/Wayne Francis/Outputs/Axis-AI-Website-Mockup.html",
+      "kind": "pricing_authority",
+      "scope_tag": "internal_only",
+      "authority_boost": 25.0
+    },
+    {
+      "label": "axis_sales_master",
+      "path": "D:/Wayne Francis/Outputs/Axis-AI-Sales-Master.html",
+      "kind": "sales_authority",
+      "scope_tag": "internal_only",
+      "authority_boost": 20.0
+    },
+    {
+      "label": "wayne_profiles_content",
+      "path": "D:/Wayne Francis/Profiles & Content",
+      "kind": "personal_content",
+      "scope_tag": "internal_only"
+    },
+    {
+      "label": "wayne_outreach",
+      "path": "D:/Wayne Francis/Outreach",
+      "kind": "outreach_archive",
+      "scope_tag": "internal_only"
+    },
+    {
+      "label": "wayne_outputs",
+      "path": "D:/Wayne Francis/Outputs",
+      "kind": "general_outputs",
+      "scope_tag": "internal_only"
+    },
+    {
+      "label": "wayne_clients_root",
+      "path": "D:/Wayne Francis/Clients",
+      "kind": "client_data",
+      "scope_tag": "always_local",
+      "per_client_subfolders": true
+    }
+  ],
+  "exclude_patterns": [
+    "*.pyc",
+    "__pycache__",
+    "node_modules",
+    ".git",
+    ".axis",
+    ".kb",
+    "*.zip",
+    "*.pdf",
+    ".env",
+    "*.key",
+    "*.pem"
+  ],
+  "always_local_for_tags": [
+    "client_data",
+    "always_local"
+  ],
+  "hosted_eligible_tags": [
+    "internal_only",
+    "sales_asset",
+    "delivery_template"
+  ],
+  "notes": [
+    "Wayne is the only operator on this Axis Local OS deployment. The ingest scope above is the full set of materials the copilot draws on.",
+    "Client-data root is per-client scoped. Each subfolder under D:/Wayne Francis/Clients/<name>/ is treated as a separate client context.",
+    "Pricing and sales master HTML files carry authority boosts so retrieval surfaces them first on any pricing or offer question.",
+    "All scope tags align with the hosted-model adapter's source-scope filter. Anything tagged always_local cannot reach a hosted provider."
+  ]
+}

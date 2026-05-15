@@ -600,6 +600,78 @@
         "HTTPS with cert verification on, always. No verify=False, ever.",
         "No third-party intermediaries. Direct from Axis to vendor only."
       ]
+    },
+    "wayne_copilot": {
+      "name": "Wayne Copilot",
+      "status": "active_profile_and_scope",
+      "type": "operator_module",
+      "purpose": "Binds this Axis Local OS deployment to Wayne Francis. Operator profile, KB ingest scope, audit-form workflow, daily/weekly/monthly cadence, teaching mode, decision support mode. Single-operator deployment, not shareable.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/WAYNE_COPILOT.md",
+        "CORE/OPERATOR_PROFILE.md",
+        "config/copilot_scope.json"
+      ],
+      "workflow_docs": [
+        "docs/modules/WAYNE_COPILOT.md",
+        "CORE/OPERATOR_PROFILE.md"
+      ],
+      "governance_docs": [
+        "docs/modules/WAYNE_COPILOT.md",
+        "CORE/OPERATOR_PROFILE.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "template_docs": [
+        "config/copilot_scope.json"
+      ],
+      "commands": [
+        "AXIS: DAILY COMMAND",
+        "AXIS: WEEKLY REVIEW",
+        "AXIS: 30 DAY PULSE",
+        "AXIS: AUDIT FORM",
+        "AXIS: TEACH ME ABOUT",
+        "AXIS: DECIDE BETWEEN",
+        "AXIS: CLIENT SCOPE"
+      ],
+      "routing_keywords": [
+        "wayne",
+        "copilot",
+        "my business",
+        "audit form",
+        "readiness review",
+        "ai readiness",
+        "intake",
+        "prospect",
+        "draft reply",
+        "fit score",
+        "offer match",
+        "daily command",
+        "weekly review",
+        "30 day",
+        "teach me",
+        "explain",
+        "how does this work",
+        "what do you think",
+        "should i",
+        "decide",
+        "axis pricing",
+        "solo operator os",
+        "client os build",
+        "sme audit",
+        "care plan",
+        "bundle"
+      ],
+      "governance_rules": [
+        "The copilot is for Wayne only. Profile, scope, audit are not shareable.",
+        "Profile content is internal-only. Never sent to hosted models unless Wayne approves per request.",
+        "Pricing is authoritative from the master HTML files. Never restated from model memory.",
+        "Client material is always_local by default. Never hosted without explicit per-client approval.",
+        "Audit-form workflow runs the five-step structure: parse, compliance check, score, match offer, draft Tier C reply, file under client folder.",
+        "Teaching mode uses the five-step structure: summary, why, how, next, source.",
+        "Decision support uses the four-line structure: recommendation, tradeoff, alternative, what would tip it.",
+        "Compliance halts route to the compliance protocol; the copilot does not improvise around them.",
+        "Session efficiency rules from Wayne's global CLAUDE.md are enforced by the system."
+      ]
     }
   }
 }
