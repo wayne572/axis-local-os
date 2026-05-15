@@ -155,3 +155,19 @@ Verified:
 - file checks pass for both products
 - routing sends solo requests to `solo_operator_os`
 - routing sends client build requests to `client_os_build`
+
+## Phase 7 Progress Notes
+
+Status: in progress
+
+Goal:
+
+Register Relationship Connector OS and bring in best-practice patterns from PingCRM and OpenVolo without breaking Axis governance.
+
+Module:
+
+`relationship_connector_os`
+
+Key boundary:
+
+Start with local relationship memory, intro tracking, and draft-only follow-ups before adding external account integrations.

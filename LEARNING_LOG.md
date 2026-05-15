@@ -238,3 +238,35 @@ Core runtime = how Axis works
 Product module = what Axis can deliver
 Sector module = who it is adapted for
 ```
+
+## 2026-05-15 - Relationship Connector OS
+
+Lesson:
+
+Boardy-style functionality belongs in Axis as a governed relationship module, not as a loose chatbot feature.
+
+What we are borrowing from PingCRM:
+
+- unified contact timelines
+- relationship scoring
+- identity resolution
+- weekly follow-up digests
+- contextual follow-up drafts
+- self-hosted ownership of relationship data
+
+What we are borrowing from OpenVolo:
+
+- local-first CRM design
+- unified contacts
+- workflow types
+- analytics and sync-health thinking
+- AI assistant over CRM data
+- encrypted credentials before real integrations
+
+Axis adaptation:
+
+```text
+relationship memory + source IDs + consent gates + draft-only messaging + human approval
+```
+
+The first Relationship Connector OS build should work locally from approved notes and trackers before adding Gmail, LinkedIn, Telegram, WhatsApp, or browser-based enrichment.

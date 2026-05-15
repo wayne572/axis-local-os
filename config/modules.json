@@ -220,6 +220,68 @@
         "Run compliance, handover, acceptance, and shipping checks before marking a client OS as ready.",
         "Do not use Black Map, Hermes, old pricing, or obsolete internal material as client authority."
       ]
+    },
+    "relationship_connector_os": {
+      "name": "Relationship Connector OS",
+      "status": "active_module_spec",
+      "type": "specialist_module",
+      "purpose": "Consent-aware relationship memory, warm introductions, follow-up discipline, and Boardy-style networking support for Axis Local OS.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/RELATIONSHIP_CONNECTOR_OS.md",
+        "CORE/CLAUDE_OPERATOR/RELATIONSHIP_CONNECTOR_MODE.md",
+        "OS_GUIDES/RELATIONSHIP_CONNECTOR_MODE_GUIDE.md"
+      ],
+      "workflow_docs": [
+        "business/TRACKING/RELATIONSHIP_MEMORY.md",
+        "business/TRACKING/INTRO_TRACKER.md",
+        "CORE/CLAUDE_OPERATOR/ACCESS_CHANNELS.md",
+        "CORE/CLAUDE_OPERATOR/VOICE_AND_MESSAGE_CAPTURE_PLAN.md"
+      ],
+      "governance_docs": [
+        "docs/modules/RELATIONSHIP_CONNECTOR_OS.md",
+        "business/GDPR.md",
+        "business/GDPR_LOG.md"
+      ],
+      "template_docs": [
+        "business/TRACKING/RELATIONSHIP_MEMORY.md",
+        "business/TRACKING/INTRO_TRACKER.md"
+      ],
+      "commands": [
+        "AXIS: RELATIONSHIP PULSE",
+        "AXIS: CAPTURE RELATIONSHIP",
+        "AXIS: TRACK INTRO",
+        "AXIS: DRAFT FOLLOW-UP",
+        "AXIS: REVIEW INTRO CONSENT",
+        "AXIS: WEEKLY RELATIONSHIP REVIEW"
+      ],
+      "routing_keywords": [
+        "relationship",
+        "connector",
+        "intro",
+        "warm intro",
+        "referral",
+        "follow up",
+        "follow-up",
+        "network",
+        "contact",
+        "relationship memory",
+        "who should i follow up",
+        "who could help",
+        "boardy",
+        "pingcrm",
+        "openvolo"
+      ],
+      "governance_rules": [
+        "Do not invent relationships.",
+        "Do not imply consent where consent is unknown.",
+        "Do not send messages automatically.",
+        "Do not create two-sided introductions without both sides agreeing.",
+        "Do not expose private relationship notes in client-safe outputs.",
+        "Do not scrape, enrich, or store unnecessary personal data.",
+        "Mark unclear source or consent as needs confirmation.",
+        "Keep outreach warm, specific, and low pressure."
+      ]
     }
   }
 }
