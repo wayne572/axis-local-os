@@ -469,3 +469,43 @@ Simple version:
 apply = write the change and save what was there before
 undo = check nothing has drifted, save what is here now, restore what was there before
 Both surfaces share the same rule: if the world has moved underneath, stop and ask.
+
+
+2026-05-15 - Local Versus Hosted Is The Wrong Question
+Lesson:
+
+The right question is not whether Axis runs locally or in the cloud. The right question is whether the system that decides which model to call runs under governance Wayne controls.
+
+Why:
+
+Local models like Gemma and Qwen are good enough for routing, summarising, transcribing, and quick drafts. They are not as capable as Claude or GPT for hard reasoning, long context, polished writing, and agent-grade code. Pretending otherwise is dishonest and would make Axis Local OS a downgrade for the heaviest work.
+
+But the v2 and v3 Axis systems already plugged into Claude and ChatGPT. They got frontier capability that way. What they did not have was the governance layer in front of those calls.
+
+Axis Local OS unifies both. The model layer is an adapter. The governance layer is the building.
+
+The decision rule going forward:
+
+local model = on-device, sensitive, fast, offline, regulated
+hosted model = hard reasoning, long context, polish, complex code
+governance = always on, both sides
+
+A request can be routed to Claude or GPT, but only after Axis has classified it, retrieved the right sources, filtered out anything marked local-only, redacted what the routing policy says to redact, written an audit event, and confirmed the call is allowed for this client.
+
+What this protects:
+
+A regulated client like an accountant or a lettings agent can use Axis with full hosted-model power for their own marketing and admin, while their client-data work stays on device. The same operator gets two modes, not one compromise.
+
+A solo operator with no compliance pressure can default to hosted for everything and still benefit from the audit trail, the source-grounded answers, and the memory discipline.
+
+Wayne can flip the policy per client, per request type, or globally, and the system will respect it.
+
+Simple version:
+
+Local model = the trusted assistant in the room
+Hosted model = the consultant on the phone
+Axis Local OS = the operator who decides who gets the question, what they hear, and what gets written down
+
+Status:
+
+The spec is filed at docs/modules/HOSTED_MODEL_ADAPTER.md. The module is registered. The build order in AXIS_LOCAL_OS_SPEC.md has been updated. Build is queued behind the remaining coding-agent surfaces (approval-gated execution, destructive path).

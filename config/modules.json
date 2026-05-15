@@ -429,6 +429,54 @@
         "Every action writes an audit event, including rejections.",
         "Destructive actions require approval plus a typed confirm token."
       ]
+    },
+    "hosted_model_adapter": {
+      "name": "Hosted Model Adapter",
+      "status": "capability_spec_pending_build",
+      "type": "capability_module",
+      "purpose": "Governed adapter for hosted frontier models (Claude, OpenAI) so Axis can route hard reasoning to Claude or GPT under per-request policy while keeping the on-device governance, redaction, and audit trail intact.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/HOSTED_MODEL_ADAPTER.md",
+        "AXIS_LOCAL_OS_SPEC.md",
+        "config/local_model_runtime.json"
+      ],
+      "workflow_docs": [
+        "docs/modules/HOSTED_MODEL_ADAPTER.md"
+      ],
+      "governance_docs": [
+        "docs/modules/HOSTED_MODEL_ADAPTER.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "template_docs": [],
+      "commands": [
+        "AXIS: MODEL HEALTH",
+        "AXIS: ANSWER WITH HOSTED",
+        "AXIS: ROUTE POLICY"
+      ],
+      "routing_keywords": [
+        "claude",
+        "anthropic",
+        "openai",
+        "gpt",
+        "hosted model",
+        "api model",
+        "frontier",
+        "long context",
+        "hard reasoning",
+        "hybrid",
+        "model routing",
+        "policy"
+      ],
+      "governance_rules": [
+        "Hosted calls are opt-in per request or per client, never global by default.",
+        "Regulated client data and local-only sources cannot reach a hosted provider.",
+        "Every hosted call writes an audit event before the response is shown.",
+        "API keys live in .env, never in config or audit files.",
+        "Redaction sweep and source scope filter run before any hosted call.",
+        "No silent fallback to local on hosted failure - halt and ask Wayne.",
+        "Retrieval grounding still applies - hosted fluency does not override source authority."
+      ]
     }
   }
 }

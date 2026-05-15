@@ -133,11 +133,14 @@ Each governed-loop event must record:
 1. Constitution and governed loop
 2. Local model runtime abstraction
 3. Coding-agent workflow with command approval
-4. Durable RAG memory store
-5. Reranking and metadata discipline
-6. Governance dashboard and review queue
-7. LangGraph orchestration
-8. Reflection and learning routines
+4. Hosted model adapter (Claude, OpenAI) under per-request routing policy
+5. Durable RAG memory store
+6. Reranking and metadata discipline
+7. Governance dashboard and review queue
+8. LangGraph orchestration
+9. Reflection and learning routines
+
+The hosted model adapter (step 4) is what makes Axis Local OS hybrid rather than local-only. Local models stay the default for sensitive, fast, or offline work. Hosted frontier models (Claude, GPT) are routed in for hard reasoning, long context, and polish - under explicit policy, with redaction, source-scope filtering, and a full audit trail. Spec at `docs/modules/HOSTED_MODEL_ADAPTER.md`.
 
 ## Current Implementation
 
