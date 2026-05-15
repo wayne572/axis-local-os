@@ -290,7 +290,8 @@
       "purpose": "Safe voice-to-text intake for Axis Local OS, allowing Wayne to speak requests and review transcripts before routing or action.",
       "base_path": "docs/modules",
       "authority_docs": [
-        "docs/modules/VOICE_INTAKE.md"
+        "docs/modules/VOICE_INTAKE.md",
+        "config/voice_intake.json"
       ],
       "workflow_docs": [
         "docs/modules/VOICE_INTAKE.md"

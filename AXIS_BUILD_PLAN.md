@@ -174,21 +174,39 @@ Start with local relationship memory, intro tracking, and draft-only follow-ups 
 
 ## Phase 8 Progress Notes
 
-Status: in progress
+Status: first pass complete
 
 Goal:
 
 Add safe voice intake so Wayne can talk to Axis Local OS when typing is a barrier.
 
-Current scope:
+Completed scope:
 
 - voice safety spec
 - module registration
-- placeholder CLI
+- file transcription CLI surface
+- faster-whisper dependency detection
+- transcript review output
+- proposed module route
+- voice intake audit events
+
+Verification:
+
+- `python tools\local_os\axis_voice.py status` reports config and dependency state.
+- `python tools\local_os\axis_voice.py transcribe missing.wav` blocks cleanly when the file is missing.
+- `faster-whisper` installed successfully in the current Python 3.14 environment.
+- `python tools\local_os\axis_voice.py transcribe .axis\voice_intake_test\axis_voice_test.wav` produced a transcript, proposed the `relationship_connector_os` route, required review, and wrote a voice intake audit event.
+- The test transcript misheard "Axis" as "Access", confirming that transcript review is necessary before routing or memory capture.
+
+Additional progress:
+
+- Added a governed `ask` path.
+- `python tools\local_os\axis_voice.py ask .axis\voice_intake_test\axis_voice_question.wav` transcribes and blocks before answering.
+- `python tools\local_os\axis_voice.py ask .axis\voice_intake_test\axis_voice_question.wav --confirm-transcript --model gemma4:latest --timeout 180` produced a grounded Axis answer with sources and model audit trail.
 
 Next implementation:
 
-Add local file transcription using `faster-whisper`.
+Add a transcript correction option so Wayne can replace a misheard transcript before confirming a voice ask.
 
 ## Phase 9 Progress Notes
 

@@ -68,13 +68,28 @@ AXIS: VOICE ROUTE
 AXIS: VOICE CAPTURE DRAFT
 ```
 
-Planned CLI:
+First CLI surface:
 
 ```powershell
 python tools/local_os/axis_voice.py transcribe path/to/audio.wav
 python tools/local_os/axis_voice.py route path/to/audio.wav
 python tools/local_os/axis_voice.py ask path/to/audio.wav
 ```
+
+Current implementation:
+
+- `status` reports the configured engine and whether `faster-whisper` is importable.
+- `transcribe` validates a local audio file, runs local file transcription when `faster-whisper` is installed, prints the transcript for review, proposes a module route, and writes an audit event.
+- `route` uses the same safe transcript-first path and proposes a route without executing the request.
+- `ask` transcribes and blocks before answering unless `--confirm-transcript` is provided.
+- `capture-draft` remains a planned governed follow-on step.
+
+First runtime test:
+
+- `faster-whisper` installed successfully in the current Python environment.
+- A short local WAV file transcribed successfully and proposed the Relationship Connector OS route.
+- The transcript contained a small recognition error, which confirms the review-first design.
+- A confirmed voice ask produced a grounded Axis answer with sources and a model audit trail.
 
 ## Governance Rules
 
@@ -121,4 +136,3 @@ Axis should:
 ## Success Condition
 
 Wayne can record a short voice note, review the transcript, and have Axis route it into the right module without typing the full request.
-

@@ -80,9 +80,14 @@ Voice Intake:
 
 - registered as `voice_intake`
 - spec complete
-- placeholder CLI complete
-- no transcription engine installed yet
-- recommended next implementation: `faster-whisper` file transcription
+- file transcription CLI surface complete
+- `faster-whisper` dependency detection complete
+- `faster-whisper` installed successfully in the current Python 3.14 environment
+- first local WAV transcription test complete
+- test route correctly proposed `relationship_connector_os`
+- transcript review remains required because the first test misheard "Axis" as "Access"
+- governed `ask` path complete with `--confirm-transcript`
+- recommended next implementation: add transcript correction before confirmation
 
 Voice Reply:
 
@@ -105,7 +110,7 @@ Voice Reply:
 
 ## Recommended Next Step
 
-Implement local file transcription using `faster-whisper`.
+Add a transcript correction option so Wayne can replace a misheard transcript before confirming a voice ask.
 
 Suggested first target:
 
@@ -141,4 +146,3 @@ SESSION_HANDOFF_2026-05-15_AXIS_LOCAL_OS.md
 Current goal:
 Continue from the voice layer. Voice Intake and Voice Reply are registered. Next safe step is local file transcription using faster-whisper. Always plan first before building.
 ```
-

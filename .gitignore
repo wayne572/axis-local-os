@@ -1,6 +1,5 @@
 # Axis Local OS local/generated state
-.axis/audit/
-.axis/memory_review/
+.axis/
 .kb/
 
 # Python/runtime cache
@@ -29,4 +28,3 @@ Thumbs.db
 # Generated/exported delivery artifacts
 *.zip
 *.pdf
-

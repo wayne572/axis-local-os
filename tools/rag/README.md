@@ -202,15 +202,34 @@ voice_reply
 python tools/local_os/axis_voice.py status
 ```
 
-Voice Intake is currently a safety spec and placeholder CLI.
+Voice Intake is a safety spec plus a file transcription CLI surface.
 
-The next build step is file transcription with `faster-whisper`.
+The transcription engine is `faster-whisper`. The command detects whether the dependency is installed before attempting transcription.
+
+Runtime note:
+
+`faster-whisper` has been installed and tested with a short local WAV file. The first test transcribed successfully and proposed the Relationship Connector OS route, while also showing why transcript review is required.
 
 Planned flow:
 
 ```text
 voice -> transcript -> review -> route -> draft/answer/proposed action -> approval
 ```
+
+First file transcription command:
+
+```powershell
+python tools/local_os/axis_voice.py transcribe path/to/audio.wav
+```
+
+Governed voice ask:
+
+```powershell
+python tools/local_os/axis_voice.py ask path/to/audio.wav
+python tools/local_os/axis_voice.py ask path/to/audio.wav --confirm-transcript
+```
+
+Without confirmation, `ask` stops after transcript review. With confirmation, it sends the transcript through the normal sourced Axis answer path.
 
 ## Voice Reply
 

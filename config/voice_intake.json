@@ -1,0 +1,18 @@
+{
+  "schema": "axis-local-os-voice-intake-config-v1",
+  "enabled": true,
+  "engine": "faster-whisper",
+  "model_size": "base",
+  "device": "cpu",
+  "compute_type": "int8",
+  "beam_size": 5,
+  "allowed_extensions": [
+    ".wav",
+    ".mp3",
+    ".m4a",
+    ".flac",
+    ".ogg",
+    ".webm",
+    ".mp4"
+  ]
+}

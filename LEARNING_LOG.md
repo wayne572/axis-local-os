@@ -314,3 +314,45 @@ Kokoro gives better natural voice potential, while Piper is a strong reliable lo
 Governance:
 
 Axis should speak only text that already exists as an answer or approved draft. Speech should not hide the written answer, source trail, or audit record.
+
+## 2026-05-15 - File Transcription Boundary
+
+Lesson:
+
+The first useful voice feature is not a microphone. It is a reviewed transcript from a local audio file.
+
+Why:
+
+A file transcription command is easy to test, audit, and repeat. It lets Axis prove the voice intake path without turning spoken words into automatic actions.
+
+Current implementation:
+
+```text
+audio file -> faster-whisper transcript -> proposed module route -> review required
+```
+
+Important:
+
+`faster-whisper` is detected at runtime. If it is missing, Axis blocks clearly and records the attempt in the voice intake audit log instead of pretending transcription happened.
+
+First runtime test:
+
+`faster-whisper` installed successfully on Python 3.14. A short local WAV file was transcribed and routed to Relationship Connector OS. The transcript changed "Axis" into "Access", which is a useful real-world reminder that speech-to-text is helpful but not authoritative.
+
+Governance:
+
+The transcript is not treated as an instruction to execute. It is treated as draft input that Wayne reviews before asking Axis to route, answer, or capture anything.
+
+## 2026-05-15 - Confirmed Voice Ask
+
+Lesson:
+
+Voice ask should require transcript confirmation before model generation.
+
+What changed:
+
+Axis can now transcribe a local audio question and stop before answering. If Wayne explicitly reruns with `--confirm-transcript`, Axis sends the transcript through the normal grounded answer path, with retrieved sources and the model runtime audit still visible.
+
+First result:
+
+A test question, "What is Axis Local OS?", was transcribed as "What is access local OS?" but still produced a sourced answer from the Axis spec. This proves the answer path works, but it also shows the next practical improvement: Wayne needs a way to correct the transcript before confirmation.
