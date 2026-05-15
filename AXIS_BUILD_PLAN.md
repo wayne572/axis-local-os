@@ -135,3 +135,23 @@ First module:
 Why:
 
 The Charity/CIC OS already existed as sector-build material. Registration turns it into something the local runtime can inspect, validate, and route toward.
+
+## Phase 6 Progress Notes
+
+Status: first pass complete
+
+Goal:
+
+Register the core product modules that sit underneath sector overlays.
+
+Registered product modules:
+
+- `solo_operator_os`
+- `client_os_build`
+
+Verified:
+
+- module list includes both products
+- file checks pass for both products
+- routing sends solo requests to `solo_operator_os`
+- routing sends client build requests to `client_os_build`

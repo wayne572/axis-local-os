@@ -210,3 +210,31 @@ Simple version:
 folder of docs = knowledge
 registered module = routable functionality
 ```
+
+## 2026-05-15 - Product Modules vs Sector Modules
+
+Lesson:
+
+Axis modules need categories.
+
+Product modules are reusable offers or operating-system templates. Sector modules adapt a product module for a specific market or use case.
+
+Current examples:
+
+```text
+product_module: solo_operator_os
+product_module: client_os_build
+sector_module: charity_cic_ai_os
+```
+
+Why:
+
+Charity/CIC AI OS should not float as an isolated build. It sits on top of the wider product architecture, especially Client OS Build. Registering Solo Operator OS and Client OS Build makes the framework clearer.
+
+Simple version:
+
+```text
+Core runtime = how Axis works
+Product module = what Axis can deliver
+Sector module = who it is adapted for
+```

@@ -91,7 +91,135 @@
         "Start narrow and solve the highest-pressure admin loop first.",
         "Use data and safeguarding boundaries before named charity/CIC build work."
       ]
+    },
+    "solo_operator_os": {
+      "name": "Solo Operator OS",
+      "status": "active_template",
+      "type": "product_module",
+      "purpose": "Personal and solo entrepreneur AI OS template for managing work, business, personal admin, relationships, ideas, weekly priorities, follow-ups, and open loops.",
+      "base_path": "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE",
+      "authority_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/README.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/START_HERE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/CLAUDE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/SOLO_MODULES.md"
+      ],
+      "workflow_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/COMMAND_CENTRE/DAILY_COMMAND_CENTRE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/ROUTINES/WEEKLY_REVIEW.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/ROUTINES/30_DAY_REVIEW.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/LIFE_ADMIN/PERSONAL_ADMIN_TRACKER.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/BUSINESS/SOLO_BUSINESS_TRACKER.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/RELATIONSHIPS/RELATIONSHIP_MEMORY.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/IDEAS/IDEA_TO_ACTION.md"
+      ],
+      "governance_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/SOLO_ACCEPTANCE_TESTS.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/SHIPPING_CHECKLIST.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/PLATFORM_NOTES.md"
+      ],
+      "template_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/SETUP_QUESTIONNAIRE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/SIMPLE_USER_GUIDE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/FIRST_7_DAYS_GUIDE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE/PERSONAL_CONTEXT.md"
+      ],
+      "commands": [
+        "AXIS: SOLO START",
+        "AXIS: DAILY COMMAND",
+        "AXIS: WEEKLY REVIEW",
+        "AXIS: 30 DAY REVIEW",
+        "AXIS: CAPTURE THIS",
+        "AXIS: DECISION"
+      ],
+      "routing_keywords": [
+        "solo",
+        "solo operator",
+        "one person",
+        "personal os",
+        "personal admin",
+        "relationship memory",
+        "weekly review",
+        "daily command",
+        "idea to action",
+        "open loops"
+      ],
+      "governance_rules": [
+        "Do not treat personal notes as public or client-safe material.",
+        "Do not automate sensitive personal, financial, legal, medical, or relationship decisions without human review.",
+        "Keep the first build narrow and focused on the operator's highest-pressure loops.",
+        "Run acceptance tests and shipping checklist before packaging a client-ready Solo build."
+      ]
+    },
+    "client_os_build": {
+      "name": "Client OS Build",
+      "status": "active_template",
+      "type": "product_module",
+      "purpose": "Client-ready AI OS package produced after an SF&W audit or implementation project.",
+      "base_path": "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE",
+      "authority_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/README.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/START_HERE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/CLAUDE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/CORE/WORKFLOW_MODULES/CLIENT_MODULE_GUIDE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/CORE/WORKFLOW_MODULES/SME_DEPLOYMENT_MODULES.md"
+      ],
+      "workflow_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/WORKFLOWS/WORKFLOW_INDEX.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/GROWTH_BUILD_BLUEPRINT_TEMPLATE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/OWNER_COMMAND_CENTRE_EXAMPLE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/TEAM_ACCESS_AND_ROLE_MAP.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/BUSINESS/TRACKING/ACTIVE_WORKSTREAMS.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/BUSINESS/TRACKING/DECISION_LOG.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/BUSINESS/TRACKING/RELATIONSHIP_MEMORY.md"
+      ],
+      "governance_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/CORE/VALIDATION/OUTPUT_VALIDATION.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/COMPLIANCE/DATA_HANDLING_NOTES.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/COMPLIANCE/CLIENT_CONSENT_AND_ANALYTICS.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/COMPLIANCE/USAGE_TRACKING_NOTICE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/HANDOVER/HANDOVER_CHECKLIST.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/HANDOVER/CLIENT_OS_GROWTH_ACCEPTANCE_TESTS.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/SHIPPING_CHECKLIST.md"
+      ],
+      "template_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/BUSINESS/CLIENT_CONTEXT.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/HANDOVER/CLIENT_HANDOVER_PACK_TEMPLATE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/HANDOVER/FIRST_7_DAYS_ADOPTION_PLAN.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/HANDOVER/CLIENT_OS_GROWTH_HANDOVER_SCRIPT.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/TEMPLATES/PROMPT_LIBRARY.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/TEMPLATES/EMAIL_TEMPLATES.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE/TRAINING/USER_GUIDE.md"
+      ],
+      "commands": [
+        "AXIS: NEW CLIENT",
+        "Run client governance check",
+        "Create client-safe version",
+        "AXIS: DAILY COMMAND",
+        "AXIS: WEEKLY REVIEW",
+        "AXIS: 30 DAY REVIEW"
+      ],
+      "routing_keywords": [
+        "client os",
+        "client build",
+        "new client",
+        "sme",
+        "handover",
+        "client-safe",
+        "growth build",
+        "workflow module",
+        "team access",
+        "implementation",
+        "delivery",
+        "acceptance tests"
+      ],
+      "governance_rules": [
+        "Do not include SF&W internal strategy, pricing, source archives, or other client files in client copies.",
+        "Every client copy must be reviewed before handover.",
+        "Remove modules not included in the signed client scope.",
+        "Run compliance, handover, acceptance, and shipping checks before marking a client OS as ready.",
+        "Do not use Black Map, Hermes, old pricing, or obsolete internal material as client authority."
+      ]
     }
   }
 }
-

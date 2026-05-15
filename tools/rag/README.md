@@ -149,6 +149,8 @@ python tools/local_os/axis_answer.py "What is Axis Local OS?" --model qwen3-code
 ```powershell
 python tools/local_os/axis_modules.py list
 python tools/local_os/axis_modules.py show charity_cic_ai_os
+python tools/local_os/axis_modules.py show solo_operator_os
+python tools/local_os/axis_modules.py show client_os_build
 python tools/local_os/axis_modules.py route "Create a charity funding workflow"
 ```
 
@@ -164,6 +166,13 @@ The first registered sector module is:
 
 ```text
 charity_cic_ai_os
+```
+
+The first registered product modules are:
+
+```text
+solo_operator_os
+client_os_build
 ```
 
 ## Capture New Knowledge
