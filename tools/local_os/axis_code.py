@@ -468,10 +468,10 @@ def apply_edit(target: Path, new_content: str, expected_diff_hash: str, out_of_s
             if target_resolved.exists():
                 timestamp = now_utc().strftime("%Y%m%dT%H%M%SZ")
                 rb = ROLLBACK_DIR / f"{timestamp}_{expected_diff_hash[:12]}.preimage"
-                rb.write_text(current_text, encoding="utf-8")
+                rb.write_bytes(current_text.encode("utf-8"))
                 rollback_path = str(rb.relative_to(ROOT))
             target_resolved.parent.mkdir(parents=True, exist_ok=True)
-            target_resolved.write_text(new_content, encoding="utf-8")
+            target_resolved.write_bytes(new_content.encode("utf-8"))
             written = True
             classification = "apply_write"
         except OSError as exc:
@@ -522,6 +522,141 @@ def render_apply_text(result: ApplyResult) -> str:
         lines.extend(["", "## Halt Reason", "", result.halt_reason])
     if result.written:
         lines.extend(["", "## Result", "", "File written. Rollback pre-image stored. Use `axis_code.py undo` once available."])
+    lines.extend(["", "## Audit", "", result.audit_path])
+    return "\n".join(lines)
+
+
+@dataclass
+class UndoResult:
+    schema: str
+    timestamp: str
+    target_path: str
+    workspace_root: str
+    matched_apply_timestamp: str | None
+    matched_apply_new_sha256: str | None
+    rollback_source: str | None
+    pre_undo_sha256: str | None
+    restored_sha256: str | None
+    redo_preimage_path: str | None
+    classification: str
+    halt_reason: str | None
+    restored: bool
+    audit_path: str
+
+
+def find_latest_apply(target_resolved: Path) -> dict[str, Any] | None:
+    if not AUDIT_PATH.exists():
+        return None
+    match: dict[str, Any] | None = None
+    target_str = str(target_resolved)
+    with AUDIT_PATH.open("r", encoding="utf-8") as handle:
+        for raw in handle:
+            try:
+                event = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            if event.get("schema") != "axis-local-os-coding-agent-apply-v1":
+                continue
+            if event.get("target_path") != target_str:
+                continue
+            if not event.get("written"):
+                continue
+            if not event.get("rollback_path"):
+                continue
+            match = event
+    return match
+
+
+def undo_apply(target: Path) -> UndoResult:
+    target_resolved = target.resolve()
+    halt_reason: str | None = None
+    restored = False
+    matched_ts: str | None = None
+    matched_new_sha: str | None = None
+    rollback_source: str | None = None
+    pre_undo_sha: str | None = None
+    restored_sha: str | None = None
+    redo_path: str | None = None
+    classification = "undo_blocked"
+
+    match = find_latest_apply(target_resolved)
+    if match is None:
+        halt_reason = "no apply event with a written rollback pre-image found for this target"
+    else:
+        matched_ts = match.get("timestamp")
+        matched_new_sha = match.get("new_sha256")
+        rollback_rel = match.get("rollback_path")
+        rollback_source = rollback_rel
+        rollback_abs = ROOT / rollback_rel if rollback_rel else None
+        if not rollback_abs or not rollback_abs.exists():
+            halt_reason = f"rollback pre-image missing on disk: {rollback_rel}"
+        elif not target_resolved.exists():
+            halt_reason = "target file no longer exists - nothing to undo against"
+        else:
+            current_text, current_binary = read_text_file(target_resolved)
+            if current_binary:
+                halt_reason = "target is binary - undo path does not handle binary"
+            else:
+                pre_undo_sha = sha256_text(current_text)
+                if matched_new_sha and pre_undo_sha != matched_new_sha:
+                    halt_reason = (
+                        f"drift since apply. apply wrote new_sha256={matched_new_sha}, "
+                        f"current sha256={pre_undo_sha}. Resolve manually before undo."
+                    )
+                else:
+                    try:
+                        ROLLBACK_DIR.mkdir(parents=True, exist_ok=True)
+                        ts = now_utc().strftime("%Y%m%dT%H%M%SZ")
+                        redo = ROLLBACK_DIR / f"{ts}_redo.preimage"
+                        redo.write_bytes(current_text.encode("utf-8"))
+                        redo_path = str(redo.relative_to(ROOT))
+                        restored_bytes = rollback_abs.read_bytes()
+                        restored_content = restored_bytes.decode("utf-8", errors="replace")
+                        target_resolved.write_bytes(restored_bytes)
+                        restored = True
+                        restored_sha = sha256_text(restored_content)
+                        classification = "undo_restore"
+                    except OSError as exc:
+                        halt_reason = f"undo write failed: {exc}"
+
+    result = UndoResult(
+        schema="axis-local-os-coding-agent-undo-v1",
+        timestamp=now_utc().isoformat(),
+        target_path=str(target_resolved),
+        workspace_root=str(ROOT),
+        matched_apply_timestamp=matched_ts,
+        matched_apply_new_sha256=matched_new_sha,
+        rollback_source=rollback_source,
+        pre_undo_sha256=pre_undo_sha,
+        restored_sha256=restored_sha,
+        redo_preimage_path=redo_path,
+        classification=classification,
+        halt_reason=halt_reason,
+        restored=restored,
+        audit_path=str(AUDIT_PATH.relative_to(ROOT)),
+    )
+    write_audit_event(result)
+    return result
+
+
+def render_undo_text(result: UndoResult) -> str:
+    lines = [
+        "# Axis Coding Agent - Undo",
+        "",
+        f"Target: {result.target_path}",
+        f"Matched apply timestamp: {result.matched_apply_timestamp or 'no match'}",
+        f"Apply new_sha256: {result.matched_apply_new_sha256 or 'n/a'}",
+        f"Rollback source: {result.rollback_source or 'n/a'}",
+        f"Pre-undo sha256: {result.pre_undo_sha256 or 'n/a'}",
+        f"Restored sha256: {result.restored_sha256 or 'n/a'}",
+        f"Redo pre-image: {result.redo_preimage_path or 'n/a'}",
+        f"Classification: {result.classification}",
+        f"Restored: {result.restored}",
+    ]
+    if result.halt_reason:
+        lines.extend(["", "## Halt Reason", "", result.halt_reason])
+    if result.restored:
+        lines.extend(["", "## Result", "", "Pre-image restored. A redo pre-image of the just-undone state is stored under .axis/rollback."])
     lines.extend(["", "## Audit", "", result.audit_path])
     return "\n".join(lines)
 
@@ -796,8 +931,9 @@ def main() -> None:
     apply_parser.add_argument("--out-of-scope", action="store_true", help="Acknowledge out-of-scope (must also have been set at preview time)")
     apply_parser.add_argument("--json", action="store_true", help="Print JSON")
 
-    undo_parser = subparsers.add_parser("undo", help="undo - not yet implemented")
-    undo_parser.add_argument("rest", nargs=argparse.REMAINDER)
+    undo_parser = subparsers.add_parser("undo", help="Restore the latest apply pre-image for a target")
+    undo_parser.add_argument("target", help="Target file path to undo the most recent apply for")
+    undo_parser.add_argument("--json", action="store_true", help="Print JSON")
 
     args = parser.parse_args()
 
@@ -816,6 +952,14 @@ def main() -> None:
         else:
             print(render_run_text(result_run))
         sys.exit(0 if result_run.executed and result_run.exit_code == 0 else (result_run.exit_code or 1))
+
+    if args.command == "undo":
+        result_undo = undo_apply(Path(args.target))
+        if args.json:
+            print(json.dumps(asdict(result_undo), indent=2, ensure_ascii=True))
+        else:
+            print(render_undo_text(result_undo))
+        sys.exit(0 if result_undo.restored else 1)
 
     if args.command == "apply":
         if args.stdin:

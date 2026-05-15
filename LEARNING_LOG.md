@@ -438,3 +438,34 @@ diff_hash = receipt for that description
 apply = present the receipt, prove nothing has drifted, then write
 
 If the receipt is missing or the file has drifted, apply refuses and Wayne reviews.
+
+
+2026-05-15 - Undo Is The Other Half Of Apply
+Lesson:
+
+A write surface without an undo surface is not really governed. The pre-image stored at apply time is only valuable if there is a path that uses it.
+
+Why:
+
+Apply already stores a copy of the file before it writes. That copy lives under .axis/rollback. Undo finds the most recent apply event for a target, checks that nothing has drifted since the apply, copies the current file as a redo pre-image, and then restores the original pre-image. The undo itself is also an audit event.
+
+The drift check is the same idea as in apply, just pointing the other way. Apply refuses if the current file does not match the preview is old_sha256. Undo refuses if the current file does not match the apply is new_sha256. In both cases, the rule is the same: if something happened in between that the governance loop did not see, halt and let Wayne look.
+
+Why bother with a redo pre-image:
+
+Because undo can itself be wrong. The system should be able to step both directions. The redo pre-image makes that possible later without baking a redo command in yet.
+
+Side lesson - byte-exact writes:
+
+The first apply-then-undo test failed with a confusing drift message. The cause was Windows newline translation: Python is write_text on Windows turns 
+ into 
+ on disk, but the sha256 was computed against the original 
+ bytes. The shas never matched after a single round-trip.
+
+The fix was to write bytes directly and read bytes directly for sha computations. Governed writes have to be byte-exact, not encoding-friendly. A diff_hash is only a receipt if the system writes exactly what the receipt described.
+
+Simple version:
+
+apply = write the change and save what was there before
+undo = check nothing has drifted, save what is here now, restore what was there before
+Both surfaces share the same rule: if the world has moved underneath, stop and ask.
