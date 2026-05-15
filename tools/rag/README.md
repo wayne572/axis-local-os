@@ -116,6 +116,34 @@ This is the first working version of:
 retrieve -> inject context -> generate -> audit
 ```
 
+## Ask Axis With Sources
+
+```powershell
+python tools/local_os/axis_answer.py "What is Axis Local OS?"
+```
+
+This is the cleaner everyday command for asking Axis a project-grounded question.
+
+Default behavior:
+
+- uses local KB retrieval
+- injects source-backed context
+- calls a local Ollama model
+- prints a clean answer and source IDs
+- writes audit metadata
+
+The default practical model is currently:
+
+```text
+gemma4:latest
+```
+
+You can override it:
+
+```powershell
+python tools/local_os/axis_answer.py "What is Axis Local OS?" --model qwen3-coder:latest --timeout 300
+```
+
 ## Capture New Knowledge
 
 ```powershell

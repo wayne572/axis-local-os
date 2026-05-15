@@ -17,6 +17,11 @@ AUDIT_DIR = ROOT / ".axis" / "audit"
 MODEL_AUDIT_PATH = AUDIT_DIR / "model_runtime.jsonl"
 DEFAULT_TIMEOUT_SECONDS = 5
 DEFAULT_GENERATE_TIMEOUT_SECONDS = 120
+AUTHORITY_SOURCE_BOOSTS = {
+    "AXIS_OS_CODEX_CURRENT\\AXIS_LOCAL_OS_SPEC.md": 20.0,
+    "AXIS_OS_CODEX_CURRENT\\AXIS_BUILD_PLAN.md": 3.0,
+    "AXIS_OS_CODEX_CURRENT\\README.md": 2.0,
+}
 
 sys.path.insert(0, str(ROOT / "tools" / "rag"))
 from kb_search import search  # noqa: E402
@@ -261,7 +266,12 @@ def generate_once(
 
 
 def build_grounded_prompt(question: str, limit: int) -> tuple[str, list[dict[str, Any]]]:
-    results = search(question, limit)
+    raw_results = search(question, max(limit * 3, limit))
+    results = sorted(
+        raw_results,
+        key=lambda item: item[0] + AUTHORITY_SOURCE_BOOSTS.get(item[1].get("source_path", ""), 0.0),
+        reverse=True,
+    )[:limit]
     sources: list[dict[str, Any]] = []
     context_blocks: list[str] = []
 

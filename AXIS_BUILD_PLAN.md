@@ -100,3 +100,22 @@ The same local model that guessed incorrectly should answer from Axis Local OS s
 Verified result:
 
 `gemma4:latest` answered correctly from retrieved Axis context. `qwen3-coder:latest` needs further performance testing before it becomes the default practical model.
+
+## Phase 4 Progress Notes
+
+Status: in progress
+
+Goal:
+
+Create a clean everyday command for sourced Axis answers.
+
+Why:
+
+The low-level runtime tool is useful for debugging, but normal use needs a smaller answer surface: answer, sources, model, audit path.
+
+Progress:
+
+- Added `tools/local_os/axis_answer.py`.
+- Verified it produces a clean sourced answer.
+- Found that source quality matters even when retrieval works.
+- Added an initial authority boost for core Axis Local OS documents.

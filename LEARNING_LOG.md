@@ -141,3 +141,40 @@ The same question that previously produced the wrong "Axis network devices" answ
 Second lesson:
 
 The primary coding model `qwen3-coder:latest` is installed, but it timed out on the first grounded generation test. `gemma4:latest` completed the grounded test successfully. This means model availability and model practicality are separate checks.
+
+## 2026-05-15 - Tool Layer vs User Command
+
+Lesson:
+
+Developer tools and everyday commands should be separate.
+
+Why:
+
+`model_runtime.py` is useful for testing the machinery. It shows prompts, retrieved context, runtime details, and audit paths. That is good for debugging, but too noisy for daily use.
+
+`axis_answer.py` is the first cleaner user-facing command. It still uses retrieval, grounding, local generation, source IDs, and audit logging, but it prints the answer in a simpler shape.
+
+Simple version:
+
+```text
+model_runtime.py = inspect the engine
+axis_answer.py = ask Axis a sourced question
+```
+
+## 2026-05-15 - Retrieval Quality Matters
+
+Lesson:
+
+Getting an answer from local context is not enough. The system needs the right local context.
+
+What happened:
+
+The first `axis_answer.py` test worked, but it leaned on learning-log chunks instead of the Axis Local OS constitution. The answer was sourced, but not sourced from the strongest authority document.
+
+Fix:
+
+We added a small authority boost for core Axis Local OS documents, especially `AXIS_LOCAL_OS_SPEC.md`.
+
+Why:
+
+This is an early version of reranking. Later, Axis should use stronger metadata and reranker logic so source quality is handled systematically.
