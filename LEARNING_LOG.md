@@ -612,3 +612,37 @@ Per-request and per-client routing policy. The model_routing.json file is filed 
 Simple version:
 
 The pipe is connected. The taps are not yet on automatic.
+
+
+2026-05-15 - The Command Centre Question
+Lesson:
+
+If Axis Local OS is going to be an operating system, it has to operate. That means it touches the operator is real tools. Outlook, Microsoft 365, Google Workspace, Drive, Teams, Slack, the CRM, the finance stack. Without that, Axis is a clever notebook with a model in it.
+
+But every integration is a security surface. Every OAuth grant is a credential that, if mishandled, exposes a client mailbox or a calendar or a file store. The honest version of integration is not "we connected Outlook." The honest version is "we connected Outlook in a way that keeps the operator in control of every action and keeps the credentials in a place the operator can audit and revoke."
+
+The four conditions a connector has to meet before it ships:
+
+1. The operator never gives Axis more authority than they themselves have. OAuth, minimum scope, per-account grant. No service accounts. No "all access."
+
+2. Tokens never leak. They live in the OS native secret store. Never in files, never in environment variables another process can read, never in audit logs, never in any prompt sent to any model. A token vault provides short-lived bearer strings on request, and the caller is forbidden from caching them.
+
+3. No action without consent. Reads classified as level none can run quietly. Reads of message bodies and file contents need review. Writes (send, create, save) need preview-and-approve, same receipt pattern as the coding agent. Destructive or mass operations need a typed confirm phrase.
+
+4. Revoke is a real operation. Not "disconnect the integration." Actually call the vendor revoke endpoint, actually remove the local keychain entry, actually clear the local KB chunks that came from that grant. One command. Audited.
+
+What this lets Wayne promise:
+
+Axis can be the operator is single command centre. The operator does not have to log into ten tools to know what is happening. They log into Axis. Axis pulls a unified view, drafts replies, schedules, files, follows up. Every action passes through the same governance that controls a local file edit. Every token sits behind the operating system is own protection. Every consent is reversible.
+
+What Wayne should not promise:
+
+That Axis will read everything automatically and act without review. That Axis will hold credentials forever once granted. That Axis will share connector data with hosted models by default. All three of those would break the model and need to be ruled out in the sales conversation, not after the deployment.
+
+Architectural note:
+
+The connector interface contract reuses the existing preview-and-approve receipt pattern from the coding agent. authenticate, revoke, health, list, read, preview_write, apply_write, ingest. Same shape across every vendor. That is what stops the integration layer from sprawling into a pile of vendor-specific code with vendor-specific governance.
+
+Status:
+
+Spec filed at docs/modules/COMMAND_CENTRE_CONNECTORS.md. Module registered. Build order updated. Slotted as step 6, after Response Fidelity Policy and before durable RAG. The first wave is Outlook and Gmail. After that, OneDrive and Drive. After that, Teams and Slack. CRMs and finance come last because read-only is easier to ship safely than write capability.

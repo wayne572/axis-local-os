@@ -531,6 +531,75 @@
         "Internal-only sources never appear in customer-facing replies.",
         "Forbidden phrase patterns and outbound length caps are policy, not suggestions."
       ]
+    },
+    "command_centre_connectors": {
+      "name": "Command Centre Connectors",
+      "status": "capability_spec_pending_build",
+      "type": "capability_module",
+      "purpose": "Governed integration layer that turns Axis Local OS into a command centre across Outlook, Microsoft 365, Google Workspace, Drive, Teams, Slack, Zoom, CRMs, and finance tools. OAuth 2.0 with PKCE, OS-keychain credential storage, minimum-scope grants, per-client isolation, preview-and-approval writes, and a full audit trail per connector call.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/COMMAND_CENTRE_CONNECTORS.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "workflow_docs": [
+        "docs/modules/COMMAND_CENTRE_CONNECTORS.md"
+      ],
+      "governance_docs": [
+        "docs/modules/COMMAND_CENTRE_CONNECTORS.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "template_docs": [],
+      "commands": [
+        "AXIS: CONNECTOR LIST",
+        "AXIS: CONNECTOR AUTHENTICATE",
+        "AXIS: CONNECTOR HEALTH",
+        "AXIS: CONNECTOR READ",
+        "AXIS: CONNECTOR PREVIEW SEND",
+        "AXIS: CONNECTOR APPLY SEND",
+        "AXIS: CONNECTOR REVOKE"
+      ],
+      "routing_keywords": [
+        "outlook",
+        "microsoft 365",
+        "office 365",
+        "m365",
+        "graph api",
+        "gmail",
+        "google workspace",
+        "google drive",
+        "onedrive",
+        "sharepoint",
+        "teams",
+        "slack",
+        "zoom",
+        "calendar",
+        "send email",
+        "connect",
+        "integration",
+        "command centre",
+        "oauth",
+        "revoke",
+        "hubspot",
+        "salesforce",
+        "pipedrive",
+        "xero",
+        "quickbooks",
+        "stripe"
+      ],
+      "governance_rules": [
+        "OAuth 2.0 with PKCE where available. Never username and password.",
+        "Tokens live in the OS keychain. Never in files, env, or logs.",
+        "Minimum-scope grants. No blanket access. New scopes require fresh consent.",
+        "Every connector call writes an audit event. Token material is never in the audit.",
+        "Writes go through preview + approval hash. Destructive and mass operations require typed confirm phrase.",
+        "Per-client scopes isolate connector grants. No cross-client access without explicit multi-client mode.",
+        "Connector data is local by default. Hosted-model use requires source-scope filter to pass.",
+        "Revoke is always one-step and always audited.",
+        "Vendor secrets live in the vault, never in code or config.",
+        "HTTPS with cert verification on, always. No verify=False, ever.",
+        "No third-party intermediaries. Direct from Axis to vendor only."
+      ]
     }
   }
 }
