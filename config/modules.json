@@ -1,0 +1,97 @@
+{
+  "schema": "axis-local-os-module-registry-v1",
+  "default_module": "core",
+  "modules": {
+    "core": {
+      "name": "Axis Local OS Core",
+      "status": "active",
+      "type": "core",
+      "purpose": "Governed local AI operating system foundation: model runtime, retrieval, audit, memory discipline, and build governance.",
+      "authority_docs": [
+        "AXIS_LOCAL_OS_SPEC.md",
+        "AXIS_BUILD_PLAN.md",
+        "LEARNING_LOG.md",
+        "tools/rag/README.md"
+      ],
+      "governance_docs": [
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "commands": [
+        "axis_answer",
+        "model_runtime",
+        "governed_loop"
+      ],
+      "routing_keywords": [
+        "axis local os",
+        "axisos",
+        "local model",
+        "rag",
+        "retrieval",
+        "governed loop",
+        "memory",
+        "audit"
+      ]
+    },
+    "charity_cic_ai_os": {
+      "name": "Charity And CIC AI OS",
+      "status": "active_sector_build",
+      "type": "sector_module",
+      "purpose": "Reusable AI OS build path for charities, community interest companies, and social impact organisations.",
+      "base_path": "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS",
+      "authority_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/README.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/CHARITY_CIC_AI_OS_TEMPLATE_CLAUDE/README.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/CHARITY_CIC_AI_OS_TEMPLATE_CLAUDE/START_HERE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/CHARITY_CIC_AI_OS_TEMPLATE_CLAUDE/CLAUDE.md"
+      ],
+      "workflow_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/WORKFLOWS/CHARITY_CIC_WORKFLOW_LIBRARY.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/WORKFLOWS/FUNDING_SUSTAINABILITY_ENGINE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/WORKFLOWS/SOCIAL_MEDIA_AND_CONTENT_ENGINE.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/WORKFLOWS/HIDDEN_SUPPORT_AND_SUCCESS_TOOLKIT.md"
+      ],
+      "governance_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/GOVERNANCE/CHARITY_CIC_DATA_AND_SAFEGUARDING_BOUNDARIES.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/HANDOVER/CHARITY_CIC_HANDOVER_CHECKLIST.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/CHARITY_CIC_AI_OS_TEMPLATE_CLAUDE/CORE/VALIDATION/OUTPUT_VALIDATION.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/CHARITY_CIC_AI_OS_TEMPLATE_CLAUDE/COMPLIANCE/DATA_HANDLING_NOTES.md"
+      ],
+      "template_docs": [
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/TEMPLATES/CHARITY_CIC_INTAKE_FORM.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/TEMPLATES/CHARITY_CIC_BUILD_BLUEPRINT.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/TEMPLATES/GENTLE_ONBOARDING_SCRIPT.md",
+        "PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/SECTOR_BUILDS/CHARITY_CIC_AI_OS/TEMPLATES/WAYNE_PERSONAL_INTRODUCTION.md"
+      ],
+      "commands": [
+        "AXIS: CHARITY START",
+        "AXIS: CHARITY INTAKE",
+        "AXIS: CHARITY BLUEPRINT",
+        "AXIS: CHARITY GOVERNANCE CHECK",
+        "AXIS: CHARITY FUNDING RHYTHM",
+        "AXIS: CHARITY CONTENT PLAN"
+      ],
+      "routing_keywords": [
+        "charity",
+        "cic",
+        "community interest company",
+        "social impact",
+        "third sector",
+        "grant",
+        "fundraising",
+        "donor",
+        "volunteer",
+        "trustee",
+        "safeguarding",
+        "impact evidence"
+      ],
+      "governance_rules": [
+        "Do not make safeguarding, legal, medical, financial, eligibility, or funding decisions.",
+        "Do not invent outcomes, exaggerate impact, or fabricate evidence.",
+        "Do not publish public statements, submit applications, or identify beneficiaries without human review.",
+        "Start narrow and solve the highest-pressure admin loop first.",
+        "Use data and safeguarding boundaries before named charity/CIC build work."
+      ]
+    }
+  }
+}
+

@@ -144,6 +144,28 @@ You can override it:
 python tools/local_os/axis_answer.py "What is Axis Local OS?" --model qwen3-coder:latest --timeout 300
 ```
 
+## Registered Modules
+
+```powershell
+python tools/local_os/axis_modules.py list
+python tools/local_os/axis_modules.py show charity_cic_ai_os
+python tools/local_os/axis_modules.py route "Create a charity funding workflow"
+```
+
+The module registry lives at:
+
+```text
+config/modules.json
+```
+
+This is where Axis Local OS starts turning stored docs into runtime-recognised functionality.
+
+The first registered sector module is:
+
+```text
+charity_cic_ai_os
+```
+
 ## Capture New Knowledge
 
 ```powershell

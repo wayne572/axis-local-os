@@ -178,3 +178,35 @@ We added a small authority boost for core Axis Local OS documents, especially `A
 Why:
 
 This is an early version of reranking. Later, Axis should use stronger metadata and reranker logic so source quality is handled systematically.
+
+## 2026-05-15 - Docs vs Registered Functionality
+
+Lesson:
+
+A folder of documents is not the same thing as runtime functionality.
+
+What happened:
+
+The Charity/CIC AI OS already existed in the repo as a strong sector build, but Axis Local OS did not yet know it was a module.
+
+Fix:
+
+We added `config/modules.json` and registered Charity/CIC AI OS as the first sector module.
+
+Why:
+
+Registration gives Axis a structured way to know:
+
+- what the module is called
+- what it is for
+- which docs are authoritative
+- which workflows belong to it
+- which governance rules apply
+- which keywords should route into it
+
+Simple version:
+
+```text
+folder of docs = knowledge
+registered module = routable functionality
+```

@@ -119,3 +119,19 @@ Progress:
 - Verified it produces a clean sourced answer.
 - Found that source quality matters even when retrieval works.
 - Added an initial authority boost for core Axis Local OS documents.
+
+## Phase 5 Progress Notes
+
+Status: in progress
+
+Goal:
+
+Register specialist modules so Axis Local OS can recognise and route to domain functionality.
+
+First module:
+
+`charity_cic_ai_os`
+
+Why:
+
+The Charity/CIC OS already existed as sector-build material. Registration turns it into something the local runtime can inspect, validate, and route toward.
