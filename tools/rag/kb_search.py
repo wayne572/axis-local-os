@@ -57,6 +57,14 @@ def score_chunk(query_terms: list[str], chunk: dict, df: Counter, total_chunks: 
             score += 1.5
         if term in source_path:
             score += 0.75
+    # Chunk-level authority boost - the scope file is the single source of truth
+    # for which sources Axis treats as authoritative (pricing master, sales master,
+    # etc.). Only applied when the base score is above zero so an authority chunk
+    # cannot float to the top on boost alone with no actual term match.
+    if score > 0:
+        boost = float(chunk.get("authority_boost", 0.0))
+        if boost:
+            score += boost
     return score
 
 
@@ -96,7 +104,12 @@ def main() -> None:
         return
 
     for rank, (score, chunk) in enumerate(results, start=1):
-        print(f"\n[{rank}] score={score:.2f}")
+        boost = float(chunk.get("authority_boost", 0.0))
+        boost_tag = f" (+{boost:.0f} authority)" if boost else ""
+        kind = chunk.get("kind", "")
+        scope = chunk.get("scope_tag", "")
+        meta = f"[{scope}/{kind}]" if scope or kind else ""
+        print(f"\n[{rank}] score={score:.2f}{boost_tag} {meta}")
         print(f"source: {chunk['source_path']}")
         print(f"title: {chunk['title']}")
         print(f"chunk: {chunk['chunk_index']}")

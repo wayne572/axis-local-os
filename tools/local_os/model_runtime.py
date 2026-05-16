@@ -38,6 +38,11 @@ def _load_env_file() -> None:
 
 
 _load_env_file()
+
+# Legacy fallback authority boosts kept for any source path not covered by the
+# scope file's chunk-level authority_boost. The chunk-level boost is the
+# canonical source of truth - this map only applies to chunks that have no
+# scope-level boost (legacy index entries) and overlaps cleanly when both exist.
 AUTHORITY_SOURCE_BOOSTS = {
     "AXIS_OS_CODEX_CURRENT\\AXIS_LOCAL_OS_SPEC.md": 20.0,
     "AXIS_OS_CODEX_CURRENT\\AXIS_BUILD_PLAN.md": 3.0,
@@ -464,11 +469,20 @@ def generate_once(
     return result
 
 
+def _authority_score(item: tuple[float, dict[str, Any]]) -> float:
+    score, chunk = item
+    # Chunk-level boost was applied inside score_chunk. Only apply the legacy
+    # path-map boost when the chunk has no scope-level boost of its own.
+    if float(chunk.get("authority_boost", 0.0)) > 0:
+        return score
+    return score + AUTHORITY_SOURCE_BOOSTS.get(chunk.get("source_path", ""), 0.0)
+
+
 def build_grounded_prompt(question: str, limit: int) -> tuple[str, list[dict[str, Any]]]:
     raw_results = search(question, max(limit * 3, limit))
     results = sorted(
         raw_results,
-        key=lambda item: item[0] + AUTHORITY_SOURCE_BOOSTS.get(item[1].get("source_path", ""), 0.0),
+        key=_authority_score,
         reverse=True,
     )[:limit]
     sources: list[dict[str, Any]] = []
