@@ -152,6 +152,10 @@ Command Centre Connectors (step 6) is the integration layer that turns Axis into
 
 This Axis Local OS deployment is for Wayne Francis. The Wayne Copilot module binds the system to him specifically — operator profile at `CORE/OPERATOR_PROFILE.md`, KB ingest scope at `config/copilot_scope.json`, named workflows for audit-form response, daily / weekly / monthly cadence, teaching mode, and decision support mode. Single-operator deployment, not shareable. Spec at `docs/modules/WAYNE_COPILOT.md`.
 
+## Sales Proof Pipeline
+
+Case Study Capture is the two-tier capture pipeline that turns Axis client engagements into sales-ready proof. Tier 1 produces anonymised sector snapshots from each client folder (no permission required, fast to publish, built for breadth). Tier 2 produces named hero case studies for the engagements that warrant them (permission-confirmed). Both tiers run through the same workflow with compliance gates, brand application, anonymisation review, and master-index integration. Reuses the existing permission form, proof pack, and website-block artefacts under `D:\Wayne Francis\Outputs\Axis AI Final Documentation\04 Client Proof\` and `D:\Wayne Francis\Axis AI\Launch\`. Spec at `docs/modules/CASE_STUDY_CAPTURE.md`.
+
 ## Current Implementation
 
 The current local seed implementation lives in:

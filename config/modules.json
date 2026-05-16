@@ -672,6 +672,59 @@
         "Compliance halts route to the compliance protocol; the copilot does not improvise around them.",
         "Session efficiency rules from Wayne's global CLAUDE.md are enforced by the system."
       ]
+    },
+    "case_study_capture": {
+      "name": "Case Study Capture",
+      "status": "capability_spec_pending_build",
+      "type": "operator_module",
+      "purpose": "Two-tier capture pipeline turning Axis client engagements into sales-ready proof. Tier 1: anonymised sector snapshots (no permission, one per active client folder). Tier 2: named hero case studies (permission-confirmed). Both run through the same workflow with compliance gates, brand application, and master-index integration.",
+      "base_path": "docs/modules",
+      "authority_docs": [
+        "docs/modules/CASE_STUDY_CAPTURE.md",
+        "CORE/OPERATOR_PROFILE.md"
+      ],
+      "workflow_docs": [
+        "docs/modules/CASE_STUDY_CAPTURE.md"
+      ],
+      "governance_docs": [
+        "docs/modules/CASE_STUDY_CAPTURE.md",
+        "AXIS_LOCAL_OS_SPEC.md"
+      ],
+      "template_docs": [],
+      "commands": [
+        "AXIS: CASE STUDY INVENTORY",
+        "AXIS: CASE STUDY CAPTURE",
+        "AXIS: CASE STUDY INDEX",
+        "AXIS: CASE STUDY COMPLIANCE CHECK"
+      ],
+      "routing_keywords": [
+        "case study",
+        "case studies",
+        "sector snapshot",
+        "client proof",
+        "testimonial",
+        "reference case",
+        "anonymise",
+        "anonymized",
+        "before and after",
+        "pattern",
+        "transferable",
+        "sales proof",
+        "proof pack",
+        "permission form",
+        "pull quote",
+        "hero case"
+      ],
+      "governance_rules": [
+        "Tier 1 case studies never include client names, addresses, registration numbers, named contractors, or named beneficiaries.",
+        "No outcome claim ships without evidence. Default to qualitative plan-and-strategy framing.",
+        "Pricing in case studies matches the locked tier exactly.",
+        "Every snapshot writes an audit event with source folder, tier, sector identifier, and output path.",
+        "Tier 2 publication is gated on a written permission record in PERMISSION_LOG.md.",
+        "Regulated-sector engagements (MLR, financial, legal, medical, safeguarding) carry a compliance note in the published artefact.",
+        "Anonymisation runs as a Tier C check; Wayne approves before publication.",
+        "Case studies follow Wayne's existing folder convention. Output to 04 Client Proof and Axis AI Launch as appropriate."
+      ]
     }
   }
 }

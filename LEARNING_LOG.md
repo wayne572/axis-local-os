@@ -714,3 +714,41 @@ The per-client routing layer needs to consult chunk.client_slug. Today the tag i
 Simple version:
 
 Wayne can now ask Axis a question and get answers that draw on everything he has ever written across the Axis ecosystem, not just one folder. The copilot has read what Wayne has built. The next layer of governance reads the chunk tags to decide what is allowed to leave the machine.
+
+
+2026-05-16 - The Pattern Is The Proof
+Lesson:
+
+Most consultancies publish nothing about a client engagement until that client signs a permission form. The permission form is slow, often refused, and biases the public portfolio towards the loudest clients. Three years of work, two named case studies, no breadth.
+
+Wayne already has the answer in front of him. After scoping the D drive this morning, there are twelve active client folders. Some hold forty-seven files. Some hold four. All of them carry the same valuable thing the prospect actually wants to see: the transferable pattern.
+
+The transferable pattern:
+
+What sector was this. What did the business look like. What was broken before Axis arrived. What did Axis build. What changed. What other business in this sector would benefit from the same intervention.
+
+The client name is decorative. The pattern is the proof.
+
+Two tiers:
+
+Tier 1 is the sector snapshot. Anonymised. No permission needed. One per active client folder. Reads in sixty seconds. Built for volume. After one focused capture session, Wayne has eight sector snapshots spanning cleaning, lettings, art, charity, trades, property, recruitment, and serviced accommodation.
+
+Tier 2 is the named hero case study. Like the existing Gavin Brown one. Permission-confirmed. Used as headline proof on the site and in proposals. One per quarter is enough.
+
+Both run through the same nine-step workflow: select source, scan contents, extract pattern, compliance check, anonymise (Tier 1 only), draft, brand apply, permission gate (Tier 2 only), file and index.
+
+Why this matters commercially:
+
+A prospect in a cleaning startup wants to see a cleaning startup snapshot. A charity wants to see a charity snapshot. The named client behind the snapshot is irrelevant. The sector match is what closes the conversation. Until today, Wayne was sitting on a portfolio he was not publishing because permission was the bottleneck. Anonymisation removes the bottleneck. The portfolio ships.
+
+The compliance shape:
+
+Tier 1 stays plan-and-strategy by default. No realised outcomes claimed unless measured. Pricing matches the locked tier exactly. Regulated-sector engagements carry a flag. Anonymisation runs as a Tier C check under Response Fidelity Policy: synthesise, verify against the original, hand to Wayne for approval before publishing.
+
+What gets built first:
+
+The spec is filed. The module is registered. The build of axis_case_study.py and the sector-identifier dictionary is the next code step. Or, faster route, the capture can run as a guided workflow in the next session using existing tools (read folder, draft snapshot, compliance check, file) before the dedicated CLI lands.
+
+Simple version:
+
+The portfolio Wayne owns is bigger than the portfolio he publishes. The fix is not more clients. The fix is publishing the patterns from the clients he already has.
