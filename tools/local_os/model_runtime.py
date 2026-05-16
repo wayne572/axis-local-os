@@ -15,11 +15,16 @@ ROOT = Path(__file__).resolve().parents[2]
 CONFIG_PATH = ROOT / "config" / "local_model_runtime.json"
 ROUTING_PATH = ROOT / "config" / "model_routing.json"
 ENV_PATH = ROOT / ".env"
+OPERATOR_PROFILE_PATH = ROOT / "CORE" / "OPERATOR_PROFILE.md"
 AUDIT_DIR = ROOT / ".axis" / "audit"
 MODEL_AUDIT_PATH = AUDIT_DIR / "model_runtime.jsonl"
 DEFAULT_TIMEOUT_SECONDS = 5
 DEFAULT_GENERATE_TIMEOUT_SECONDS = 120
 HOSTED_TIMEOUT_SECONDS = 60
+PROMPT_PREAMBLE_SECTIONS = [
+    "How To Work With Wayne",
+    "What Axis Does Not Do For Wayne",
+]
 
 
 def _load_env_file() -> None:
@@ -469,6 +474,58 @@ def generate_once(
     return result
 
 
+_preamble_cache: dict[str, Any] = {"text": None, "mtime": None}
+
+
+def load_operator_preamble() -> str:
+    """Extract prompt-relevant sections from OPERATOR_PROFILE.md.
+
+    Pulls the `## How To Work With Wayne` and `## What Axis Does Not Do For Wayne`
+    sections from the canonical operator profile so every model call sees the
+    operator's communication style, teaching-mode structure, decision-support
+    structure, and the constitutional don't-list. Cached by file mtime so
+    edits to the profile take effect on next call without restart.
+    """
+    if not OPERATOR_PROFILE_PATH.exists():
+        return ""
+    try:
+        mtime = OPERATOR_PROFILE_PATH.stat().st_mtime
+    except OSError:
+        return ""
+    if _preamble_cache["mtime"] == mtime and _preamble_cache["text"] is not None:
+        return _preamble_cache["text"]
+
+    try:
+        raw = OPERATOR_PROFILE_PATH.read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return ""
+
+    sections: list[str] = []
+    current_section: str | None = None
+    current_lines: list[str] = []
+    for line in raw.splitlines():
+        if line.startswith("## "):
+            heading = line[3:].strip()
+            if current_section in PROMPT_PREAMBLE_SECTIONS and current_lines:
+                sections.append(f"## {current_section}\n" + "\n".join(current_lines).strip())
+            if heading in PROMPT_PREAMBLE_SECTIONS:
+                current_section = heading
+                current_lines = []
+            else:
+                current_section = None
+                current_lines = []
+            continue
+        if current_section in PROMPT_PREAMBLE_SECTIONS:
+            current_lines.append(line)
+    if current_section in PROMPT_PREAMBLE_SECTIONS and current_lines:
+        sections.append(f"## {current_section}\n" + "\n".join(current_lines).strip())
+
+    preamble = "\n\n".join(sections).strip()
+    _preamble_cache["mtime"] = mtime
+    _preamble_cache["text"] = preamble
+    return preamble
+
+
 def _authority_score(item: tuple[float, dict[str, Any]]) -> float:
     score, chunk = item
     # Chunk-level boost was applied inside score_chunk. Only apply the legacy
@@ -513,8 +570,14 @@ def build_grounded_prompt(question: str, limit: int) -> tuple[str, list[dict[str
         )
 
     context = "\n\n".join(context_blocks) or "No retrieved Axis Local OS context was found."
-    prompt = f"""You are answering inside Axis Local OS.
-
+    preamble = load_operator_preamble()
+    preamble_block = (
+        f"\nOperator profile (canonical from CORE/OPERATOR_PROFILE.md):\n\n{preamble}\n"
+        if preamble
+        else ""
+    )
+    prompt = f"""You are answering inside Axis Local OS. The operator is Wayne Francis.
+{preamble_block}
 Governance rules:
 - Answer only from the retrieved Axis context below.
 - Cite exact source_id values for project-memory claims.
@@ -523,6 +586,7 @@ Governance rules:
 - If the retrieved context is insufficient, say what is missing.
 - Do not claim project history from general model memory.
 - Do not run tools, edit files, or update memory.
+- Pricing is authoritative from retrieved chunks marked pricing_authority or sales_authority. Never restate pricing from model memory.
 
 Retrieved Axis context:
 {context}
@@ -556,6 +620,8 @@ def generate_grounded(
             "prompt_chars": len(prompt),
             "response_chars": len(result.response),
             "source_ids": result.source_ids,
+            "operator_preamble_applied": bool(load_operator_preamble()),
+            "operator_preamble_chars": len(load_operator_preamble()),
             "done": result.done,
             "message": result.message,
         }
