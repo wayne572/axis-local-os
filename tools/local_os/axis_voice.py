@@ -43,6 +43,8 @@ class VoiceTranscript:
     language_probability: float | None
     duration_seconds: float | None
     transcript: str
+    raw_transcript: str | None
+    transcript_corrected: bool
     uncertainty_notes: list[str]
     proposed_route: str
     proposed_next_action: str
@@ -124,6 +126,7 @@ Commands:
 python tools/local_os/axis_voice.py transcribe path/to/audio.wav
 python tools/local_os/axis_voice.py route path/to/audio.wav
 python tools/local_os/axis_voice.py ask path/to/audio.wav --confirm-transcript
+python tools/local_os/axis_voice.py ask path/to/audio.wav --transcript "Corrected transcript" --confirm-transcript
 
 Governance:
 
@@ -182,7 +185,7 @@ Audit: .axis/audit/voice_intake.jsonl
 """
 
 
-def transcribe_audio(audio_path: str) -> VoiceTranscript:
+def transcribe_audio(audio_path: str, transcript_override: str | None = None) -> VoiceTranscript:
     config = load_config()
     if not config.enabled:
         raise SystemExit("Voice intake is disabled in config/voice_intake.json")
@@ -198,10 +201,13 @@ def transcribe_audio(audio_path: str) -> VoiceTranscript:
     model = WhisperModel(config.model_size, device=config.device, compute_type=config.compute_type)
     segments, info = model.transcribe(str(path), beam_size=config.beam_size)
     segment_list = list(segments)
-    transcript = " ".join(segment.text.strip() for segment in segment_list).strip()
+    raw_transcript = " ".join(segment.text.strip() for segment in segment_list).strip()
+    transcript = transcript_override.strip() if transcript_override else raw_transcript
     uncertainty_notes: list[str] = []
-    if not transcript:
+    if not raw_transcript:
         uncertainty_notes.append("No transcript text was detected.")
+    if transcript_override:
+        uncertainty_notes.append("Transcript was manually corrected before routing or asking.")
     if any(getattr(segment, "no_speech_prob", 0.0) > 0.6 for segment in segment_list):
         uncertainty_notes.append("Some segments may contain silence or unclear speech.")
     if any(getattr(segment, "avg_logprob", 0.0) < -1.0 for segment in segment_list):
@@ -222,6 +228,8 @@ def transcribe_audio(audio_path: str) -> VoiceTranscript:
         if getattr(info, "duration", None) is not None
         else None,
         transcript=transcript,
+        raw_transcript=raw_transcript if transcript_override else None,
+        transcript_corrected=bool(transcript_override),
         uncertainty_notes=uncertainty_notes,
         proposed_route=route,
         proposed_next_action=(
@@ -251,9 +259,17 @@ def render_transcript(result: VoiceTranscript) -> str:
         "",
         result.transcript or "[No transcript text detected.]",
         "",
-        "## Uncertainty Notes",
-        "",
     ]
+    if result.transcript_corrected and result.raw_transcript is not None:
+        lines.extend(
+            [
+                "## Raw Transcript",
+                "",
+                result.raw_transcript or "[No raw transcript text detected.]",
+                "",
+            ]
+        )
+    lines.extend(["## Uncertainty Notes", ""])
     lines.extend(f"- {note}" for note in notes)
     lines.extend(
         [
@@ -295,12 +311,13 @@ def render_ask_blocked(result: VoiceTranscript) -> str:
 def ask_from_audio(
     audio_path: str,
     confirm_transcript: bool,
+    transcript_override: str | None,
     model: str,
     provider: str | None,
     limit: int,
     timeout: int,
 ):
-    transcript = transcribe_audio(audio_path)
+    transcript = transcribe_audio(audio_path, transcript_override)
     if not confirm_transcript:
         write_audit(
             {
@@ -310,6 +327,7 @@ def ask_from_audio(
                 "source_audio": transcript.source_audio,
                 "status": "blocked_pending_transcript_review",
                 "transcript_chars": len(transcript.transcript),
+                "transcript_corrected": transcript.transcript_corrected,
                 "confirmation_required": True,
             }
         )
@@ -330,6 +348,8 @@ def ask_from_audio(
             "source_audio": transcript.source_audio,
             "status": "answered_after_transcript_confirmation",
             "transcript_chars": len(transcript.transcript),
+            "transcript_corrected": transcript.transcript_corrected,
+            "raw_transcript": transcript.raw_transcript,
             "model": answer.model,
             "provider": answer.provider,
             "answer_audit_path": answer.audit_path,
@@ -350,6 +370,7 @@ def render_voice_ask(transcript: VoiceTranscript, answer) -> str:
             "## Confirmed Voice Ask",
             "",
             "Transcript was explicitly confirmed with `--confirm-transcript`.",
+            "A corrected transcript was used." if transcript.transcript_corrected else "The raw transcript was used.",
             "",
             render_answer(answer),
         ]
@@ -375,6 +396,11 @@ def main() -> None:
         command_parser = subparsers.add_parser(command, help=command_help[command])
         command_parser.add_argument("audio_path", help="Path to a local audio file")
         command_parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
+        command_parser.add_argument(
+            "--transcript",
+            default=None,
+            help="Manual transcript correction to use for routing or asking after audio transcription",
+        )
         if command == "ask":
             command_parser.add_argument(
                 "--confirm-transcript",
@@ -396,7 +422,7 @@ def main() -> None:
     if args.command == "status":
         print(render_status())
     elif args.command in {"transcribe", "route"}:
-        result = transcribe_audio(args.audio_path)
+        result = transcribe_audio(args.audio_path, args.transcript)
         if args.json:
             print(json.dumps(asdict(result), indent=2, ensure_ascii=True))
         else:
@@ -405,6 +431,7 @@ def main() -> None:
         transcript, answer = ask_from_audio(
             audio_path=args.audio_path,
             confirm_transcript=args.confirm_transcript,
+            transcript_override=args.transcript,
             model=args.model,
             provider=args.provider,
             limit=args.limit,

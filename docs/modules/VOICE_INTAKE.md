@@ -82,6 +82,7 @@ Current implementation:
 - `transcribe` validates a local audio file, runs local file transcription when `faster-whisper` is installed, prints the transcript for review, proposes a module route, and writes an audit event.
 - `route` uses the same safe transcript-first path and proposes a route without executing the request.
 - `ask` transcribes and blocks before answering unless `--confirm-transcript` is provided.
+- `--transcript "..."` can be used as a manual correction; the raw transcript is still shown and audited.
 - `capture-draft` remains a planned governed follow-on step.
 
 First runtime test:

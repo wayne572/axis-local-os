@@ -87,7 +87,8 @@ Voice Intake:
 - test route correctly proposed `relationship_connector_os`
 - transcript review remains required because the first test misheard "Axis" as "Access"
 - governed `ask` path complete with `--confirm-transcript`
-- recommended next implementation: add transcript correction before confirmation
+- transcript correction complete with `--transcript`
+- recommended next implementation: build review-only voice capture draft path
 
 Voice Reply:
 
@@ -110,7 +111,7 @@ Voice Reply:
 
 ## Recommended Next Step
 
-Add a transcript correction option so Wayne can replace a misheard transcript before confirming a voice ask.
+Build the review-only voice capture draft path for turning a corrected transcript into a proposed memory/update draft.
 
 Suggested first target:
 

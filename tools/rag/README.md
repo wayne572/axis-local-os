@@ -227,9 +227,11 @@ Governed voice ask:
 ```powershell
 python tools/local_os/axis_voice.py ask path/to/audio.wav
 python tools/local_os/axis_voice.py ask path/to/audio.wav --confirm-transcript
+python tools/local_os/axis_voice.py ask path/to/audio.wav --transcript "Corrected transcript" --confirm-transcript
 ```
 
 Without confirmation, `ask` stops after transcript review. With confirmation, it sends the transcript through the normal sourced Axis answer path.
+Use `--transcript` when speech-to-text mishears a term such as "Axis".
 
 ## Voice Reply
 

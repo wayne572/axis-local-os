@@ -41,6 +41,7 @@ These files must be reviewed before treating the master OS as updated:
 
 | Date | Change | Master sync status |
 |---|---|---|
+| 2026-05-16 | Added voice transcript correction with `--transcript`; synced to Wayne AI OS and verified corrected voice ask | synced to master |
 | 2026-05-16 | Activated RAG in `D:\Wayne AI OS\Axis OS_v3` by building `.kb/index.json`; synced conditional authority-boost search fix into master; verified Wayne Copilot and pricing retrieval plus sourced answer | synced to master |
 | 2026-05-16 | Refreshed `D:\Wayne AI OS\Axis OS_v3` from Codex/GitHub `main` at `c22b632`; copied 499 tracked files without deleting master-only material | synced to master |
 | 2026-05-11 | Optimisation scan report created | not required for live OS unless Wayne wants it in master |

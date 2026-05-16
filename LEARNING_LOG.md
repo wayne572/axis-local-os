@@ -357,6 +357,20 @@ First result:
 
 A test question, "What is Axis Local OS?", was transcribed as "What is access local OS?" but still produced a sourced answer from the Axis spec. This proves the answer path works, but it also shows the next practical improvement: Wayne needs a way to correct the transcript before confirmation.
 
+## 2026-05-16 - Transcript Correction
+
+Lesson:
+
+Speech-to-text output should be editable before it becomes the prompt.
+
+Why:
+
+The first voice tests repeatedly heard "Axis" as "access". That is harmless when Axis shows the transcript first, but it becomes annoying if Wayne has to rerecord clean audio just to correct one word.
+
+Fix:
+
+Voice commands now accept `--transcript "..."` as a manual correction. Axis still transcribes the audio, shows the raw transcript, records whether correction was used, and only sends the corrected text into routing or grounded answering after confirmation.
+
 
 2026-05-15 - Coding Agent Before Coding Autonomy
 Lesson:

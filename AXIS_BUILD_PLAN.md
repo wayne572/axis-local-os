@@ -206,7 +206,13 @@ Additional progress:
 
 Next implementation:
 
-Add a transcript correction option so Wayne can replace a misheard transcript before confirming a voice ask.
+Build the review-only voice capture draft path for turning a corrected transcript into a proposed memory/update draft.
+
+Transcript correction:
+
+- Added `--transcript` override for voice commands.
+- The corrected transcript is used for routing and confirmed asks.
+- The raw transcript is still shown and audited.
 
 ## Phase 9 Progress Notes
 
