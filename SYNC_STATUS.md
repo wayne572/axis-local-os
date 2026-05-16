@@ -1,7 +1,7 @@
 # AXIS Sync Status
 
 Status: active
-Last reviewed: 2026-05-13
+Last reviewed: 2026-05-16
 Purpose: Prevent drift between the Codex working copy and Wayne's master OS folder.
 
 ## Source-Of-Truth Decision
@@ -41,6 +41,7 @@ These files must be reviewed before treating the master OS as updated:
 
 | Date | Change | Master sync status |
 |---|---|---|
+| 2026-05-16 | Refreshed `D:\Wayne AI OS\Axis OS_v3` from Codex/GitHub `main` at `c22b632`; copied 499 tracked files without deleting master-only material | synced to master |
 | 2026-05-11 | Optimisation scan report created | not required for live OS unless Wayne wants it in master |
 | 2026-05-11 | SCC Homes proof captured | pending sync |
 | 2026-05-11 | Sonjie rota proof captured | pending sync |
