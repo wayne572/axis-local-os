@@ -19,6 +19,7 @@ def tokenize(text: str) -> list[str]:
         "the", "and", "for", "with", "that", "this", "from", "are", "you",
         "your", "into", "what", "when", "where", "have", "has", "will",
         "axis", "should", "use", "not", "but", "can", "all", "each",
+        "is", "it", "at", "as", "by", "or", "an", "be", "ai",
     }
     return [word for word in words if word not in stopwords]
 
@@ -36,6 +37,53 @@ def build_document_frequency(chunks: list[dict]) -> Counter:
     for chunk in chunks:
         df.update(set(chunk.get("tokens", [])))
     return df
+
+
+def authority_boost_applies(query_terms: list[str], chunk: dict) -> bool:
+    kind = chunk.get("kind", "")
+    terms = set(query_terms)
+    if kind == "pricing_authority":
+        return bool(
+            terms
+            & {
+                "price",
+                "pricing",
+                "cost",
+                "costs",
+                "fee",
+                "fees",
+                "quote",
+                "budget",
+                "tier",
+                "tiers",
+                "package",
+                "packages",
+                "offer",
+                "offers",
+                "readiness",
+            }
+        )
+    if kind == "sales_authority":
+        return bool(
+            terms
+            & {
+                "sales",
+                "sell",
+                "selling",
+                "offer",
+                "offers",
+                "positioning",
+                "copy",
+                "proposal",
+                "market",
+                "client",
+                "clients",
+                "sme",
+                "solo",
+                "audit",
+            }
+        )
+    return True
 
 
 def score_chunk(query_terms: list[str], chunk: dict, df: Counter, total_chunks: int) -> float:
@@ -61,7 +109,7 @@ def score_chunk(query_terms: list[str], chunk: dict, df: Counter, total_chunks: 
     # for which sources Axis treats as authoritative (pricing master, sales master,
     # etc.). Only applied when the base score is above zero so an authority chunk
     # cannot float to the top on boost alone with no actual term match.
-    if score > 0:
+    if score > 0 and authority_boost_applies(query_terms, chunk):
         boost = float(chunk.get("authority_boost", 0.0))
         if boost:
             score += boost
@@ -105,7 +153,7 @@ def main() -> None:
 
     for rank, (score, chunk) in enumerate(results, start=1):
         boost = float(chunk.get("authority_boost", 0.0))
-        boost_tag = f" (+{boost:.0f} authority)" if boost else ""
+        boost_tag = f" (+{boost:.0f} authority)" if boost and authority_boost_applies(tokenize(args.query), chunk) else ""
         kind = chunk.get("kind", "")
         scope = chunk.get("scope_tag", "")
         meta = f"[{scope}/{kind}]" if scope or kind else ""
