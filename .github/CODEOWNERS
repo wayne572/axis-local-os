@@ -1,0 +1,19 @@
+# CODEOWNERS - Axis Local OS
+# Every PR touching these paths requires @wayne572 review before merge.
+
+# Catch-all: Wayne reviews everything by default.
+*                                       @wayne572
+
+# Hard-locked: pricing, brand, constitution, infrastructure spine.
+CLAUDE.md                               @wayne572
+START_HERE.md                           @wayne572
+DEVELOPER.md                            @wayne572
+business/PRICING_AUTHORITY.md           @wayne572
+business/OFFERS.md                      @wayne572
+business/BRAND.md                       @wayne572
+business/BRAND_ARCHITECTURE.md          @wayne572
+business/VENTURES/**                    @wayne572
+CORE/AXIS_INFRASTRUCTURE/**             @wayne572
+.github/**                              @wayne572
+.gitattributes                          @wayne572
+tools/ci/**                             @wayne572
