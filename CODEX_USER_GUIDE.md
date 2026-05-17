@@ -1,4 +1,4 @@
-# Codex User Guide - Axis OS v3 Enhanced
+# Codex User Guide - Axis OS v4
 
 Status: active
 Audience: Wayne Francis
@@ -15,7 +15,7 @@ D:\Axis AI - ChatGPT OS\AXIS_OS_CODEX_CURRENT
 This is a Codex-ready copy of:
 
 ```text
-D:\Wayne AI OS\Axis OS_v3
+D:\Wayne AI OS\Axis OS_v4
 ```
 
 ## What This Version Is For
@@ -36,7 +36,7 @@ Use the Codex version when you want to:
 For live day-to-day conversation in Claude, use the master folder:
 
 ```text
-D:\Wayne AI OS\Axis OS_v3
+D:\Wayne AI OS\Axis OS_v4
 ```
 
 ## First Start In Codex
@@ -60,16 +60,18 @@ Confirm:
 5. Which pricing file is authoritative
 6. Which commands are available
 7. What should not be activated
+8. Which V4 infrastructure files control the core loop, memory, agents, governance, and idea-to-memory workflow
 ```
 
 Expected answer:
 
-- System: Axis OS v3 Enhanced for Codex
+- System: Axis OS v4 for Codex
 - Public brand: Wayne Francis
 - Trading entity: SF&W Project Solutions
 - Priority: consultancy first, SME AI Automation Audit into Client OS Build
 - Pricing authority: `business/PRICING_AUTHORITY.md`
-- Do not activate: Black Map, Hermes, old v2/v2.1 pricing
+- Do not activate: Black Map, Hermes, old v2/v2.1/v3 authority, old pricing
+- V4 infrastructure: `CORE/AXIS_INFRASTRUCTURE/`
 
 ## Core Commands
 
@@ -92,6 +94,7 @@ Expected answer:
 | `AXIS: CAPTURE THIS` | Capture note, task, idea, relationship, or decision |
 | `AXIS: DECISION` | Log a decision |
 | `AXIS: 30 DAY REVIEW` | Review system value after 30 days |
+| `AXIS: IDEA TO MEMORY` | Run the V4 idea-to-memory workflow |
 
 ## Current-System Commands
 
@@ -152,6 +155,17 @@ START_HERE.md
 CLAUDE.md
 ```
 
+V4 infrastructure:
+
+```text
+CORE\AXIS_INFRASTRUCTURE\README.md
+CORE\AXIS_INFRASTRUCTURE\AXIS_CORE_LOOP.md
+CORE\AXIS_INFRASTRUCTURE\AXIS_MEMORY_ARCHITECTURE.md
+CORE\AXIS_INFRASTRUCTURE\AXIS_AGENT_SYSTEM.md
+CORE\AXIS_INFRASTRUCTURE\AXIS_GOVERNANCE_LAYER.md
+CORE\AXIS_INFRASTRUCTURE\AXIS_MVP_WORKFLOW_IDEA_TO_MEMORY.md
+```
+
 Guide folder:
 
 ```text
@@ -208,7 +222,7 @@ Do not treat these as active:
 
 - Black Map
 - Hermes
-- old v2/v2.1 versions
+- old v2/v2.1/v3 versions
 - old Axis OS Deployment / Axis Live pricing
 - Telegram or WhatsApp automation as already built
 
@@ -219,7 +233,7 @@ The Codex copy and Wayne AI OS master folder do not sync automatically.
 Master folder:
 
 ```text
-D:\Wayne AI OS\Axis OS_v3
+D:\Wayne AI OS\Axis OS_v4
 ```
 
 Codex copy:
@@ -231,7 +245,7 @@ D:\Axis AI - ChatGPT OS\AXIS_OS_CODEX_CURRENT
 If you make a useful improvement in Codex, ask:
 
 ```text
-Copy this improvement back into the master Axis OS v3 folder and update the backup.
+Copy this improvement back into the master Axis OS v4 folder and update the backup.
 ```
 
 ## Quick Test

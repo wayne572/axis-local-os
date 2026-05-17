@@ -49,6 +49,7 @@ These files must be reviewed before treating the master OS as updated:
 
 | Date | Change | Master sync status |
 |---|---|---|
+| 2026-05-17 | Updated Codex-specific OS guidance (`AGENTS.md`, `CODEX.md`, `CODEX_USER_GUIDE.md`) to use Axis OS v4 logic, V4 infrastructure files, and `D:\Wayne AI OS\Axis OS_v4`; synced the same files back to Wayne's V4 master folder | synced to master and GitHub |
 | 2026-05-17 | Created `D:\Wayne AI OS\Axis OS_v4` from v3, added `CORE/AXIS_INFRASTRUCTURE`, updated V4 entry files, backed up v3, mirrored V4 into GitHub repo, and pushed `main` to `wayne572/axis-local-os` | synced to master and GitHub |
 | 2026-05-16 | Added voice transcript correction with `--transcript`; synced to Wayne AI OS and verified corrected voice ask | synced to master |
 | 2026-05-16 | Activated RAG in `D:\Wayne AI OS\Axis OS_v3` by building `.kb/index.json`; synced conditional authority-boost search fix into master; verified Wayne Copilot and pricing retrieval plus sourced answer | synced to master |

@@ -1,7 +1,7 @@
-# AGENTS.md - Axis OS v3 Enhanced For Codex
+# AGENTS.md - Axis OS v4 For Codex
 
 Status: active Codex working copy
-Source system: `D:\Wayne AI OS\Axis OS_v3`
+Source system: `D:\Wayne AI OS\Axis OS_v4`
 Codex workspace copy: `D:\Axis AI - ChatGPT OS\AXIS_OS_CODEX_CURRENT`
 
 ## Identity
@@ -25,11 +25,24 @@ When this folder is opened in Codex, read:
 1. `START_HERE.md`
 2. `CLAUDE.md`
 3. `CODEX.md`
-4. `business/TRACKING/ACTIVE_WORKSTREAMS.md`
-5. `business/BRAND_ARCHITECTURE.md`
-6. `business/PRICING_AUTHORITY.md`
-7. `../final-docs-drafts/AXIS_AI_OS_BUSINESS_BIBLE.md` for offer/delivery/business questions
-8. only the files needed for the current task
+4. `CORE/AXIS_INFRASTRUCTURE/README.md`
+5. `business/TRACKING/ACTIVE_WORKSTREAMS.md`
+6. `business/BRAND_ARCHITECTURE.md`
+7. `business/PRICING_AUTHORITY.md`
+8. `../final-docs-drafts/AXIS_AI_OS_BUSINESS_BIBLE.md` for offer/delivery/business questions
+9. only the files needed for the current task
+
+## V4 Infrastructure Rule
+
+Axis OS v4 is governed operational infrastructure.
+
+Use:
+
+- `CORE/AXIS_INFRASTRUCTURE/AXIS_CORE_LOOP.md` for lifecycle, handoffs, governance checkpoints, and memory timing
+- `CORE/AXIS_INFRASTRUCTURE/AXIS_MEMORY_ARCHITECTURE.md` for short-term, project, workflow, reflection, and archived memory
+- `CORE/AXIS_INFRASTRUCTURE/AXIS_AGENT_SYSTEM.md` for roles, authority boundaries, orchestration, and escalation
+- `CORE/AXIS_INFRASTRUCTURE/AXIS_GOVERNANCE_LAYER.md` for validation, auditability, reflection controls, and workflow integrity
+- `CORE/AXIS_INFRASTRUCTURE/AXIS_MVP_WORKFLOW_IDEA_TO_MEMORY.md` for the first end-to-end operating loop
 
 ## Current Priority
 
@@ -89,19 +102,22 @@ Codex should not pretend to send emails, run unavailable connectors, or access t
 | `Run client governance check` | Check consent, human review, and data boundaries |
 | `Create client-safe version` | Use the client version checklist |
 | `Plan message capture` | Use the voice/message capture plan |
+| `AXIS: IDEA TO MEMORY` | Use the V4 MVP idea-to-memory workflow |
 
 ## File Editing Rules
 
 When editing this Codex copy:
 
-- preserve the v3 OS structure
+- preserve the v4 OS structure
 - do not overwrite logs unless asked
 - keep old pricing superseded
+- keep v3 as fallback only
 - keep Black Map excluded unless Wayne reintroduces it
 - keep Hermes archived only
 - use `business/PRICING_AUTHORITY.md` for pricing
 - update relevant guides when adding commands
 - create backups before major structural changes
+- update `SYNC_STATUS.md` when Codex and Wayne master state changes
 
 ## Important Files
 
@@ -116,6 +132,10 @@ Main constitution:
 Codex guide:
 
 `CODEX_USER_GUIDE.md`
+
+V4 infrastructure:
+
+`CORE/AXIS_INFRASTRUCTURE/README.md`
 
 Command guides:
 

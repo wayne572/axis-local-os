@@ -1,7 +1,7 @@
-# CODEX.md - Using Axis OS v3 Enhanced In Codex
+# CODEX.md - Using Axis OS v4 In Codex
 
 Status: active
-Purpose: Codex-specific operating notes for Wayne's current AXIS OS.
+Purpose: Codex-specific operating notes for Wayne's current Axis OS v4.
 
 ## What This Copy Is
 
@@ -13,13 +13,18 @@ Active folder:
 
 Source/master working folder:
 
-`D:\Wayne AI OS\Axis OS_v3`
+`D:\Wayne AI OS\Axis OS_v4`
+
+Core V4 infrastructure:
+
+`CORE\AXIS_INFRASTRUCTURE\README.md`
 
 ## How Codex Should Behave
 
 Codex should:
 
 - read the relevant OS files before making changes
+- read `CORE/AXIS_INFRASTRUCTURE/README.md` when work affects the operating model
 - use existing AXIS structure
 - edit files carefully
 - preserve client-safe boundaries
@@ -28,15 +33,18 @@ Codex should:
 - use `../final-docs-drafts/AXIS_BUILD_DELIVERY_MASTER_SOP.md` for build delivery SOPs
 - update documentation when commands or workflows change
 - verify changes after editing
+- keep Codex-specific guidance aligned with V4 while preserving Claude as the live operator model
 
 Codex should not:
 
 - treat old v2/v2.1 pricing as current
+- treat v3 as active authority
 - activate Black Map
 - reactivate Hermes
 - promise WhatsApp/Telegram automation as built
 - expose internal Wayne files inside client copies
 - invent unavailable tools or integrations
+- bypass the V4 governance or memory rules in `CORE/AXIS_INFRASTRUCTURE`
 
 ## Best Uses In Codex
 
@@ -67,6 +75,7 @@ Confirm:
 6. Which commands are available
 7. What should not be activated
 8. Which Business Bible and Master SOP are current
+9. Which V4 infrastructure files control the core loop, memory, agents, governance, and MVP workflow
 ```
 
 ## Current Business Guide
@@ -148,7 +157,7 @@ Current sync control file:
 
 If Codex improvements should become the master system, copy them back carefully into:
 
-`D:\Wayne AI OS\Axis OS_v3`
+`D:\Wayne AI OS\Axis OS_v4`
 
 Do not assume both folders stay synced automatically.
 
@@ -159,6 +168,6 @@ Before treating Codex changes as live in the master OS, update `SYNC_STATUS.md` 
 Precision Alpha must match between:
 
 - `D:\Axis AI - ChatGPT OS\AXIS_OS_CODEX_CURRENT\CORE\SPECIALIST_OS\PRECISION_ALPHA_OS`
-- `D:\Wayne AI OS\Axis OS_v3\CORE\SPECIALIST_OS\PRECISION_ALPHA_OS`
+- `D:\Wayne AI OS\Axis OS_v4\CORE\SPECIALIST_OS\PRECISION_ALPHA_OS`
 
 When one is updated, review and sync the other before treating the change as complete.
