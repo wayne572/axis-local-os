@@ -1,7 +1,7 @@
 # SME AI Automation Audit - No-Code Delivery Plan
 
-Status: active draft
-Price: GBP 5,595, in review
+Status: active
+Price: ladder GBP 2,500 / GBP 4,500 / GBP 6,500 (one-time). See `business/PRICING_AUTHORITY.md`.
 Owner / brand: Wayne Francis
 Trading entity: SF&W Project Solutions
 Purpose: Deliver an SME AI Automation Audit without programming.

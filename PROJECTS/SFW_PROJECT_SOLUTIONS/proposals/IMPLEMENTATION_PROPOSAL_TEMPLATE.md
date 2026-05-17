@@ -108,16 +108,23 @@ Use the relevant pricing line below.
 
 ### Standard Prices
 
-| Offer | Price | When To Use |
-|---|---:|---|
-| Solo Operator OS | GBP 3,995 one-time | solo consultants, freelancers, solopreneurs, expert practitioners |
-| SME AI Automation Audit | GBP 5,595 | SME diagnosis and automation roadmap |
-| Client OS Build And Handover | GBP 9,995 | custom implementation after audit |
-| Relationship Connector Mode | GBP 3,195 per quarter | post-build optimisation and ongoing support |
+Pricing is locked in `business/PRICING_AUTHORITY.md`. Recommended default tier shown in bold.
+
+| Offer | Ladder | When To Use |
+|---|---|---|
+| Solo Operator OS | GBP 1,495 / **GBP 2,495** / GBP 3,995 (one-time) | solo consultants, freelancers, solopreneurs, expert practitioners |
+| SME AI Automation Audit | GBP 2,500 / **GBP 4,500** / GBP 6,500 (one-time) | SME diagnosis and automation roadmap |
+| Client OS Build And Handover | GBP 6,500 / **GBP 9,500** / GBP 12,500 (one-time) | custom implementation after audit |
+| Audit + Build Bundle | GBP 9,995 / **GBP 12,995** / GBP 15,995 (one-time) | committed clients buying audit and build together |
+| OS Care Plan | GBP 750 / **GBP 995** / GBP 1,495 per month | post-build optimisation and ongoing support (no lock-in) |
+
+Audit converts to Build at full credit within 90 days.
 
 ### Proposed Investment
 
 Selected offer:
+
+Selected tier:
 
 Project fee:
 
@@ -125,13 +132,11 @@ Audit fee, if separate:
 
 Build fee:
 
-Optional quarterly support:
-
 Total initial investment:
 
 Payment terms:
 
-Optional monthly support:
+Optional monthly support (OS Care Plan):
 
 Third-party tool costs:
 

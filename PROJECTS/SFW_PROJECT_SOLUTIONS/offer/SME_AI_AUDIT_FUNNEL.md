@@ -62,13 +62,14 @@ Delivery:
 - Prioritised implementation plan
 
 Price:
-GBP 5,595 for the full SME AI Automation Audit.
+SME AI Automation Audit ladder: GBP 2,500 (Lite) / GBP 4,500 (Core, recommended) / GBP 6,500 (Deep Dive).
+Source of truth: `business/PRICING_AUTHORITY.md`.
 
 Optional introductory conversation:
-Free short fit check before paid audit.
+Free AI Readiness Review before paid audit.
 
 Paid implementation:
-Client OS Build And Handover starts from GBP 9,995 after workflow review.
+Client OS Build And Handover starts from GBP 6,500 (Foundation) and is sized after the audit. Bundled Audit + Build available from GBP 9,995 (Launch).
 
 ## Funnel
 

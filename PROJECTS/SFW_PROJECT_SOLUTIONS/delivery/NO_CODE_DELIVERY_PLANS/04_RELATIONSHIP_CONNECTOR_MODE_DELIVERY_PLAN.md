@@ -1,10 +1,10 @@
-# Relationship Connector Mode - No-Code Delivery Plan
+# Relationship Connector Mode - Workflow Pattern Reference
 
-Status: active draft
-Price: GBP 3,195 per quarter, in review
+Status: retired as standalone offer - reference only
+Replaced by: OS Care Plan. See `business/PRICING_AUTHORITY.md` for the current ladder (GBP 750 / GBP 995 / GBP 1,495 per month).
 Owner / brand: Wayne Francis
 Trading entity: SF&W Project Solutions
-Purpose: Deliver quarterly relationship and operations optimisation without programming.
+Purpose: Document the relationship and operations optimisation workflow pattern. Use this pattern inside Solo Operator OS, Client OS, or OS Care Plan engagements - not as a standalone product.
 
 ## Who This Is For
 

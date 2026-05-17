@@ -189,16 +189,17 @@ Avoid:
 
 ## Pricing Rules
 
-Current pricing should stay in review until Wayne approves it:
+Pricing is locked in `business/PRICING_AUTHORITY.md`. Always quote from that file.
 
-- Solo Operator OS: GBP 3,995
-- SME AI Automation Audit: GBP 5,595
-- Client OS Build And Handover: GBP 9,995
-- Relationship Connector Mode: GBP 3,195 per quarter
+Current ladder (recommended default tier in bold):
 
-If pricing appears in public copy, mark it as draft or confirm Wayne has approved it.
+- Solo Operator OS: GBP 1,495 / **GBP 2,495** / GBP 3,995 (one-time)
+- SME AI Automation Audit: GBP 2,500 / **GBP 4,500** / GBP 6,500 (one-time)
+- Client OS Build And Handover: GBP 6,500 / **GBP 9,500** / GBP 12,500 (one-time)
+- Audit + Build Bundle: GBP 9,995 / **GBP 12,995** / GBP 15,995 (one-time)
+- OS Care Plan: GBP 750 / **GBP 995** / GBP 1,495 per month
 
-Always check `business/PRICING_AUTHORITY.md` before quoting pricing.
+Relationship Connector Mode is retired as a standalone offer. The post-build support path is now OS Care Plan.
 
 Never use superseded pricing from v2, v2.1, archives, old sales guides, old outreach runbooks, or old launch material.
 

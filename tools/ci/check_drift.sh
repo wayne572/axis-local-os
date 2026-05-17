@@ -49,12 +49,7 @@ EXCLUDES=(
   ':!tools/ci/**'
   ':!.github/**'
   # --- DRIFT EXEMPT (tracked) ---
-  ':!DEVELOPER.md'
-  ':!PROJECTS/SFW_PROJECT_SOLUTIONS/offer/PRICING_AND_VALUE_GUIDE.md'
-  ':!PROJECTS/SFW_PROJECT_SOLUTIONS/offer/SME_AI_AUDIT_FUNNEL.md'
-  ':!PROJECTS/SFW_PROJECT_SOLUTIONS/proposals/IMPLEMENTATION_PROPOSAL_TEMPLATE.md'
-  ':!PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/NO_CODE_DELIVERY_PLANS/02_SME_AI_AUTOMATION_AUDIT_DELIVERY_PLAN.md'
-  ':!PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/NO_CODE_DELIVERY_PLANS/04_RELATIONSHIP_CONNECTOR_MODE_DELIVERY_PLAN.md'
+  # (cleared 2026-05-17 - all six files de-drifted in commit cleanup)
 )
 
 # Lines containing any of these phrases are treated as "negation
