@@ -1,0 +1,34 @@
+name: production-line
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  drift-guard:
+    name: Pricing and banned-term guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run drift guard
+        run: bash tools/ci/check_drift.sh
+
+  link-check:
+    name: Markdown link check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lychee link check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude-mail
+            --exclude-path ARCHIVE_NOTES
+            --exclude-path .git
+            --max-concurrency 8
+            './**/*.md'
+          fail: true
