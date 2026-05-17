@@ -17,16 +17,24 @@ jobs:
         run: bash tools/ci/check_drift.sh
 
   link-check:
-    name: Markdown link check
+    name: External URL check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Lychee link check
+      - name: Lychee external URL check
+        # Scope: HTTP/HTTPS URLs only. Relative file paths are not
+        # checked because the repo is one half of a dual-folder
+        # operating model - many .md files intentionally point at
+        # paths in D:\Wayne AI OS\ that live outside the repo (e.g.
+        # ../final-docs-drafts/). Folder structure governs those;
+        # this job only catches dead external URLs.
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
             --no-progress
             --exclude-mail
+            --scheme https
+            --scheme http
             --exclude-path ARCHIVE_NOTES
             --exclude-path .git
             --max-concurrency 8
