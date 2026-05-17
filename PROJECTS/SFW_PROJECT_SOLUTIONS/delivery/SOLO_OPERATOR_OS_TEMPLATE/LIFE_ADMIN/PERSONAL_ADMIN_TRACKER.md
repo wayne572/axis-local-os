@@ -34,3 +34,7 @@ Use this when the user feels overloaded:
 ## Safety Note
 
 For legal, tax, medical, debt, insurance, or regulated financial matters, help the user prepare questions and documents, but recommend qualified advice where needed.
+
+If the user works through a limited company, hires freelancers, uses contractors, or is asked about IR35 / off-payroll working, flag this as a tax/legal review item.
+
+The OS can help organise the facts and prepare questions. It must not decide employment status, IR35 status, or tax treatment.

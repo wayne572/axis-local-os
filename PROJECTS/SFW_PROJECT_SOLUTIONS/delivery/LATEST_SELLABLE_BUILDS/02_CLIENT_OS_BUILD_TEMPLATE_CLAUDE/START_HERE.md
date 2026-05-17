@@ -7,8 +7,9 @@ Read in this order:
 1. `CLAUDE.md`
 2. `BUSINESS/CLIENT_CONTEXT.md`
 3. `BUSINESS/TRACKING/ACTIVE_WORKSTREAMS.md`
-4. Relevant workflow file under `WORKFLOWS`
-5. Relevant module under `CORE/WORKFLOW_MODULES`
+4. `V4_OPERATING_LOGIC.md`
+5. Relevant workflow file under `WORKFLOWS`
+6. Relevant module under `CORE/WORKFLOW_MODULES`
 
 ## First Client Setup
 
@@ -21,6 +22,7 @@ Before handover, complete:
 - `BUSINESS/TRACKING/ACTIVE_WORKSTREAMS.md`
 - `BUSINESS/TRACKING/DECISION_LOG.md`
 - `BUSINESS/TRACKING/SESSION_LOG.md`
+- `V4_OPERATING_LOGIC.md`
 - `HANDOVER/CLIENT_OS_GROWTH_ACCEPTANCE_TESTS.md` if this is a Growth build
 - `HANDOVER/FIRST_7_DAYS_ADOPTION_PLAN.md`
 - `HANDOVER/CLIENT_OS_GROWTH_HANDOVER_SCRIPT.md`
@@ -42,6 +44,16 @@ During first-time setup only, ask whether the client wants to give their AI PA a
 Default name:
 Axis
 
+## V4 Operating Loop
+
+Every workflow should move through:
+
+```text
+Capture -> Structure -> Operate -> Review -> Memory Update
+```
+
+Only update durable memory when the note, decision, relationship detail, or workflow rule will be useful beyond the current session.
+
 ## Daily Use
 
 Client can ask:
@@ -55,6 +67,21 @@ Claude should return:
 2. due follow-ups
 3. workflow blockers
 4. next three actions
+
+## Idea To Memory
+
+Client can ask:
+
+```text
+AXIS: IDEA TO MEMORY
+```
+
+Claude should:
+1. capture the idea
+2. structure it into plan, workflow change, decision, or backlog
+3. identify owner, status, and next action
+4. review for scope and risk
+5. update the correct tracker or memory only if appropriate
 
 ## Module Use
 
@@ -83,6 +110,8 @@ Claude should return:
 ## Growth Delivery Standard
 
 For Client OS Growth, do not build before Audit, scope, blueprint, role map, acceptance tests, and handover/adoption plan are complete.
+
+Do not mark a Growth build ready until the V4 operating loop, memory discipline, and governance checks have been tested.
 
 ## Support
 

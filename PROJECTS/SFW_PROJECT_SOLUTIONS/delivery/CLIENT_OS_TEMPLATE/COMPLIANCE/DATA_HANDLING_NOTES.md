@@ -56,6 +56,19 @@ Mark compliance as `in review` if:
 - a new tool is added
 - data leaves the client's usual systems
 - usage tracking or analytics are enabled
+- contractors, freelancers, consultants, agency workers, or limited company workers are involved
+
+## IR35 / Off-Payroll Working
+
+If a workflow involves contractors, freelancers, consultants, agency workers, or workers through limited companies, flag possible IR35 / off-payroll working considerations.
+
+The OS may help organise information, track whether a status check has been completed, and prepare questions for an adviser.
+
+The OS must not make employment status, tax, or legal determinations.
+
+Use:
+
+`COMPLIANCE/IR35_OFF_PAYROLL_RISK_FLAG.md`
 
 ## Usage Tracking
 

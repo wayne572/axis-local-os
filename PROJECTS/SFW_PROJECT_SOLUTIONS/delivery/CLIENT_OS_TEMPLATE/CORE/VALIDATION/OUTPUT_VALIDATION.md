@@ -15,6 +15,7 @@ Before delivering an output, confirm:
 6. It flags risks or blockers.
 7. It does not invent business facts.
 8. It handles data and compliance carefully.
+9. It flags IR35 / off-payroll working risk where contractor, freelancer, agency worker, or limited company worker workflows are involved.
 
 ## Stop Conditions
 
@@ -23,6 +24,7 @@ Stop and ask for clarification if:
 - scope is unclear
 - legal/compliance wording is being changed
 - personal data use is unclear
+- the client asks the OS to decide employment status, IR35 status, or tax treatment
 - the client asks for something outside agreed scope
 
 ## Review States
@@ -32,4 +34,3 @@ Use:
 - in review
 - locked
 - superseded
-

@@ -13,6 +13,8 @@ Purpose: Confirms the client OS is ready to hand over.
 - [ ] Data handling notes reviewed
 - [ ] Usage tracking notice reviewed
 - [ ] Client consent and analytics options recorded
+- [ ] Contractor, freelancer, agency worker, and limited company worker use checked
+- [ ] IR35 / off-payroll risk flag reviewed if relevant
 - [ ] Email templates reviewed
 - [ ] Prompt library reviewed
 - [ ] User guide reviewed
@@ -30,6 +32,7 @@ Purpose: Confirms the client OS is ready to hand over.
 - [ ] Show how to update a workflow
 - [ ] Show how to draft and review emails
 - [ ] Explain compliance guardrails
+- [ ] Explain IR35 / off-payroll boundary if contractor workflows are in scope
 - [ ] Explain what usage is tracked and why
 - [ ] Explain optional analytics and opt-out
 - [ ] Explain when to contact SF&W

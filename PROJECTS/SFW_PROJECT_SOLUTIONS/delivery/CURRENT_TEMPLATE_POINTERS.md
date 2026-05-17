@@ -1,7 +1,7 @@
 # Current Template Pointers
 
 Status: active
-Last reviewed: 2026-05-13
+Last reviewed: 2026-05-17
 Purpose: Identify the canonical delivery templates so archived, shipped, and test folders are not edited by mistake.
 
 ## Core Rule
@@ -20,8 +20,25 @@ Do not create new client work from:
 
 | Product / Use Case | Canonical Folder | Platform Default | Status |
 |---|---|---|---|
-| Solo Operator OS | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE` | Claude | current template; includes simple user guide, first 7 days guide, acceptance tests, shipping checklist, and platform notes |
-| Client OS Build / Growth Template | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE` | Claude | current template; includes Growth blueprint, role map, owner command centre example, acceptance tests, adoption plan, handover script, change control, shipping checklist, and sample records |
+| Solo Operator OS | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE` | Claude | production V4 template; includes `V4_OPERATING_LOGIC.md`, idea-to-memory workflow, memory discipline, simple user guide, first 7 days guide, acceptance tests, shipping checklist, and platform notes |
+| Client OS Build / Growth Template | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE` | Claude | production V4 template; includes `V4_OPERATING_LOGIC.md`, Growth blueprint, role map, owner command centre example, acceptance tests, adoption plan, handover script, change control, shipping checklist, and sample records |
+
+## V4 Template Rule
+
+All production AI OS builds must be created from the V4 templates above.
+
+Minimum required operating loop:
+
+```text
+Capture -> Structure -> Operate -> Review -> Memory Update
+```
+
+Do not ship a production build until the relevant acceptance tests confirm:
+
+- one full workflow loop works end-to-end
+- `AXIS: IDEA TO MEMORY` is available
+- memory updates are scoped, useful, and approved
+- governance and human review boundaries are clear
 
 ## Current Business And Delivery Authority
 

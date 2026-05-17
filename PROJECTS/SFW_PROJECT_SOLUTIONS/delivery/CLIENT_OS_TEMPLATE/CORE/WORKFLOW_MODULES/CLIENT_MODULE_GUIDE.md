@@ -11,6 +11,12 @@ They are not separate bots.
 
 The client talks to the same assistant, and the assistant uses the right module in the background.
 
+Each module should still follow the V4 loop:
+
+```text
+Capture -> Structure -> Operate -> Review -> Memory Update
+```
+
 ## Available Modules
 
 ### 1. Enquiry Follow-Up
@@ -113,6 +119,22 @@ Example prompt:
 Run the weekly review.
 ```
 
+### 8. Idea To Memory
+
+Use for:
+- new improvement ideas
+- workflow changes
+- future opportunities
+- useful operating lessons
+
+Example prompt:
+
+```text
+AXIS: IDEA TO MEMORY
+```
+
+This should create a structured plan, workflow update, decision, or backlog item with a clear owner and next action.
+
 ## Module Access
 
 The client can ask naturally.
@@ -143,3 +165,4 @@ Only modules listed in `WORKFLOWS/WORKFLOW_INDEX.md` are active for this client.
 
 If the client asks for a module outside scope, Claude should say it needs to be added by SF&W before use.
 
+Do not add new durable memory from a module unless it is useful beyond the current session and allowed by the client's data rules.

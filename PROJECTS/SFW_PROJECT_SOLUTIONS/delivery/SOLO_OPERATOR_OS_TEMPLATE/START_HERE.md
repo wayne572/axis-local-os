@@ -18,7 +18,7 @@ If setup is incomplete, run first-time setup.
 If setup is complete, ask:
 
 ```text
-Do you want Daily Command Centre, Weekly Review, Capture, Decision Support, or Admin Clear-Down?
+Do you want Daily Command Centre, Weekly Review, Capture, Idea To Memory, Decision Support, Business Builder, or Admin Clear-Down?
 ```
 
 ## Main Commands
@@ -40,6 +40,12 @@ AXIS: CAPTURE THIS
 ```
 
 Turn a messy note, voice note, idea, or message into structured action.
+
+```text
+AXIS: IDEA TO MEMORY
+```
+
+Turn an idea into a structured plan, review point, tracker update, and memory update only when useful.
 
 ```text
 AXIS: DECISION
@@ -68,9 +74,25 @@ Review whether the OS is improving clarity, follow-through, admin, business prog
 ## Operating Standard
 
 Every session should create at least one of:
+
 - a decision
 - a next action
 - an updated tracker
 - a clearer plan
 - a useful draft
 - a closed loop
+- a reviewed memory decision
+
+## Before Handover
+
+Complete or review:
+
+- `PERSONAL_CONTEXT.md`
+- `SETUP_QUESTIONNAIRE.md`
+- `SIMPLE_USER_GUIDE.md`
+- `FIRST_7_DAYS_GUIDE.md`
+- `SOLO_ACCEPTANCE_TESTS.md`
+- `SHIPPING_CHECKLIST.md`
+- `PLATFORM_NOTES.md`
+- `V4_OPERATING_LOGIC.md`
+- `ROUTINES/30_DAY_REVIEW.md`

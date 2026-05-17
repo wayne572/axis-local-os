@@ -1,6 +1,6 @@
 # Solo Operator OS Template
 
-Status: active draft
+Status: production template - V4
 Purpose: Personal / solo entrepreneur AI OS template.
 
 ## What This Is
@@ -22,6 +22,7 @@ It helps them manage:
 This is not a general chatbot.
 
 It has:
+
 - command centre
 - active trackers
 - weekly review
@@ -29,6 +30,9 @@ It has:
 - personal admin workflows
 - solo business workflows
 - decision support
+- V4 operating logic
+- memory discipline
+- governance/review rules
 
 ## Folder Structure
 
@@ -52,6 +56,7 @@ SOLO_OPERATOR_OS/
   DECISIONS/DECISION_LOG.md
   IDEAS/IDEA_TO_ACTION.md
   SETUP_QUESTIONNAIRE.md
+  V4_OPERATING_LOGIC.md
   ROUTINES/30_DAY_REVIEW.md
 ```
 
@@ -69,6 +74,7 @@ AXIS: SOLO START
 - Solo Business Builder
 - Relationship Memory
 - Idea To Action
+- Idea To Memory
 - Decision Support
 - Personal Knowledge Base
 - Setup Questionnaire
@@ -76,7 +82,7 @@ AXIS: SOLO START
 
 ## Build Status
 
-Working draft. Ready for internal testing before client packaging.
+Production template. Use this as the current source for new Solo Operator OS builds.
 
 ## Handover Standard
 
@@ -88,3 +94,5 @@ Every Solo build should include:
 - shipping checklist
 - 30-day review route
 - platform confirmation
+- V4 operating logic
+- acceptance tests

@@ -1,7 +1,7 @@
 # Latest Sellable Builds
 
 Status: current source of truth
-Last updated: 2026-05-09
+Last updated: 2026-05-17
 Owner: Wayne Francis, trading under SF&W Project Solutions
 
 ## Purpose
@@ -9,6 +9,28 @@ Owner: Wayne Francis, trading under SF&W Project Solutions
 This folder contains the current sellable build templates.
 
 Use these before creating a new client copy.
+
+All production builds must now use the Axis V4 operating logic:
+
+```text
+capture
+-> structure
+-> plan / operate
+-> review
+-> update tracker or memory
+```
+
+Functionality is the core of the build. Every production template must include:
+
+- a clear start route
+- active loops or workstream tracking
+- decision capture
+- weekly review
+- 30-day review
+- boundary/governance rules
+- memory discipline
+- acceptance tests
+- shipping checklist
 
 ## Current Builds
 
@@ -22,6 +44,13 @@ Folder:
 
 Use this for a solo founder, consultant, freelancer, creator, or one-person business.
 
+V4 production standard:
+
+- `V4_OPERATING_LOGIC.md` must be included.
+- `AXIS: IDEA TO MEMORY` must work.
+- The build must distinguish temporary notes from durable memory.
+- The user should always leave with a next action, tracker update, or reviewed memory decision.
+
 ### 02 - Client OS Build Template
 
 Folder:
@@ -31,6 +60,13 @@ Folder:
 ```
 
 Use this after an SME audit or approved implementation scope when creating a client operating system.
+
+V4 production standard:
+
+- `V4_OPERATING_LOGIC.md` must be included.
+- Workflow changes must pass review before becoming locked authority.
+- Client memory must remain scoped to the client folder.
+- Sensitive data and compliance boundaries must be visible before handover.
 
 ## Platform Rule
 
