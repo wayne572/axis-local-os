@@ -1,21 +1,28 @@
-# START_HERE.md - Axis OS v3 Enhanced
+# START_HERE.md - Axis OS v4
 
-## How v3 Works
+## How v4 Works
 
 Type the task. DCoS routes it.
 
-DCoS is the user-facing command layer. It decides the mode, the specialist support, the review requirement, and the next action.
+DCoS is the command discipline inside Claude. Claude decides the mode, the specialist support, the review requirement, and the next action.
+
+Axis OS v4 adds one explicit operating infrastructure layer:
+
+`CORE/AXIS_INFRASTRUCTURE/README.md`
+
+Use that layer when work affects the core loop, memory, agent boundaries, governance, or end-to-end workflow design.
 
 ## Start Sequence
 
 When Claude opens this folder, read:
 
 1. `CLAUDE.md`
-2. `business/TRACKING/ACTIVE_WORKSTREAMS.md`
-3. `business/VENTURES/VENTURE_REGISTRY.md`
-4. `business/BRAND_ARCHITECTURE.md`
-5. `CORE/CLAUDE_OPERATOR/CLAUDE_OPERATOR_MODEL.md`
-6. Relevant venture, product, specialist, or project files
+2. `CORE/AXIS_INFRASTRUCTURE/README.md`
+3. `business/TRACKING/ACTIVE_WORKSTREAMS.md`
+4. `business/VENTURES/VENTURE_REGISTRY.md`
+5. `business/BRAND_ARCHITECTURE.md`
+6. `CORE/CLAUDE_OPERATOR/CLAUDE_OPERATOR_MODEL.md`
+7. Relevant venture, product, specialist, or project files
 
 For product understanding, development, or handover documentation, read:
 
@@ -194,4 +201,4 @@ Capture:
 
 ## Versions
 
-v2 locked. v2.1 frozen. v3 enhanced active.
+v2 locked. v2.1 frozen. v3 superseded. v4 active.

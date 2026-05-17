@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Axis OS v2 — Use Case Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #00B4D8;
+    --gold: #C9A84C;
+    --bg: #F7F8FA;
+    --line: #E4E7EC;
+    --text: #1A2332;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 32px; }
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 64px 0 56px;
+    border-bottom: 6px solid var(--gold);
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+  }
+  header .sub {
+    font-size: 18px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  header .meta { font-size: 14px; opacity: 0.75; }
+  header .meta span { margin-right: 20px; }
+  main { padding: 56px 0 80px; }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--navy);
+    font-size: 30px;
+    margin: 56px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gold);
+  }
+  h3 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--navy);
+    font-size: 22px;
+    margin: 32px 0 8px;
+  }
+  h4 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--teal);
+    margin: 20px 0 8px;
+  }
+  p, li { font-size: 16px; }
+  ul { padding-left: 22px; }
+  ul li { margin-bottom: 6px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(13,27,42,0.08);
+  }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); font-size: 15px; }
+  th { background: var(--navy); color: #fff; font-weight: 500; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #FAFBFC; }
+  .vertical {
+    background: #fff;
+    padding: 32px 36px;
+    border-radius: 12px;
+    margin: 24px 0;
+    border-left: 5px solid var(--teal);
+    box-shadow: 0 2px 8px rgba(13,27,42,0.06);
+  }
+  .vertical h3 { margin-top: 0; }
+  .icp {
+    display: inline-block;
+    background: var(--bg);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .hook {
+    background: var(--navy);
+    color: #fff;
+    padding: 16px 20px;
+    border-left: 4px solid var(--gold);
+    border-radius: 4px;
+    margin-top: 16px;
+    font-style: italic;
+    font-size: 16px;
+  }
+  .hook strong { color: var(--gold); font-style: normal; display: block; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .sprint {
+    background: #FFF8E6;
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 14px 0;
+  }
+  .sprint strong { color: var(--navy); }
+  .roi { background: #E6F7FB; border-left: 4px solid var(--teal); padding: 14px 18px; border-radius: 4px; margin: 14px 0; }
+  .callout {
+    background: #fff;
+    padding: 24px 28px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border-top: 4px solid var(--gold);
+  }
+  footer {
+    background: var(--navy);
+    color: #fff;
+    padding: 32px 0;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.9;
+    border-top: 6px solid var(--gold);
+  }
+  footer a { color: var(--teal); text-decoration: none; }
+  .toc {
+    background: #fff;
+    padding: 24px 28px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    border-left: 5px solid var(--gold);
+  }
+  .toc h4 { margin-top: 0; }
+  .toc ol { columns: 2; column-gap: 32px; padding-left: 22px; margin: 0; }
+  .toc li { font-size: 14px; margin-bottom: 4px; break-inside: avoid; }
+  .toc a { color: var(--navy); text-decoration: none; }
+  .toc a:hover { color: var(--teal); }
+  @media (max-width: 720px) {
+    header h1 { font-size: 34px; }
+    .toc ol { columns: 1; }
+    .wrap { padding: 0 20px; }
+    .vertical { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Axis OS v2 — Use Case Guide</h1>
+    <div class="sub">What It Does. Where It Works. How to Sell It.</div>
+    <div class="meta">
+      <span>Version: April 2026 (v2.1)</span>
+      <span>System: Axis OS v2</span>
+      <span>Author: Wayne Francis</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+<div class="callout">
+  <h4>How to Use This Guide</h4>
+  <p>Sales and scoping tool. Qualify a prospect, match pain to the right agents, pick the 14-Day Sprint entry point, and set realistic expectations. <strong>Lead with the problem. Map to the agent. Propose the sprint.</strong></p>
+</div>
+
+<h2>What Makes Axis OS v2 Different — The Customer-Triggered Handover</h2>
+<p>When a customer buys Axis OS v2, they don't wait for a consultant to set them up. They run the setup themselves, in conversation with the system.</p>
+
+<div class="callout" style="border-top-color: var(--teal);">
+  <h4>They type one command</h4>
+  <p style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);margin:0;"><code style="background:var(--bg);padding:6px 12px;border-radius:4px;">Begin Axis OS v2 setup</code></p>
+</div>
+
+<h3>The Handover Agent runs the entire deployment</h3>
+<ol>
+  <li><strong>Welcome &amp; scope</strong> — explains what's about to happen, confirms the customer is ready</li>
+  <li><strong>Onboarding</strong> — asks structured questions, writes the customer's brand, offers, content themes, and memory</li>
+  <li><strong>Diagnose &amp; prioritise</strong> — identifies the top 3 bottlenecks and the 2 workflows to build first</li>
+  <li><strong>Recommend the stack</strong> — picks pre-tested tools within budget, deduplicates costs, respects off-limits</li>
+  <li><strong>Guided setup</strong> — walks them through every tool connection, one instruction at a time</li>
+  <li><strong>End-to-end test</strong> — runs a real test on the live system before declaring it done</li>
+  <li><strong>Team playbook</strong> — generates a customer-specific guide their team can use day one</li>
+</ol>
+
+<table>
+  <tr><th>What changes for the seller</th><th>What changes for the buyer</th></tr>
+  <tr>
+    <td>1 hour of your time per deployment, not 14 days</td>
+    <td>In control from minute one</td>
+  </tr>
+  <tr>
+    <td>Customer sees value within the first 90 minutes</td>
+    <td>Builds the system in their business, not in your office</td>
+  </tr>
+  <tr>
+    <td>System tests itself before sign-off — never ship a broken deployment</td>
+    <td>Owns everything immediately</td>
+  </tr>
+  <tr>
+    <td>Capacity goes from 2 deployments per month to 10–15</td>
+    <td>If they pause, the system resumes cleanly when they're back</td>
+  </tr>
+</table>
+
+<div class="hook" style="margin-top:24px;">
+  <strong>THE PITCH LINE</strong>"You buy it on Monday. You're running on Friday. You did the setup yourself, in your business, in conversations with the system. No consultant. No installation. Yours from day one."
+</div>
+
+<div class="toc">
+  <h4>Verticals Covered</h4>
+  <ol>
+    <li><a href="#v1">Professional Services</a></li>
+    <li><a href="#v2">Trades & Home Services</a></li>
+    <li><a href="#v3">Health & Wellness</a></li>
+    <li><a href="#v4">Property</a></li>
+    <li><a href="#v5">Retail & E-Commerce</a></li>
+    <li><a href="#v6">Hospitality</a></li>
+    <li><a href="#v7">Education & Training</a></li>
+    <li><a href="#v8">Creative Agencies</a></li>
+    <li><a href="#v9">Construction & Contractors</a></li>
+    <li><a href="#v10">Non-Profits & CICs</a></li>
+    <li><a href="#v11">Recruitment & Staffing</a></li>
+    <li><a href="#v12">Financial Services</a></li>
+  </ol>
+</div>
+
+<h2>Axis OS v2 — System Reminder</h2>
+<ul>
+  <li>12 specialist agents</li>
+  <li>4 core context files: BRAND, OFFERS, CONTENT_THEMES, MEMORY</li>
+  <li>4 commands: Onboard new client / What is the current status? / Let's do the monthly system review / Summarise this session</li>
+  <li>Set up in one conversation via the Onboarding Agent</li>
+  <li>Client owns everything. No vendor lock-in.</li>
+</ul>
+
+<h2>The 13 Agents</h2>
+<table>
+  <tr><th>Agent</th><th>What It Does</th></tr>
+  <tr><td><strong>handover</strong></td><td>Runs the customer-triggered full deployment from "I just bought this" to "my system is live"</td></tr>
+  <tr><td>onboarding</td><td>Sets up the system for a new client</td></tr>
+  <tr><td>audit</td><td>Diagnoses the business — gaps, bottlenecks, missed opportunities</td></tr>
+  <tr><td>workflow</td><td>Designs repeatable processes</td></tr>
+  <tr><td>outreach</td><td>Writes targeted messages (emails, DMs, follow-ups)</td></tr>
+  <tr><td>linkedin</td><td>Creates LinkedIn content</td></tr>
+  <tr><td>social</td><td>Creates Instagram, X, TikTok content</td></tr>
+  <tr><td>design</td><td>Layouts, decks, visual direction</td></tr>
+  <tr><td>builder</td><td>Builds or specifies technical implementations</td></tr>
+  <tr><td>pipeline</td><td>Tracks leads and clients</td></tr>
+  <tr><td>qa</td><td>Reviews all outputs before they go out</td></tr>
+  <tr><td>context</td><td>Extracts relevant context from documents or sessions</td></tr>
+  <tr><td>session-summary</td><td>Captures decisions and next actions at session end</td></tr>
+</table>
+
+<h2>Universal Use Cases — Every SME</h2>
+<table>
+  <tr><th>Problem</th><th>Agent(s)</th><th>Output</th></tr>
+  <tr><td>Leads come in but don't get followed up</td><td>pipeline + outreach</td><td>Automated follow-up sequence, lead tracker in Airtable</td></tr>
+  <tr><td>No consistent content going out</td><td>linkedin + social</td><td>Weekly content batch, scheduled and ready</td></tr>
+  <tr><td>Inconsistent client onboarding</td><td>workflow + onboarding</td><td>Repeatable onboarding pack and process</td></tr>
+  <tr><td>Owner doing everything manually</td><td>audit + workflow</td><td>Mapped workflows, priority automation list</td></tr>
+  <tr><td>No clear pipeline view</td><td>pipeline</td><td>Live Airtable pipeline with status and next actions</td></tr>
+  <tr><td>Monthly progress not reviewed</td><td>session-summary</td><td>Monthly review template and captured decisions</td></tr>
+</table>
+
+<!-- VERTICAL 1 -->
+<div class="vertical" id="v1">
+  <h3>1. Professional Services</h3>
+  <span class="icp">Accountants · Solicitors · Consultants · 1–15 staff · £100k–£2m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Chasing clients for documents and signatures</li>
+    <li>No consistent follow-up on quotes or proposals</li>
+    <li>LinkedIn dead or inconsistent</li>
+    <li>Referral network not worked</li>
+    <li>Manual client onboarding</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Proposal follow-up system — auto-draft at day 3, 7, 14</li>
+    <li>LinkedIn content engine — weekly batch, reviewed before posting</li>
+    <li>Client onboarding pack — welcome, document checklist, kickoff agenda</li>
+    <li>Referral outreach sequence — keep top referrers warm</li>
+    <li>Monthly pipeline review — flag stalled prospects in one session</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Lead and proposal pipeline + first LinkedIn batch.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 2–3 hours/week saved on follow-up. 1 recovered proposal/month. Inbound enquiries lift in 4–6 weeks.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"How many proposals have you sent in the last 90 days that you never heard back from?"</div>
+</div>
+
+<!-- VERTICAL 2 -->
+<div class="vertical" id="v2">
+  <h3>2. Trades & Home Services</h3>
+  <span class="icp">Cleaning · Plumbing · Electrical · Landscaping · 1–10 staff · £50k–£500k</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Enquiries not converted</li>
+    <li>No quote follow-up</li>
+    <li>Inconsistent reviews</li>
+    <li>No social content</li>
+    <li>Repeat business missed</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Lead qualifier (Typeform → Zapier → Airtable)</li>
+    <li>Quote follow-up at day 2 and day 5</li>
+    <li>Review request workflow post-job</li>
+    <li>Social content batch (before/after photos)</li>
+    <li>Repeat customer outreach (3+ months inactive)</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Lead qualifier + quote follow-up.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1 extra job/week = £200–£500. Review volume up in 30 days. Owner saves 1–2 hours/week.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"If someone fills in your enquiry form today, what happens next — and who does it?"</div>
+</div>
+
+<!-- VERTICAL 3 -->
+<div class="vertical" id="v3">
+  <h3>3. Health & Wellness</h3>
+  <span class="icp">Clinics · Therapists · Gyms · Coaches · 1–20 staff · £60k–£1m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>New enquiries go cold</li>
+    <li>Reactive client retention</li>
+    <li>No authority content</li>
+    <li>Accidental referrals only</li>
+    <li>Manual session admin</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Enquiry-to-booking pipeline with 48-hour follow-up</li>
+    <li>Retention alert system for inactive clients</li>
+    <li>Authority content engine (LinkedIn + Instagram)</li>
+    <li>Referral programme workflow</li>
+    <li>Session check-in workflow</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Enquiry-to-booking pipeline + first content batch.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1 extra enquiry/week converted at £50–£150. 1 saved cancellation/month. Enquiry volume lifts in 6–8 weeks.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"How many people enquire but never actually book — and do you know why?"</div>
+</div>
+
+<!-- VERTICAL 4 -->
+<div class="vertical" id="v4">
+  <h3>4. Property</h3>
+  <span class="icp">Estate Agents · Lettings · Property Management · Independent · £150k–£3m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Slow vendor and landlord lead follow-up</li>
+    <li>No content vs online agents</li>
+    <li>Inconsistent enquiry handling</li>
+    <li>Manual landlord reports</li>
+    <li>Out of mind between transactions</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Vendor lead pipeline with rapid follow-up</li>
+    <li>Landlord monthly report</li>
+    <li>Local market content (weekly)</li>
+    <li>Past client re-engagement (12–18 months)</li>
+    <li>Tenant communication workflow</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Vendor lead pipeline + local content batch.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1 extra instruction/month = £1,500–£4,000+ in fees. Landlord retention improves. Local authority builds in 6–10 weeks.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"What happens when a vendor fills in your online valuation form at 10pm on a Sunday?"</div>
+</div>
+
+<!-- VERTICAL 5 -->
+<div class="vertical" id="v5">
+  <h3>5. Retail & E-Commerce</h3>
+  <span class="icp">Independent Shops · DTC Brands · 1–15 staff · £100k–£2m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Inconsistent social</li>
+    <li>No follow-up sequences</li>
+    <li>Last-minute promotions</li>
+    <li>Content burden on owner</li>
+    <li>No pipeline view</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Social content engine (IG, TikTok, X)</li>
+    <li>Post-purchase 4-email sequence</li>
+    <li>Seasonal campaign planner (6 weeks ahead)</li>
+    <li>Abandoned basket outreach</li>
+    <li>Wholesale/trade outreach</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Social content engine + post-purchase sequence.</div>
+  <div class="roi"><strong>ROI Signal:</strong> Repeat purchase rate up in 60 days. Engagement growth in 4–6 weeks. 1 new stockist from a 20-contact sequence.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"What does a customer receive from you in the 30 days after they buy?"</div>
+</div>
+
+<!-- VERTICAL 6 -->
+<div class="vertical" id="v6">
+  <h3>6. Hospitality</h3>
+  <span class="icp">Restaurants · Cafes · Event Venues · 1–30 staff · £150k–£2m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Event/group enquiries go cold</li>
+    <li>No lapsed customer system</li>
+    <li>Reactive social</li>
+    <li>No active review management</li>
+    <li>Last-minute seasonal pushes</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Event enquiry pipeline</li>
+    <li>Lapsed customer campaign (60+ days)</li>
+    <li>Social content batch (food, team, atmosphere)</li>
+    <li>Review request workflow (email/SMS)</li>
+    <li>Seasonal promotion plan (4 weeks ahead)</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Event enquiry pipeline + social content batch.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1 recovered group booking/month = £300–£2,000+. Review volume often doubles in 60 days. Social growth in 4–6 weeks.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"How many group booking enquiries do you get that you never convert?"</div>
+</div>
+
+<!-- VERTICAL 7 -->
+<div class="vertical" id="v7">
+  <h3>7. Education & Training</h3>
+  <span class="icp">Tutors · Course Creators · Training Providers · Solo–10 staff · £40k–£500k</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Leads not converting to enrolment</li>
+    <li>Ad hoc launches</li>
+    <li>No nurture sequence</li>
+    <li>Inconsistent student onboarding</li>
+    <li>No LinkedIn presence</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Enrolment pipeline</li>
+    <li>Launch sequence (5–7 emails, reusable)</li>
+    <li>Student onboarding pack</li>
+    <li>LinkedIn authority content</li>
+    <li>Alumni re-engagement</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Enrolment pipeline + launch email sequence.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1 extra enrolment/cohort at £500–£2,000. Better waitlist conversion. LinkedIn compounds over 8–12 weeks.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"When someone says they're interested in your course, what happens next — and is it consistent every time?"</div>
+</div>
+
+<!-- VERTICAL 8 -->
+<div class="vertical" id="v8">
+  <h3>8. Creative Agencies</h3>
+  <span class="icp">Marketing · Design · Video · PR · 2–20 staff · £150k–£2m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Empty pipeline</li>
+    <li>Proposal follow-up inconsistent</li>
+    <li>Own marketing neglected</li>
+    <li>Slow client onboarding</li>
+    <li>No case study capture</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>New business pipeline</li>
+    <li>Own LinkedIn content engine</li>
+    <li>Client onboarding workflow</li>
+    <li>Proposal follow-up at day 3 and 10</li>
+    <li>Case study capture template</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> New business pipeline + own LinkedIn content.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1 recovered proposal/month at £2k–£10k. Content-driven leads in 8–12 weeks. Faster onboarding = better first impression.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"When did you last post on your own LinkedIn — and when did you last follow up on a proposal?"</div>
+</div>
+
+<!-- VERTICAL 9 -->
+<div class="vertical" id="v9">
+  <h3>9. Construction & Contractors</h3>
+  <span class="icp">Project-based · 1–20 staff · £200k–£5m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Quote and tender follow-up falls off</li>
+    <li>Subcontractor coordination ad hoc</li>
+    <li>Manual payment chasing</li>
+    <li>No online presence</li>
+    <li>Repeat clients not maintained</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Tender and quote tracker</li>
+    <li>Project update workflow (3 stages)</li>
+    <li>Payment chase sequence (day 7, day 14)</li>
+    <li>LinkedIn presence (monthly project posts)</li>
+    <li>Repeat client outreach (12+ months)</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Quote tracker + payment chase sequence.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1 recovered tender/quarter at £10k–£100k. Debtor days down by 10. Commercial clients check LinkedIn before awarding.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"How many quotes have you sent in the last 6 months that you never heard back from?"</div>
+</div>
+
+<!-- VERTICAL 10 -->
+<div class="vertical" id="v10">
+  <h3>10. Non-Profits & CICs</h3>
+  <span class="icp">Community Orgs · Social Enterprises · 1–10 staff + volunteers · £30k–£500k</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Grant application burden</li>
+    <li>Manual impact reporting</li>
+    <li>Ad hoc communications</li>
+    <li>Disorganised volunteer coordination</li>
+    <li>Limited awareness</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Grant writing workflow</li>
+    <li>Impact report template</li>
+    <li>Social content engine</li>
+    <li>Funder communication workflow</li>
+    <li>Volunteer onboarding pack</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Social content engine + funder communication workflow.</div>
+  <div class="roi"><strong>ROI Signal:</strong> Improved grant quality = £5k–£50k more funding. Funder retention up. Awareness drives volunteers and donors.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"How much time does your team spend on reporting and grant applications — and is any of it repeatable?"</div>
+</div>
+
+<!-- VERTICAL 11 -->
+<div class="vertical" id="v11">
+  <h3>11. Recruitment & Staffing</h3>
+  <span class="icp">Niche or Generalist · 1–15 staff · £200k–£5m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Disorganised candidate pipeline</li>
+    <li>Inconsistent client follow-up</li>
+    <li>Slow job advert writing</li>
+    <li>LinkedIn underused</li>
+    <li>Placed candidates not re-engaged</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Candidate pipeline (Airtable)</li>
+    <li>Client update workflow (submission, feedback, offer)</li>
+    <li>Job advert production</li>
+    <li>LinkedIn content (sector trends, success stories)</li>
+    <li>Placed candidate 3-month and 6-month check-ins</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Candidate pipeline + job advert production.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1–2 hours saved per role posted. Better fill rate. 1 referral per 10 contacts at 3-month check-in.</div>
+  <div class="hook"><strong>SALES HOOK</strong>"How long does it take you to write and post a job advert — and is the process the same every time?"</div>
+</div>
+
+<!-- VERTICAL 12 -->
+<div class="vertical" id="v12">
+  <h3>12. Financial Services</h3>
+  <span class="icp">Mortgage · Insurance · IFA · FCA Regulated · 1–10 staff · £100k–£1m</span>
+
+  <h4>Top Pain Points</h4>
+  <ul>
+    <li>Hard to track case pipeline across providers</li>
+    <li>Renewal follow-up missed</li>
+    <li>No trust-building content</li>
+    <li>Inconsistent referral partner outreach</li>
+    <li>Time-heavy compliance docs</li>
+  </ul>
+
+  <h4>Use Cases</h4>
+  <ol>
+    <li>Case pipeline (status, lender, next action)</li>
+    <li>Renewal reminder workflow (90 days out)</li>
+    <li>LinkedIn authority content</li>
+    <li>Referral partner check-in sequence</li>
+    <li>Fact-find and document chaser</li>
+  </ol>
+
+  <div class="sprint"><strong>14-Day Sprint Entry:</strong> Case pipeline + LinkedIn content.</div>
+  <div class="roi"><strong>ROI Signal:</strong> 1 extra renewal/month at £500–£1,500 proc fee. 1 reactivated referral relationship = 5–20 cases/year. Trust builds over 8–12 weeks.</div>
+  <p style="font-size:13px;color:#5a6273;margin-top:14px;"><strong>FCA note:</strong> All content goes through human review and the firm's own compliance sign-off. Axis OS v2 does not produce regulated advice.</p>
+  <div class="hook"><strong>SALES HOOK</strong>"How many of your clients are coming up for renewal in the next 90 days — and are you in front of all of them?"</div>
+</div>
+
+<h2>Where Axis OS v2 Is NOT a Fit</h2>
+<table>
+  <tr><th>Scenario</th><th>Why</th></tr>
+  <tr><td>Wants full automation, no human oversight</td><td>v2 supports humans, doesn't replace judgement</td></tr>
+  <tr><td>No existing leads or audience</td><td>Amplifies what exists, can't create demand from nothing</td></tr>
+  <tr><td>Won't engage with the system</td><td>Owner must review and approve outputs</td></tr>
+  <tr><td>Needs deep legacy CRM integration</td><td>v2 uses Airtable; bespoke integration is scoped work</td></tr>
+  <tr><td>Wants a marketing agency on retainer</td><td>v2 builds the system, doesn't run campaigns</td></tr>
+  <tr><td>Needs regulated advice</td><td>v2 drafts content; doesn't produce FCA/legal sign-off</td></tr>
+  <tr><td>Wants it done for them entirely</td><td>Some involvement is always required</td></tr>
+</table>
+
+<h2>Axis OS v2 vs Hiring vs SaaS Tools</h2>
+<table>
+  <tr><th></th><th>Axis OS v2</th><th>Hiring</th><th>SaaS Tools</th></tr>
+  <tr><td>Investment structure</td><td>Fixed sprint + optional ongoing optimisation</td><td>Salary + NI + benefits + recruitment cost</td><td>Recurring monthly subscriptions</td></tr>
+  <tr><td>Speed to value</td><td>14 days</td><td>1–3 months</td><td>Variable, often unused</td></tr>
+  <tr><td>Ownership</td><td>Client owns everything</td><td>Knowledge leaves with hire</td><td>Vendor dependency</td></tr>
+  <tr><td>Customisation</td><td>Built for the business</td><td>Depends on hire</td><td>Generic</td></tr>
+  <tr><td>Consistency</td><td>Runs the same every time</td><td>Depends on individual</td><td>Depends on discipline</td></tr>
+</table>
+
+<div class="callout">
+  <h4>Positioning Line</h4>
+  <p style="font-size:18px;font-family:'DM Serif Display',serif;color:var(--navy);margin:0;">Axis OS v2 costs less than a month of a hire and is set up in two weeks. The client owns it. It runs consistently. It doesn't call in sick.</p>
+</div>
+
+<h2>Fast Prospect Filter — Three Questions</h2>
+<ol>
+  <li>What's falling through the cracks right now?</li>
+  <li>Do you have leads or clients coming in — just not being followed up properly?</li>
+  <li>Are you willing to review and approve AI-drafted outputs, or do you want it fully automated?</li>
+</ol>
+<p><em>Willing to review = proceed. Wants zero involvement = flag early.</em></p>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Axis OS v2 — Use Case Guide · April 2026 · Internal use only<br>
+    Wayne Francis · Founder, Axis AI · <a href="mailto:wayne@waynefrancis.co.uk">wayne@waynefrancis.co.uk</a>
+  </div>
+</footer>
+
+</body>
+</html>

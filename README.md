@@ -1,4 +1,4 @@
-# Axis OS v3 Enhanced
+# Axis OS v4
 
 Owner / brand: Wayne Francis
 Trading entity: SF&W Project Solutions
@@ -6,11 +6,11 @@ System: AXIS / Axis AI operating system logic
 
 ## What This Is
 
-Axis OS v3 is Wayne's active working AI operating system.
+Axis OS v4 is Wayne's active working AI operating system.
 
 It combines:
 
-- the original v3 DCoS-first control layer
+- the working v3 Claude/DCoS control layer
 - 16 specialist agents
 - execution tracking
 - GDPR and handover controls
@@ -20,6 +20,15 @@ It combines:
 - Client OS and Solo Operator OS templates
 - relationship workflow patterns for follow-up, referrals, and warm introductions
 - Claude-first operating instructions
+- a new core infrastructure layer for loop, memory, agent, governance, and MVP workflow control
+
+Axis OS v4 is built around:
+
+```text
+AI as governed operational infrastructure
+```
+
+It is not a chatbot enhancement, automation gimmick, random agent layer, or prompt collection.
 
 ## Active Priority
 
@@ -49,6 +58,10 @@ For the Axis Local OS build track:
 Then follow:
 
 `CLAUDE.md`
+
+For the v4 operating infrastructure:
+
+`CORE/AXIS_INFRASTRUCTURE/README.md`
 
 For product understanding:
 
@@ -89,6 +102,7 @@ For pricing authority:
 | `.claude/agents` | v3 specialist agent instructions |
 | `business` | active business context, trackers, GDPR, pipeline, offers |
 | `CORE` | Claude operator, DCoS, governance, validation, and Specialist OS playbooks |
+| `CORE/AXIS_INFRASTRUCTURE` | v4 core loop, memory architecture, agent system, governance map, and MVP idea-to-memory workflow |
 | `CORE/LEARNING` | Technology Radar and agent interoperability watch |
 | `PRODUCT_MANUAL` | product explanation, capability map, testing, risks, development guide |
 | `OS_GUIDES` | user guides and command references for Wayne, clients, Client OS, Solo Operator OS, SF&W, and relationship workflow patterns |
@@ -116,7 +130,7 @@ Pricing remains governed by:
 
 ## Important Boundaries
 
-- Do not use v2 or v2.1 as active authority.
+- Do not use v2, v2.1, or v3 as active authority.
 - Do not activate Black Map unless Wayne explicitly reintroduces it.
 - Do not treat Hermes as active.
 - Do not overwrite execution logs, deal logs, active client state, or pipeline history.
@@ -129,4 +143,4 @@ Pricing remains governed by:
 
 ## Current Upgrade Status
 
-Enhanced v3 is active but should remain `in review` until a live Claude startup test, Client OS test, Solo Operator test, and Relationship Connector test are completed.
+Axis OS v4 is active but should remain `in review` until a live Claude startup test, infrastructure review, Client OS test, Solo Operator test, and idea-to-memory workflow test are completed.

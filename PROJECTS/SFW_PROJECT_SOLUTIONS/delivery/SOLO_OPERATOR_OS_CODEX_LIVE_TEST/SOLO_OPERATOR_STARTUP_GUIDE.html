@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solo Operator OS Start-Up Guide (Live Test)</title>
+  <style>
+    .legacy-banner {
+      background: #fff3cd;
+      border: 1px solid #f0c36d;
+      color: #6b4a00;
+      padding: 14px 18px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .legacy-banner strong { color: #4a3500; }
+  </style>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5f6f7c;
+      --line: #d9e1e7;
+      --soft: #f4f7f8;
+      --blue: #245f73;
+      --green: #2f6f5e;
+      --gold: #b07a2a;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 42px 34px 56px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 26px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 38px;
+      line-height: 1.1;
+      margin: 0 0 14px;
+    }
+
+    h2 {
+      font-size: 23px;
+      margin: 34px 0 12px;
+    }
+
+    h3 {
+      font-size: 17px;
+      margin: 20px 0 8px;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 8px 0 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    code,
+    pre {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    pre {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      white-space: pre-wrap;
+      margin: 10px 0 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 780px;
+    }
+
+    .band {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 18px 0;
+    }
+
+    .warning {
+      background: #fff8ed;
+      border: 1px solid #ead6b8;
+      border-left: 5px solid var(--gold);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 18px 0;
+    }
+
+    .footer {
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      margin-top: 34px;
+      padding-top: 18px;
+      font-size: 13px;
+    }
+
+    @media print {
+      body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .page {
+        padding: 22px;
+      }
+
+      h2 {
+        page-break-after: avoid;
+      }
+
+      table,
+      pre,
+      .band,
+      .warning {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="legacy-banner">
+    <strong>Live-test document.</strong> Solo Operator OS is in review. Public pricing, offer wording, and client-facing claims must be approved by Wayne before external use.
+  </div>
+  <main class="page">
+    <header>
+      <div class="eyebrow">Solo Operator OS</div>
+      <h1>Start-Up And User Guide</h1>
+      <p class="intro">
+        A plain-English guide for opening, starting, testing, and using the Solo Operator OS live-test build in Codex.
+      </p>
+    </header>
+
+    <section>
+      <h2>1. What This System Is</h2>
+      <p>
+        Solo Operator OS is a personal AI operating system for a solo entrepreneur, freelancer, consultant, creator, or busy professional.
+      </p>
+      <p>
+        It is designed to help one person manage work, business actions, personal admin, ideas, relationships, decisions, follow-ups, and weekly priorities through a structured Codex workspace.
+      </p>
+      <div class="band">
+        <strong>Simple version:</strong> this is not a normal AI chat. It is a repeatable operating system with commands, context files, trackers, routines, and review steps.
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Where To Start</h2>
+      <p>Open this folder in ChatGPT Codex:</p>
+      <pre>D:\Axis AI - ChatGPT OS\AXIS_OS_CLAUDE_BUILD\PROJECTS\SFW_PROJECT_SOLUTIONS\delivery\SOLO_OPERATOR_OS_CODEX_LIVE_TEST</pre>
+      <p>Start by reading these files:</p>
+      <ol>
+        <li><code>README.md</code></li>
+        <li><code>START_HERE.md</code></li>
+        <li><code>PERSONAL_CONTEXT.md</code></li>
+        <li><code>LIVE_TEST_SCRIPT.md</code></li>
+        <li><code>ACCEPTANCE_CHECKLIST.md</code></li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>3. First Command To Type</h2>
+      <p>In ChatGPT Codex, type:</p>
+      <pre>AXIS: SOLO START</pre>
+      <p>Expected result:</p>
+      <ul>
+        <li>Codex reads the live-test context.</li>
+        <li>Codex sees setup is already complete.</li>
+        <li>Codex does not repeat first-time onboarding.</li>
+        <li>Codex offers the main operating choices.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Main Commands</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Command</th>
+            <th>Use It For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>AXIS: SOLO START</code></td>
+            <td>Start the Solo Operator OS and choose what to do next.</td>
+          </tr>
+          <tr>
+            <td><code>AXIS: DAILY COMMAND</code></td>
+            <td>Set today&apos;s priorities, admin actions, follow-ups, and focus plan.</td>
+          </tr>
+          <tr>
+            <td><code>AXIS: CAPTURE THIS</code></td>
+            <td>Turn a messy note, idea, message, or voice-note transcript into action.</td>
+          </tr>
+          <tr>
+            <td><code>AXIS: DECISION</code></td>
+            <td>Compare options, trade-offs, risks, and next steps.</td>
+          </tr>
+          <tr>
+            <td><code>AXIS: ADMIN CLEAR-DOWN</code></td>
+            <td>Sort personal or business admin into a clear action list.</td>
+          </tr>
+          <tr>
+            <td><code>AXIS: BUSINESS BUILDER</code></td>
+            <td>Move offers, leads, pricing, delivery, content, or revenue actions forward.</td>
+          </tr>
+          <tr>
+            <td><code>AXIS: WEEKLY REVIEW</code></td>
+            <td>Review wins, open loops, decisions, admin, follow-ups, and next week.</td>
+          </tr>
+          <tr>
+            <td><code>AXIS: 30 DAY REVIEW</code></td>
+            <td>Review whether the system is improving clarity, follow-through, admin, business progress, and relationships.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>5. How To Run The Live Test</h2>
+      <ol>
+        <li>Open the live-test folder in Codex.</li>
+        <li>Type <code>AXIS: SOLO START</code>.</li>
+        <li>Open <code>LIVE_TEST_SCRIPT.md</code>.</li>
+        <li>Run each test prompt in order.</li>
+        <li>After each test, update <code>LIVE_TEST_LOG.md</code>.</li>
+        <li>When finished, complete <code>ACCEPTANCE_CHECKLIST.md</code>.</li>
+      </ol>
+      <div class="band">
+        <strong>Pass standard:</strong> the output should be specific, practical, calm, and action-focused. It should reference the right trackers and avoid acting like a generic chatbot.
+      </div>
+    </section>
+
+    <section>
+      <h2>6. What Each Folder Does</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Folder / File</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>PERSONAL_CONTEXT.md</code></td>
+            <td>The user&apos;s operating context, priorities, preferences, and setup status.</td>
+          </tr>
+          <tr>
+            <td><code>COMMAND_CENTRE</code></td>
+            <td>Daily command centre for priorities and focus.</td>
+          </tr>
+          <tr>
+            <td><code>TRACKERS</code></td>
+            <td>Open loops, waiting items, closed items, and review state.</td>
+          </tr>
+          <tr>
+            <td><code>LIFE_ADMIN</code></td>
+            <td>Personal admin, deadlines, documents, renewals, and practical tasks.</td>
+          </tr>
+          <tr>
+            <td><code>BUSINESS</code></td>
+            <td>Offers, leads, content, clients, delivery, revenue, and business actions.</td>
+          </tr>
+          <tr>
+            <td><code>RELATIONSHIPS</code></td>
+            <td>Follow-ups, useful context, introductions, and relationship memory.</td>
+          </tr>
+          <tr>
+            <td><code>IDEAS</code></td>
+            <td>Idea capture and idea-to-action processing.</td>
+          </tr>
+          <tr>
+            <td><code>DECISIONS</code></td>
+            <td>Decision log and decision support.</td>
+          </tr>
+          <tr>
+            <td><code>KNOWLEDGE</code></td>
+            <td>Durable preferences, rules, goals, and project context.</td>
+          </tr>
+          <tr>
+            <td><code>ROUTINES</code></td>
+            <td>Weekly review and 30-day review workflows.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>7. What Good Use Looks Like</h2>
+      <p>Good use is short, regular, and practical.</p>
+      <ul>
+        <li>Start the day with <code>AXIS: DAILY COMMAND</code>.</li>
+        <li>Capture ideas immediately with <code>AXIS: CAPTURE THIS</code>.</li>
+        <li>Use <code>AXIS: DECISION</code> before changing direction.</li>
+        <li>Run <code>AXIS: ADMIN CLEAR-DOWN</code> when tasks feel scattered.</li>
+        <li>End the week with <code>AXIS: WEEKLY REVIEW</code>.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>8. Important Boundaries</h2>
+      <div class="warning">
+        Solo Operator OS supports organisation, planning, drafting, workflow management, decision clarity, and follow-through. It does not replace legal, financial, tax, medical, therapeutic, safeguarding, or regulated professional advice.
+      </div>
+      <p>If a topic is high-risk, the OS should help prepare questions and organise information, then recommend speaking to a qualified professional.</p>
+    </section>
+
+    <section>
+      <h2>9. How To Test First-Time Setup Later</h2>
+      <p>The live-test build is already configured. To test first-time onboarding later, read:</p>
+      <pre>RESET_FOR_FIRST_TIME_SETUP.md</pre>
+      <p>That file explains how to temporarily switch setup back to incomplete, run onboarding, and then restore the live-test state.</p>
+    </section>
+
+    <section>
+      <h2>10. When It Is Ready To Use Externally</h2>
+      <p>The system is ready for external testing only when:</p>
+      <ul>
+        <li><code>LIVE_TEST_LOG.md</code> is completed.</li>
+        <li><code>ACCEPTANCE_CHECKLIST.md</code> passes.</li>
+        <li>Pricing and packaging are approved.</li>
+        <li>Data and professional-advice boundaries are clear.</li>
+        <li>Wayne signs off the build.</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>Solo Operator OS is developed by Wayne Francis and delivered through SF&amp;W Project Solutions.</p>
+      <p>Document status: in review. Created for live testing before external use.</p>
+    </footer>
+  </main>
+</body>
+</html>
