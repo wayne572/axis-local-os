@@ -49,6 +49,7 @@ These files must be reviewed before treating the master OS as updated:
 
 | Date | Change | Master sync status |
 |---|---|---|
+| 2026-05-17 | Added managed shipped-build update standard: delivery-level `TEMPLATE_UPDATE_REGISTER.md`, per-build `CARE_PACKAGE/BUILD_UPDATE_LOG.md`, selective update rule, and care-review checks so shipped builds stay current without overwriting client/user-specific work | synced to master; pending GitHub push |
 | 2026-05-17 | Added care-package enhancement layer to current Claude/Codex production templates: AI OS control register, freeze protocol, source trust / prompt injection check, monthly memory audit, usage and ROI tracker, platform change watch, tone profile, and `AXIS: CARE REVIEW` wiring | synced to master and GitHub |
 | 2026-05-17 | Consolidated delivery builds by adding current Codex V4 Solo template under `LATEST_SELLABLE_BUILDS`, keeping Claude V4 templates there, and moving older live-test, duplicate root template, `client-templates`, and `V3 Axis` material into `delivery/_ARCHIVE_OLDER_BUILDS_2026-05-17` | synced to master and GitHub |
 | 2026-05-17 | Updated production AI OS templates so Solo Operator and Client OS builds use Axis V4 operating logic, `AXIS: IDEA TO MEMORY`, memory discipline, governance checks, acceptance tests, and shipping checklist requirements; aligned older duplicate template folders with latest sellable builds | synced to master and GitHub |

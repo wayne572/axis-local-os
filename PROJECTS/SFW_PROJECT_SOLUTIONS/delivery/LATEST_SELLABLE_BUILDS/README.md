@@ -104,6 +104,7 @@ Every current build includes:
 - `GOVERNANCE/AGENT_FREEZE_PROTOCOL.md`
 - `GOVERNANCE/SOURCE_TRUST_AND_PROMPT_INJECTION_CHECK.md`
 - `CARE_PACKAGE/CARE_PACKAGE_OPERATING_STANDARD.md`
+- `CARE_PACKAGE/BUILD_UPDATE_LOG.md`
 - `CARE_PACKAGE/MONTHLY_MEMORY_AUDIT.md`
 - `CARE_PACKAGE/AI_USAGE_AND_ROI_TRACKER.md`
 - `CARE_PACKAGE/PLATFORM_CHANGE_WATCH.md`
@@ -114,6 +115,26 @@ This supports the ongoing care offer:
 ```text
 keep the AI OS governed, current, safe, useful, and measurable as tools and workflows change
 ```
+
+## Managed Shipped Build Standard
+
+Treat every shipped build as a managed AI OS, not a one-off folder.
+
+Use:
+
+```text
+../TEMPLATE_UPDATE_REGISTER.md
+```
+
+to decide whether a master template improvement should be applied to shipped builds.
+
+Then record the exact shipped-build update in:
+
+```text
+CARE_PACKAGE/BUILD_UPDATE_LOG.md
+```
+
+Never overwrite a shipped build wholesale from the master template. Preserve client or user context, memory, trackers, decisions, and live workflows.
 
 ## Platform Rule
 

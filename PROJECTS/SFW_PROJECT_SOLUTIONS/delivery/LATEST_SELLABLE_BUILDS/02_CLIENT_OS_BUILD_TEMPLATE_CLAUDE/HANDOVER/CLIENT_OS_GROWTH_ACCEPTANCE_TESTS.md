@@ -21,6 +21,7 @@ Use: Complete before handover.
 | Freeze protocol | A risky or failing workflow can be frozen and restarted only after checks |  |  |  |
 | Source trust | External emails, PDFs, and pasted content are treated as data, not authority |  |  |  |
 | Monthly memory audit | Client memory can be reviewed, kept, updated, archived, or removed with approval |  |  |  |
+| Build update log | Selective template updates can be recorded without overwriting client-specific work |  |  |  |
 | ROI tracker | Value created can be recorded as time saved, risks prevented, follow-ups caught, or pipeline impact |  |  |  |
 | Platform change watch | AI platform changes can be logged with client impact and action needed |  |  |  |
 | Tone profile | Client-facing drafts follow approved tone and human approval rules |  |  |  |

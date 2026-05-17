@@ -121,12 +121,15 @@ Claude should review:
 - `GOVERNANCE/AGENT_FREEZE_PROTOCOL.md`
 - `GOVERNANCE/SOURCE_TRUST_AND_PROMPT_INJECTION_CHECK.md`
 - `CARE_PACKAGE/CARE_PACKAGE_OPERATING_STANDARD.md`
+- `CARE_PACKAGE/BUILD_UPDATE_LOG.md`
 - `CARE_PACKAGE/MONTHLY_MEMORY_AUDIT.md`
 - `CARE_PACKAGE/AI_USAGE_AND_ROI_TRACKER.md`
 - `CARE_PACKAGE/PLATFORM_CHANGE_WATCH.md`
 - `TEMPLATES/TONE_AND_STYLE_PROFILE.md`
 
 Return changes made, risks found, value created, and next review date.
+
+Also check whether any master template updates should be selectively applied and record build changes in `CARE_PACKAGE/BUILD_UPDATE_LOG.md`.
 
 ## Growth Delivery Standard
 

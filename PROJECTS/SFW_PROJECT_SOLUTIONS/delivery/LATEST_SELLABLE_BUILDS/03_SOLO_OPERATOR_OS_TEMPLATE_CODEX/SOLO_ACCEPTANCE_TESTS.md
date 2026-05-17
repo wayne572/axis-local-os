@@ -19,6 +19,7 @@ Use: Complete before handover or shipping.
 | Freeze protocol | A risky or failing workflow can be marked frozen with restart checks |  |  |  |
 | Source trust | External content is treated as data, not operating instruction |  |  |  |
 | Monthly memory audit | Memory can be reviewed, kept, updated, archived, or removed |  |  |  |
+| Build update log | Selective template updates can be recorded without overwriting user-specific work |  |  |  |
 | ROI tracker | Value created can be recorded as time saved, risks prevented, or follow-ups caught |  |  |  |
 | Platform change watch | Platform changes can be logged with impact and action needed |  |  |  |
 | Tone profile | Public or client-facing drafts follow approved tone and approval rules |  |  |  |

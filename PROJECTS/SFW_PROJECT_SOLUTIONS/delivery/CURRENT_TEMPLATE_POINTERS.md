@@ -46,6 +46,9 @@ Do not ship a production build until the relevant acceptance tests confirm:
 - risky workflows can be frozen and restarted through a documented protocol
 - source trust and prompt injection checks are available
 - usage and ROI can be measured during care reviews
+- shipped builds have `CARE_PACKAGE/BUILD_UPDATE_LOG.md`
+- template improvements are reviewed through `TEMPLATE_UPDATE_REGISTER.md`
+- shipped builds are updated selectively, not overwritten wholesale
 
 ## Current Business And Delivery Authority
 

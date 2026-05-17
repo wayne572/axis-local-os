@@ -29,6 +29,8 @@ AXIS: CARE REVIEW
 
 Codex should review the control register, memory audit, ROI tracker, platform change watch, and any frozen workflows.
 
+It should also check whether any master template updates should be selectively applied and record build changes in `CARE_PACKAGE/BUILD_UPDATE_LOG.md`.
+
 ## Main Commands
 
 ```text
@@ -107,6 +109,7 @@ Complete or review:
 - `GOVERNANCE/AGENT_FREEZE_PROTOCOL.md`
 - `GOVERNANCE/SOURCE_TRUST_AND_PROMPT_INJECTION_CHECK.md`
 - `CARE_PACKAGE/CARE_PACKAGE_OPERATING_STANDARD.md`
+- `CARE_PACKAGE/BUILD_UPDATE_LOG.md`
 - `CARE_PACKAGE/MONTHLY_MEMORY_AUDIT.md`
 - `CARE_PACKAGE/AI_USAGE_AND_ROI_TRACKER.md`
 - `CARE_PACKAGE/PLATFORM_CHANGE_WATCH.md`

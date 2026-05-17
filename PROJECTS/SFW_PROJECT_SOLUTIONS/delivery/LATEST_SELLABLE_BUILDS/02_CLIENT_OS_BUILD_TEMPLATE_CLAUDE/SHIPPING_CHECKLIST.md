@@ -19,6 +19,7 @@ Use: Complete before sending or handing over a client build.
 - [ ] `GOVERNANCE/AGENT_FREEZE_PROTOCOL.md` reviewed
 - [ ] `GOVERNANCE/SOURCE_TRUST_AND_PROMPT_INJECTION_CHECK.md` included
 - [ ] `CARE_PACKAGE/CARE_PACKAGE_OPERATING_STANDARD.md` included
+- [ ] `CARE_PACKAGE/BUILD_UPDATE_LOG.md` included
 - [ ] `CARE_PACKAGE/MONTHLY_MEMORY_AUDIT.md` included
 - [ ] `CARE_PACKAGE/AI_USAGE_AND_ROI_TRACKER.md` included
 - [ ] `CARE_PACKAGE/PLATFORM_CHANGE_WATCH.md` included
@@ -43,6 +44,7 @@ Use: Complete before sending or handing over a client build.
 - [ ] Freeze protocol tested
 - [ ] Source trust / prompt injection check tested
 - [ ] Monthly memory audit path tested
+- [ ] Build update log tested
 - [ ] Usage and ROI tracker tested
 - [ ] Platform change watch tested
 - [ ] Tone and style profile tested
