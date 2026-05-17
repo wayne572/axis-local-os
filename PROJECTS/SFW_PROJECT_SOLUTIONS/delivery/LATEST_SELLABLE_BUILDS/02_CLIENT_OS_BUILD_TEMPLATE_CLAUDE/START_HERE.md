@@ -107,11 +107,34 @@ Claude should return:
 - decisions needed
 - next week priorities
 
+## Care Package Review
+
+Client or SF&W can ask:
+
+```text
+AXIS: CARE REVIEW
+```
+
+Claude should review:
+
+- `GOVERNANCE/AI_OS_CONTROL_REGISTER.md`
+- `GOVERNANCE/AGENT_FREEZE_PROTOCOL.md`
+- `GOVERNANCE/SOURCE_TRUST_AND_PROMPT_INJECTION_CHECK.md`
+- `CARE_PACKAGE/CARE_PACKAGE_OPERATING_STANDARD.md`
+- `CARE_PACKAGE/MONTHLY_MEMORY_AUDIT.md`
+- `CARE_PACKAGE/AI_USAGE_AND_ROI_TRACKER.md`
+- `CARE_PACKAGE/PLATFORM_CHANGE_WATCH.md`
+- `TEMPLATES/TONE_AND_STYLE_PROFILE.md`
+
+Return changes made, risks found, value created, and next review date.
+
 ## Growth Delivery Standard
 
 For Client OS Growth, do not build before Audit, scope, blueprint, role map, acceptance tests, and handover/adoption plan are complete.
 
 Do not mark a Growth build ready until the V4 operating loop, memory discipline, and governance checks have been tested.
+
+Do not mark a Growth build ready until the care package path is also visible.
 
 ## Support
 

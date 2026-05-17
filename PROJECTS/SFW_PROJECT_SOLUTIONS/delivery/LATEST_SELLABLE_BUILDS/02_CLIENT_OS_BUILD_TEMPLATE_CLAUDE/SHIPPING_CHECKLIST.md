@@ -15,6 +15,14 @@ Use: Complete before sending or handing over a client build.
 - [ ] Sample records added
 - [ ] Governance notes completed
 - [ ] `V4_OPERATING_LOGIC.md` tailored to client
+- [ ] `GOVERNANCE/AI_OS_CONTROL_REGISTER.md` completed
+- [ ] `GOVERNANCE/AGENT_FREEZE_PROTOCOL.md` reviewed
+- [ ] `GOVERNANCE/SOURCE_TRUST_AND_PROMPT_INJECTION_CHECK.md` included
+- [ ] `CARE_PACKAGE/CARE_PACKAGE_OPERATING_STANDARD.md` included
+- [ ] `CARE_PACKAGE/MONTHLY_MEMORY_AUDIT.md` included
+- [ ] `CARE_PACKAGE/AI_USAGE_AND_ROI_TRACKER.md` included
+- [ ] `CARE_PACKAGE/PLATFORM_CHANGE_WATCH.md` included
+- [ ] `TEMPLATES/TONE_AND_STYLE_PROFILE.md` completed
 - [ ] Templates/prompts reviewed
 - [ ] Usage log ready
 - [ ] 30-day review path ready
@@ -31,6 +39,13 @@ Use: Complete before sending or handing over a client build.
 - [ ] `AXIS: IDEA TO MEMORY` tested
 - [ ] Decision capture tested
 - [ ] Memory discipline tested
+- [ ] Control register tested
+- [ ] Freeze protocol tested
+- [ ] Source trust / prompt injection check tested
+- [ ] Monthly memory audit path tested
+- [ ] Usage and ROI tracker tested
+- [ ] Platform change watch tested
+- [ ] Tone and style profile tested
 - [ ] Sensitive-data boundary tested
 - [ ] Out-of-scope request tested
 
@@ -41,4 +56,5 @@ Use: Complete before sending or handing over a client build.
 - [ ] Role quick-start guidance prepared
 - [ ] Client users confirmed
 - [ ] 30-day review booked
+- [ ] Care package review route explained
 - [ ] Wayne reviewed final package

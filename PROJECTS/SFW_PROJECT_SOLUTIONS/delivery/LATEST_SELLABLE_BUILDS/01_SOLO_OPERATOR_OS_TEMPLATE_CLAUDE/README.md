@@ -33,6 +33,14 @@ It has:
 - V4 operating logic
 - memory discipline
 - governance/review rules
+- care package operating standard
+- AI OS control register
+- freeze protocol
+- source trust and prompt injection check
+- monthly memory audit
+- AI usage and ROI tracker
+- platform change watch
+- tone and style profile
 
 ## Folder Structure
 
@@ -58,6 +66,9 @@ SOLO_OPERATOR_OS/
   SETUP_QUESTIONNAIRE.md
   V4_OPERATING_LOGIC.md
   ROUTINES/30_DAY_REVIEW.md
+  GOVERNANCE/
+  CARE_PACKAGE/
+  TEMPLATES/TONE_AND_STYLE_PROFILE.md
 ```
 
 ## Start Command
@@ -79,6 +90,11 @@ AXIS: SOLO START
 - Personal Knowledge Base
 - Setup Questionnaire
 - 30 Day Review
+- Care Review
+- Source Trust Check
+- Memory Audit
+- Usage And ROI Tracking
+- Platform Change Watch
 
 ## Build Status
 
@@ -95,4 +111,8 @@ Every Solo build should include:
 - 30-day review route
 - platform confirmation
 - V4 operating logic
+- care package operating standard
+- governance control register
+- monthly memory audit
+- usage and ROI tracker
 - acceptance tests

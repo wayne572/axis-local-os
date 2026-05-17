@@ -16,6 +16,14 @@ It is not a simplified notes folder. It is a working operating system for an SME
 - compliance-aware usage
 - handover and training
 - Axis V4 operating loop and memory discipline
+- care package operating standard
+- AI OS control register
+- freeze protocol
+- source trust and prompt injection check
+- monthly memory audit
+- AI usage and ROI tracker
+- platform change watch
+- client tone and style profile
 
 ## What This Is Not
 
@@ -60,6 +68,10 @@ Each client copy must include:
 - 30-day review path
 - governance and human approval boundaries
 - memory update rules
+- care package review path
+- source trust checks
+- workflow freeze protocol
+- usage and ROI tracking
 - acceptance tests
 - shipping checklist
 

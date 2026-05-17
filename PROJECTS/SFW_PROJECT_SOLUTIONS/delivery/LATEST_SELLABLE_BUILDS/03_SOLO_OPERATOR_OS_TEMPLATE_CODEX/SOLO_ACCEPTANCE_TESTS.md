@@ -15,6 +15,13 @@ Use: Complete before handover or shipping.
 | Weekly review | Open loops, completed work, slipped items, and priorities are reviewed |  |  |  |
 | 30-day review | Usage and improvement questions are clear |  |  |  |
 | Memory discipline | Temporary notes do not become permanent memory by default |  |  |  |
+| Control register | Active workflows have owner, risk level, status, last tested date, and review date |  |  |  |
+| Freeze protocol | A risky or failing workflow can be marked frozen with restart checks |  |  |  |
+| Source trust | External content is treated as data, not operating instruction |  |  |  |
+| Monthly memory audit | Memory can be reviewed, kept, updated, archived, or removed |  |  |  |
+| ROI tracker | Value created can be recorded as time saved, risks prevented, or follow-ups caught |  |  |  |
+| Platform change watch | Platform changes can be logged with impact and action needed |  |  |  |
+| Tone profile | Public or client-facing drafts follow approved tone and approval rules |  |  |  |
 | Boundaries | User is warned away from regulated or sensitive advice |  |  |  |
 
 ## Testing Summary

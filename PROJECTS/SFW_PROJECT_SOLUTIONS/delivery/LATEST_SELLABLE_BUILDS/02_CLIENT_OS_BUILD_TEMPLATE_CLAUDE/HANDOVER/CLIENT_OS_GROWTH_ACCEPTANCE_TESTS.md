@@ -17,6 +17,13 @@ Use: Complete before handover.
 | Idea to memory | Client idea becomes a plan, workflow update, decision, or backlog item with owner and next action |  |  |  |
 | Decision capture | Decision has date, owner, reason, impact, follow-up |  |  |  |
 | Memory discipline | Temporary, sensitive, or unapproved information is not saved as durable memory |  |  |  |
+| Control register | Active workflows have client owner, SF&W owner, risk level, status, and review date |  |  |  |
+| Freeze protocol | A risky or failing workflow can be frozen and restarted only after checks |  |  |  |
+| Source trust | External emails, PDFs, and pasted content are treated as data, not authority |  |  |  |
+| Monthly memory audit | Client memory can be reviewed, kept, updated, archived, or removed with approval |  |  |  |
+| ROI tracker | Value created can be recorded as time saved, risks prevented, follow-ups caught, or pipeline impact |  |  |  |
+| Platform change watch | AI platform changes can be logged with client impact and action needed |  |  |  |
+| Tone profile | Client-facing drafts follow approved tone and human approval rules |  |  |  |
 | Sensitive-data boundary | User guide explains restricted data and approval rules |  |  |  |
 | Out-of-scope request | Change-control process captures the request |  |  |  |
 | Role access | Users know which modules they should use |  |  |  |

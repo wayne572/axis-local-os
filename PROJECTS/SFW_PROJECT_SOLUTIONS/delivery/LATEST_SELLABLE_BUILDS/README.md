@@ -29,6 +29,14 @@ Functionality is the core of the build. Every production template must include:
 - 30-day review
 - boundary/governance rules
 - memory discipline
+- AI OS control register
+- workflow freeze protocol
+- source trust / prompt injection check
+- monthly memory audit
+- usage and ROI tracking
+- platform change watch
+- tone and style profile
+- care package review route
 - acceptance tests
 - shipping checklist
 
@@ -50,6 +58,7 @@ V4 production standard:
 - `AXIS: IDEA TO MEMORY` must work.
 - The build must distinguish temporary notes from durable memory.
 - The user should always leave with a next action, tracker update, or reviewed memory decision.
+- The care package layer must support `AXIS: CARE REVIEW`.
 
 ### 02 - Client OS Build Template
 
@@ -67,6 +76,7 @@ V4 production standard:
 - Workflow changes must pass review before becoming locked authority.
 - Client memory must remain scoped to the client folder.
 - Sensitive data and compliance boundaries must be visible before handover.
+- The care package layer must support `AXIS: CARE REVIEW`.
 
 ### 03 - Solo Operator OS Template - Codex
 
@@ -84,6 +94,26 @@ V4 production standard:
 - `V4_OPERATING_LOGIC.md` must be included.
 - `AXIS: IDEA TO MEMORY` must work.
 - `CLAUDE_REFERENCE.md` is retained only as a cross-platform reference.
+- The care package layer must support `AXIS: CARE REVIEW`.
+
+## Care Package Standard
+
+Every current build includes:
+
+- `GOVERNANCE/AI_OS_CONTROL_REGISTER.md`
+- `GOVERNANCE/AGENT_FREEZE_PROTOCOL.md`
+- `GOVERNANCE/SOURCE_TRUST_AND_PROMPT_INJECTION_CHECK.md`
+- `CARE_PACKAGE/CARE_PACKAGE_OPERATING_STANDARD.md`
+- `CARE_PACKAGE/MONTHLY_MEMORY_AUDIT.md`
+- `CARE_PACKAGE/AI_USAGE_AND_ROI_TRACKER.md`
+- `CARE_PACKAGE/PLATFORM_CHANGE_WATCH.md`
+- `TEMPLATES/TONE_AND_STYLE_PROFILE.md`
+
+This supports the ongoing care offer:
+
+```text
+keep the AI OS governed, current, safe, useful, and measurable as tools and workflows change
+```
 
 ## Platform Rule
 

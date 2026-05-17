@@ -21,6 +21,14 @@ If setup is complete, ask:
 Do you want Daily Command Centre, Weekly Review, Capture, Idea To Memory, Decision Support, Business Builder, or Admin Clear-Down?
 ```
 
+For care package review, use:
+
+```text
+AXIS: CARE REVIEW
+```
+
+Codex should review the control register, memory audit, ROI tracker, platform change watch, and any frozen workflows.
+
 ## Main Commands
 
 ```text
@@ -95,4 +103,12 @@ Complete or review:
 - `SHIPPING_CHECKLIST.md`
 - `PLATFORM_NOTES.md`
 - `V4_OPERATING_LOGIC.md`
+- `GOVERNANCE/AI_OS_CONTROL_REGISTER.md`
+- `GOVERNANCE/AGENT_FREEZE_PROTOCOL.md`
+- `GOVERNANCE/SOURCE_TRUST_AND_PROMPT_INJECTION_CHECK.md`
+- `CARE_PACKAGE/CARE_PACKAGE_OPERATING_STANDARD.md`
+- `CARE_PACKAGE/MONTHLY_MEMORY_AUDIT.md`
+- `CARE_PACKAGE/AI_USAGE_AND_ROI_TRACKER.md`
+- `CARE_PACKAGE/PLATFORM_CHANGE_WATCH.md`
+- `TEMPLATES/TONE_AND_STYLE_PROFILE.md`
 - `ROUTINES/30_DAY_REVIEW.md`

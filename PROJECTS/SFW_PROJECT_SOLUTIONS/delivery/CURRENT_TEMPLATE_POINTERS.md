@@ -21,9 +21,9 @@ Do not create new client work from:
 
 | Product / Use Case | Canonical Folder | Platform Default | Status |
 |---|---|---|---|
-| Solo Operator OS | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE` | Claude | production V4 template; includes `V4_OPERATING_LOGIC.md`, idea-to-memory workflow, memory discipline, simple user guide, first 7 days guide, acceptance tests, shipping checklist, and platform notes |
-| Client OS Build / Growth Template | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE` | Claude | production V4 template; includes `V4_OPERATING_LOGIC.md`, Growth blueprint, role map, owner command centre example, acceptance tests, adoption plan, handover script, change control, shipping checklist, and sample records |
-| Solo Operator OS | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/03_SOLO_OPERATOR_OS_TEMPLATE_CODEX` | Codex | production V4 template; includes `AGENTS.md`, `CODEX.md`, `V4_OPERATING_LOGIC.md`, idea-to-memory workflow, memory discipline, acceptance tests, and shipping checklist |
+| Solo Operator OS | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE` | Claude | production V4 template; includes V4 loop, idea-to-memory, memory discipline, care package layer, control register, freeze protocol, source trust check, ROI tracker, acceptance tests, shipping checklist, and platform notes |
+| Client OS Build / Growth Template | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE` | Claude | production V4 template; includes V4 loop, Growth blueprint, role map, handover assets, care package layer, control register, freeze protocol, source trust check, ROI tracker, sample records, acceptance tests, and shipping checklist |
+| Solo Operator OS | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/03_SOLO_OPERATOR_OS_TEMPLATE_CODEX` | Codex | production V4 template; includes `AGENTS.md`, `CODEX.md`, V4 loop, idea-to-memory, memory discipline, care package layer, control register, freeze protocol, source trust check, ROI tracker, acceptance tests, and shipping checklist |
 
 ## V4 Template Rule
 
@@ -39,8 +39,13 @@ Do not ship a production build until the relevant acceptance tests confirm:
 
 - one full workflow loop works end-to-end
 - `AXIS: IDEA TO MEMORY` is available
+- `AXIS: CARE REVIEW` is available
 - memory updates are scoped, useful, and approved
 - governance and human review boundaries are clear
+- active workflows are visible in a control register
+- risky workflows can be frozen and restarted through a documented protocol
+- source trust and prompt injection checks are available
+- usage and ROI can be measured during care reviews
 
 ## Current Business And Delivery Authority
 
