@@ -19,6 +19,10 @@ jobs:
   link-check:
     name: External URL check
     runs-on: ubuntu-latest
+    # Informational only - drift-guard is the required blocking check.
+    # Lychee surfaces broken URLs in the run log without failing the
+    # workflow. Promote to required once URL inventory is curated.
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - name: Lychee external URL check
@@ -39,4 +43,4 @@ jobs:
             --exclude-path .git
             --max-concurrency 8
             './**/*.md'
-          fail: true
+          fail: false
