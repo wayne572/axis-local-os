@@ -1,14 +1,14 @@
 # AXIS Sync Status
 
 Status: active
-Last reviewed: 2026-05-16
+Last reviewed: 2026-05-17
 Purpose: Prevent drift between the Codex working copy and Wayne's master OS folder.
 
 ## Source-Of-Truth Decision
 
 Current master OS:
 
-`D:\Wayne AI OS\Axis OS_v3`
+`D:\Wayne AI OS\Axis OS_v4`
 
 Current Codex optimisation copy:
 
@@ -16,7 +16,15 @@ Current Codex optimisation copy:
 
 Decision:
 
-The Codex copy is the active optimisation workspace. Changes made here are not automatically live in the master OS until reviewed and copied back to `D:\Wayne AI OS\Axis OS_v3`.
+The Codex copy is the GitHub-backed optimisation workspace. Axis OS v4 has now been created in Wayne's master OS folder and mirrored into this GitHub-backed repo.
+
+Current active master:
+
+`D:\Wayne AI OS\Axis OS_v4`
+
+Previous master:
+
+`D:\Wayne AI OS\Axis OS_v3` - superseded fallback only.
 
 ## Sync-Critical Files
 
@@ -41,6 +49,7 @@ These files must be reviewed before treating the master OS as updated:
 
 | Date | Change | Master sync status |
 |---|---|---|
+| 2026-05-17 | Created `D:\Wayne AI OS\Axis OS_v4` from v3, added `CORE/AXIS_INFRASTRUCTURE`, updated V4 entry files, backed up v3, mirrored V4 into GitHub repo, and pushed `main` to `wayne572/axis-local-os` | synced to master and GitHub |
 | 2026-05-16 | Added voice transcript correction with `--transcript`; synced to Wayne AI OS and verified corrected voice ask | synced to master |
 | 2026-05-16 | Activated RAG in `D:\Wayne AI OS\Axis OS_v3` by building `.kb/index.json`; synced conditional authority-boost search fix into master; verified Wayne Copilot and pricing retrieval plus sourced answer | synced to master |
 | 2026-05-16 | Refreshed `D:\Wayne AI OS\Axis OS_v3` from Codex/GitHub `main` at `c22b632`; copied 499 tracked files without deleting master-only material | synced to master |
@@ -88,4 +97,10 @@ Then review earlier handoff if needed:
 
 `D:\Axis AI - ChatGPT OS\AXIS_WAYNE_AI_OS_HANDOFF_2026-05-11.md`
 
-After Wayne signoff, copy the updated OS entry points, offers file, brand file, template pointers, and canonical template additions into the master OS folder if that folder is still being used as the master.
+Run the V4 acceptance checks:
+
+- live Claude startup test
+- infrastructure review
+- Client OS test
+- Solo Operator test
+- idea-to-memory workflow test
