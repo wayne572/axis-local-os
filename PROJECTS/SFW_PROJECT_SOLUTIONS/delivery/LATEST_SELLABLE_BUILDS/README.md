@@ -68,6 +68,23 @@ V4 production standard:
 - Client memory must remain scoped to the client folder.
 - Sensitive data and compliance boundaries must be visible before handover.
 
+### 03 - Solo Operator OS Template - Codex
+
+Folder:
+
+```text
+03_SOLO_OPERATOR_OS_TEMPLATE_CODEX
+```
+
+Use this when the Solo Operator OS will run inside Codex.
+
+V4 production standard:
+
+- `AGENTS.md` and `CODEX.md` are the platform authority.
+- `V4_OPERATING_LOGIC.md` must be included.
+- `AXIS: IDEA TO MEMORY` must work.
+- `CLAUDE_REFERENCE.md` is retained only as a cross-platform reference.
+
 ## Platform Rule
 
 Before creating any client build, ask:

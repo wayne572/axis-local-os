@@ -49,6 +49,7 @@ These files must be reviewed before treating the master OS as updated:
 
 | Date | Change | Master sync status |
 |---|---|---|
+| 2026-05-17 | Consolidated delivery builds by adding current Codex V4 Solo template under `LATEST_SELLABLE_BUILDS`, keeping Claude V4 templates there, and moving older live-test, duplicate root template, `client-templates`, and `V3 Axis` material into `delivery/_ARCHIVE_OLDER_BUILDS_2026-05-17` | synced to master and GitHub |
 | 2026-05-17 | Updated production AI OS templates so Solo Operator and Client OS builds use Axis V4 operating logic, `AXIS: IDEA TO MEMORY`, memory discipline, governance checks, acceptance tests, and shipping checklist requirements; aligned older duplicate template folders with latest sellable builds | synced to master and GitHub |
 | 2026-05-17 | Created Sonjie Francis V4 Solo OS build at `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/CLIENT_READY_SOLO_BUILDS/SONJIE_FRANCIS_CARE_CREATOR_SOLO_OS`, tailored to care rota/workplace process and TikTok/content direction, updated client/workstream indexes, and mirrored it into Codex repo | synced to master and GitHub |
 | 2026-05-17 | Updated Codex-specific OS guidance (`AGENTS.md`, `CODEX.md`, `CODEX_USER_GUIDE.md`) to use Axis OS v4 logic, V4 infrastructure files, and `D:\Wayne AI OS\Axis OS_v4`; synced the same files back to Wayne's V4 master folder | synced to master and GitHub |

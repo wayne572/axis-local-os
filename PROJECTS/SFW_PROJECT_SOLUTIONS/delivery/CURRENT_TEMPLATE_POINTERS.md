@@ -12,6 +12,7 @@ Do not create new client work from:
 
 - shipped client folders
 - `_NOT_IN_USE_BUILDS_ARCHIVE_2026-05-09`
+- `_ARCHIVE_OLDER_BUILDS_2026-05-17`
 - live test folders
 - old duplicate ZIPs
 - folders marked archive, test, backup, or not in use
@@ -22,6 +23,7 @@ Do not create new client work from:
 |---|---|---|---|
 | Solo Operator OS | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/01_SOLO_OPERATOR_OS_TEMPLATE_CLAUDE` | Claude | production V4 template; includes `V4_OPERATING_LOGIC.md`, idea-to-memory workflow, memory discipline, simple user guide, first 7 days guide, acceptance tests, shipping checklist, and platform notes |
 | Client OS Build / Growth Template | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/02_CLIENT_OS_BUILD_TEMPLATE_CLAUDE` | Claude | production V4 template; includes `V4_OPERATING_LOGIC.md`, Growth blueprint, role map, owner command centre example, acceptance tests, adoption plan, handover script, change control, shipping checklist, and sample records |
+| Solo Operator OS | `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/LATEST_SELLABLE_BUILDS/03_SOLO_OPERATOR_OS_TEMPLATE_CODEX` | Codex | production V4 template; includes `AGENTS.md`, `CODEX.md`, `V4_OPERATING_LOGIC.md`, idea-to-memory workflow, memory discipline, acceptance tests, and shipping checklist |
 
 ## V4 Template Rule
 
@@ -81,3 +83,7 @@ Then adjust the instruction file:
 ## Archive Handling
 
 The bulky `_NOT_IN_USE_BUILDS_ARCHIVE_2026-05-09` folder should not be used for current work. It can be moved to an external archive after Wayne approves the cleanup.
+
+Older live-test builds, duplicate root templates, and older build material from outside `delivery` were consolidated into:
+
+`PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/_ARCHIVE_OLDER_BUILDS_2026-05-17`
