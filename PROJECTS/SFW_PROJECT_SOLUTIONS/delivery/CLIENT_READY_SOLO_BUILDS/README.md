@@ -9,6 +9,7 @@ Purpose: Client-specific Solo Operator OS builds ready for setup, handover, or t
 |---|---|---|---|
 | `TIANNA_MULTI_PROJECT_SOLO_OS` | Tianna | Multi-project personal command system | client-ready draft |
 | `TAMMY_KARIKARI_OPEN_SOLO_OS` | Tammy Karikari | Open Solo Operator OS functionality test | open testing draft |
+| `SONJIE_FRANCIS_CARE_CREATOR_SOLO_OS` | Sonjie Francis | Care rota, workplace process, TikTok/content direction, and non-technical user support | V4 client-ready draft |
 | `SECOND_SOLO_BUILD_PENDING_DETAILS` | superseded | Replaced by Tammy Karikari open test build | superseded |
 
 ## Rule

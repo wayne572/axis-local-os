@@ -42,6 +42,7 @@ Blockers:
 - Live SCC Homes feedback captured on 2026-05-11 as proof that a shipped build created client value.
 - Live Sonjie Francis feedback captured on 2026-05-11 as proof that Axis can help a non-technical care-sector user create a practical 4-week rota system.
 - Live Sonjie Francis TikTok feedback captured on 2026-05-11 as proof that Axis can help a non-technical user understand content direction and monetisation focus.
+- Sonjie Francis V4 Solo OS build created at `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/CLIENT_READY_SOLO_BUILDS/SONJIE_FRANCIS_CARE_CREATOR_SOLO_OS`; first live test and permission review still needed.
 - One SME Audit-specific test or mapped case study decision is still needed before locking the audit offer.
 - Pricing added to proposal materials but remains in review.
 - Email cannot be sent directly from this environment until an email connector or SMTP route is available.

@@ -226,11 +226,13 @@ Client feedback received by email on 2026-05-10 at 20:48. Evidence captured in `
 ### Contact Name: Sonjie Francis
 ### Service: Axis-supported rota system and TikTok page review
 
+### Build Folder: `PROJECTS/SFW_PROJECT_SOLUTIONS/delivery/CLIENT_READY_SOLO_BUILDS/SONJIE_FRANCIS_CARE_CREATOR_SOLO_OS`
+
 ---
 
 ### Current Stage: Delivered
-### Current Priority: Capture testimonial permission and assess whether the rota and TikTok review workflows should become demo use cases.
-### Next Action: Ask Sonjie whether Wayne can use both reviews publicly and whether the rota/TikTok review can be anonymised for demos or case studies.
+### Current Priority: Review the new Sonjie V4 Solo OS build, capture testimonial permission, and assess whether the rota and TikTok review workflows should become demo use cases.
+### Next Action: Run first live V4 test with Sonjie, then ask whether Wayne can use both reviews publicly and whether the rota/TikTok review can be anonymised for demos or case studies.
 
 ---
 
@@ -285,8 +287,8 @@ Workplace adoption, time saved, TikTok growth, and monetisation progress are not
 
 ---
 
-### Last Update: 2026-05-11
-### Review Needed: Testimonial permission, rota outcome follow-up, and TikTok/content outcome follow-up.
+### Last Update: 2026-05-17
+### Review Needed: V4 build review, testimonial permission, rota outcome follow-up, and TikTok/content outcome follow-up.
 
 ---
 
